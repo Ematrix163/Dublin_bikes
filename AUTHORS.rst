@@ -1,7 +1,8 @@
 ============
 Contributors
 ============
-Yiming Chen
-Louis
-* diarmuidmorgan <diarmuidmorgan@hotmail.com>
 
+
+* Yiming Chen
+* Louis
+* diarmuidmorgan <diarmuidmorgan@hotmail.com>
