@@ -1,0 +1,2 @@
+#I thought we could just start scraping data and saving it in text files,
+til we have the database up and running

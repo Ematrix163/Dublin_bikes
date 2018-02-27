@@ -1,0 +1,3 @@
+I was thinking we'd have a separate directory for each component?
+
+Maybe this isn't necessary, or I have created directories for the wrong components!

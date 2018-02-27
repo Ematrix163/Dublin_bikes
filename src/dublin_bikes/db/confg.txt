@@ -1,0 +1,2 @@
+host = 'dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com dublinbikes'
+port = 3306
