@@ -1,0 +1,19 @@
+
+Lol! Does this look like an ER diagram?
+
+        table
+ static_bike_stands ---- key = id|
+                            |
+  |                        |
+  |                        |
+                      table
+  |                live bike stands
+  |                     |
+|
+                       |
+|                  key = time
+|                       |
+
+|                       |
+-key=location?--------table
+                      weather data
