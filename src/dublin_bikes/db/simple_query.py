@@ -2,7 +2,7 @@ import datetime
 import mysql.connector
 import time
 
-def queryStandNumber(x, key='id'):
+def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     '''gets all historical information about a specific stands occupancy'''
 
     #takes a key, and a value for the key
@@ -20,7 +20,7 @@ def queryStandNumber(x, key='id'):
 #this can be changed to reflect any query we like
 
     query = ("SELECT * FROM testtest "
-             "WHERE " +key+" = " + str(x))
+             "WHERE " +key+" = " + str(x) +" AND time > " +str(t1)+" AND time < " +str(t2))
 
 
 
@@ -30,17 +30,19 @@ def queryStandNumber(x, key='id'):
 
     big_arr=[]
     for (arr) in cursor:
-        big_arr.append([arr[0], arr[1], arr[2], arr[3], arr[4]])
+        big_arr.append([arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]])
 
     print(big_arr)
 
 
     cursor.close()
     cnx.close()
-    return arr
+    return big_arr
 
 def queryCurrentStands():
     '''seems to return most recent stands'''
+
+    # this function isn't working!
     t = time.time()
     t1 = t+250
     t2 = t - 250
@@ -70,16 +72,19 @@ def queryCurrentStands():
 
     big_arr=[]
     for (arr) in cursor:
-        big_arr.append([arr[0], arr[1], arr[2], arr[3], arr[4]])
+        big_arr.append([arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]])
 
     print(big_arr)
 
 
     cursor.close()
     cnx.close()
-    return arr
+    return big_arr
+
+
+
 
 if __name__=='__main__':
-
+    #testing
     queryStandNumber(5)
     queryCurrentStands()
