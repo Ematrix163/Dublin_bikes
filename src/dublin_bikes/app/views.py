@@ -1,22 +1,44 @@
 from flask import render_template
 from app import app
-
+import time
 from flask import request
 from dublin_bikes.db import simple_query as query
-
+from dublin_bikes.analytics import single_stand as graph
 import json
+
+
+
+
 @app.route('/')
 def index():
 
     js = open('app/static/js/simplemapscript.js', 'r').read()
     html = open('app/static/html/index.html', 'r').read()
 
+    #concantenate the js and html files and serve them
     return '<script>'+ js + '</script>' + html
 
 
 
 
+@app.route('/graph')
+def getGtaphData():
+    if request.args.get('begin')==None:
+        begin = 0
+    else:
 
+        begin = request.args.get('begin')
+
+    if request.args.get('end')==None:
+        end = time.time()
+
+    else:
+
+        end = request.args.get('end')
+
+    stand = request.args.get('stand')
+
+    return json.dumps(graph.prepareData(stand, begin, end))
 
 
 
