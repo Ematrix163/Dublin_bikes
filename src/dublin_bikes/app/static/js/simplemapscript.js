@@ -67,12 +67,14 @@ console.log(staticlocations[i.toString()])
 
             e = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
 
+            var scale = currentData[i.toString()].bikes - currentData[i.toString()].spaces + 1
+
              }
 
              else{
 
                e = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-
+               var scale = currentData[i.toString()].spaces- currentData[i.toString()].bikes + 1
 
 
 
@@ -82,12 +84,19 @@ console.log(staticlocations[i.toString()])
              var contentString='<div><p>'+staticlocations[i.toString()].address.toString()+'</p><p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>'
              +'<p>Current stands: '+currentData[i.toString()].spaces.toString() +'</p></div>';
 
+             var icon = {
+                 url: e, // url
+                 scaledSize: new google.maps.Size(5+scale*1.5, 5+scale*1.5), // scaled size
+                 origin: new google.maps.Point(0,0), // origin
+                 anchor: new google.maps.Point(0, 0) // anchor
+             };
+
 
 
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(parseFloat(lat), parseFloat(long)),
         map: map,
-        icon: e,
+        icon: icon,
         title: staticlocations[i.toString()].name
     });
 
