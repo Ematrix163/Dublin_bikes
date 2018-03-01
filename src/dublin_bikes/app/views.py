@@ -25,8 +25,10 @@ def getCurrentData():
     (address, name, latitude, longitude etc)
 
 
-    should be able to use /request?type=standNumber?stand=52?begin=123718?end=11471847
-    to find data for a bike stand from a begin time to an end time'''
+    should be able to use /request?type=standnumber&stand=52&begin=123718&end=11471847
+    to find data for a bike stand from a begin time to an end time
+
+    begin and end default to only times within the last five minutes'''
 
     request_type = request.args.get('type')
 
