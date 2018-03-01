@@ -8,9 +8,19 @@ import json
 @app.route('/')
 def index():
 
+    js = open('app/static/js/simplemapscript.js', 'r').read()
     html = open('app/static/html/index.html', 'r').read()
 
-    return html
+    return '<script>'+ js + '</script>' + html
+
+
+
+
+
+
+
+
+#for requesting
 
 @app.route('/request')
 def getCurrentData():

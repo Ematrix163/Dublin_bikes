@@ -11,59 +11,7 @@
   <body>
     <h3>Dublin Bikes</h3>
     <div id="map"></div>
-    <script>
-    var map;
-      function initMap() {
-        var uluru = {lat:  53.349, lng:-6.2603};
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: uluru
-        });
-        var xmlhttp = new XMLHttpRequest();
-      var url = "myTutorials.txt";
-
-      xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              var myArr = JSON.parse(this.responseText);
-              addMarkers(myArr);
-          }
-      };
-      xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
-      xmlhttp.send();
-
-
-    }
-
-
-
-
-
-
-
-
-      function addMarkers(staticlocations) {
-        for (var i in staticlocations){
-
-console.log(staticlocations)
-
-    console.log(staticlocations[i.toString()])
-                 lat = staticlocations[i.toString()].lat;
-                 long = staticlocations[i.toString()].long;
-
-                marker = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(lat), parseFloat(long)),
-            map: map,
-            title: staticlocations[i.toString()].name
-        });
-               }
-          }
-
-
-
-
-
-
-    </script>
+    
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSrSbeZwb9AeX2X8gh_AVErGaXVfpkriU&callback=initMap">
     </script>

@@ -60,8 +60,8 @@ def queryCurrentStands():
 
 
     t = time.time()
-    t1 = int(t+250)
-    t2 = int(t - 250)
+    t1 = t+1000
+    t2 = t - 1000
     print(t1, t2)
     cnx = mysql.connector.connect(user='BikesMasterUser',\
     database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
@@ -70,7 +70,7 @@ def queryCurrentStands():
 
     #this can be changed to reflect any query we like
     query = ("SELECT id, bikes, bikestands  FROM testtest "
-    "WHERE time < " +str(t1) + " AND time > " + str(t2))
+    "WHERE time < " +str(t1)+" AND time > " +str(t2))
 
 
 
