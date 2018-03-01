@@ -1,7 +1,10 @@
 import datetime
 import mysql.connector
 import time
-import json
+import json as js
+
+global passw
+passw = input('please enter a password: ')
 
 def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     '''gets all historical information about a specific stands occupancy'''
@@ -12,7 +15,7 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     #basically ripped from
     #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
-    passw=input('please enter password for the db: ')
+
     cnx = mysql.connector.connect(user='BikesMasterUser',\
     database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
     port = 3306, password = passw )
@@ -42,6 +45,7 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     return json
 
 def queryCurrentStands():
+    global passw
     '''seems to return most recent stands'''
 
 
@@ -54,7 +58,7 @@ def queryCurrentStands():
         #basically ripped from
         #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
-    passw=input('please enter password for the db: ')
+
     t = time.time()
     t1 = int(t+250)
     t2 = int(t - 250)
@@ -65,7 +69,6 @@ def queryCurrentStands():
     cursor = cnx.cursor()
 
     #this can be changed to reflect any query we like
-
     query = ("SELECT id, bikes, bikestands  FROM testtest "
     "WHERE time < " +str(t1) + " AND time > " + str(t2))
 
@@ -90,9 +93,8 @@ def queryCurrentStands():
     return json
 
 def queryStaticLocations():
+    global passw
 
-        '''returns static stand data.
-        Use this with queryCurrentStands() to set markers on map'''
 
 
         # this function isn't working!
@@ -104,37 +106,37 @@ def queryStaticLocations():
             #basically ripped from
             #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
-        passw=input('please enter password for the db: ')
 
-        cnx = mysql.connector.connect(user='BikesMasterUser',\
-        database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-        port = 3306, password = passw )
-        cursor = cnx.cursor()
+
+    cnx = mysql.connector.connect(user='BikesMasterUser',\
+    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
+    port = 3306, password = passw )
+    cursor = cnx.cursor()
 
         #this can be changed to reflect any query we like
 
-        query = ("SELECT standid, name, address, lat, longitude  FROM bikestands ")
+    query = ("SELECT standid, name, address, lat, longitude  FROM bikestands ")
 
-        cursor.execute(query)
+    cursor.execute(query)
 
         #should change to return data in json like format
 
-        json={}
-        for (arr) in cursor:
-            print(arr)
-            json[arr[0]]={'name' : arr[1], 'address' : arr[2], \
-            'lat': arr[3], 'long':arr[4]}
+    json={}
+    for (arr) in cursor:
+        print(arr)
+        json[arr[0]]={'name' : arr[1], 'address' : arr[2], \
+        'lat': arr[3], 'long':arr[4]}
 
 
 
-        cursor.close()
-        cnx.close()
-        print(json)
-        return json
+    cursor.close()
+    cnx.close()
+    print(json)
+    return json
 
 def dictionaryToJson(dictionary):
     #do we want to pass dictionary as a string, a 'json' object, or just a dictionary?
-    json = json.dumps(dictionary)
+    json = js.dumps(dictionary)
     return json
 
 
