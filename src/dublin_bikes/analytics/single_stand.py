@@ -4,7 +4,7 @@ import time
 
 
 def prepareData(stand, begin, end):
-
+    #this is returning nonsense
     data = query.queryStandNumber(stand, t1=begin, t2=end)
 
     #there could be a ridiculous amount of data points, and ideally we want
@@ -67,7 +67,7 @@ def prepareData(stand, begin, end):
 
 
 
-
+    print(arr)
     print(len(arr))
     return arr
 

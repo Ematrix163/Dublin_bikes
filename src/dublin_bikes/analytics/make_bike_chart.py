@@ -1,5 +1,5 @@
 from matplotlib import pyplot as pyplot
-from db import simple_query as query
+from dublin_bikes.db import simple_query as query
 import time
 '''I don't think this approach is going to work. I mean,
 we could pre render the analytics as images, and somehow send them,
@@ -9,7 +9,7 @@ and b) maybe we can just use javascript to render them anyway?'''
 
 def make_stand_chart(stand, timeFrame=[o, time.time()]):
 
-    data = simple_query.queryStandNumber(stand, timeFrame)
+    data = query.queryStandNumber(stand, timeFrame)
 
     #py plot this data....
     # should be returned like this'

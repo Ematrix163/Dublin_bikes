@@ -104,8 +104,10 @@ console.log(staticlocations[i.toString()])
              }
 
              //this is the content the user will see when they click a dot
-             var contentString='<div><p>'+staticlocations[i.toString()].address.toString()+'</p><p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>'
-             +'<p>Current stands: '+currentData[i.toString()].spaces.toString() +'</p></div>';
+             var contentString='<div><p>'+staticlocations[i.toString()].address.toString()+'</p>'
+            contentString+='<p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>';
+             +'<p>Current stands: '+currentData[i.toString()].spaces.toString() + '</p>';
+             contentString += '<a onclick="showGraph('+i.toString()+')">Show Analytics</a></div>';
 
              var icon = {
                //this determines what the marker will look like.

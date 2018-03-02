@@ -12,11 +12,13 @@ import json
 @app.route('/')
 def index():
 
-    js = open('app/static/js/simplemapscript.js', 'r').read()
-    html = open('app/static/html/index.html', 'r').read()
+    mapjs = open('app/static/js/simplemapscript.js', 'r').read()
+    maphtml = open('app/static/html/index.html', 'r').read()
+    graphtml = open('app/static/html/graph-canvas.html', 'r').read()
+    graphjs = open('app/static/js/graph-canvas.js', 'r').read()
 
     #concantenate the js and html files and serve them
-    return '<script>'+ js + '</script>' + html
+    return '<script>'+ mapjs + '</script>' + maphtml + '<script>'+graphjs+'</script>' + graphtml
 
 
 
@@ -37,6 +39,7 @@ def getGtaphData():
         end = request.args.get('end')
 
     stand = request.args.get('stand')
+
 
     return json.dumps(graph.prepareData(stand, begin, end))
 
