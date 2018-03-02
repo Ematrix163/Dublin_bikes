@@ -104,11 +104,10 @@ console.log(staticlocations[i.toString()])
              }
 
              //this is the content the user will see when they click a dot
-             var contentString='<div><p>'+staticlocations[i.toString()].address.toString()+'</p>'
-            contentString+='<p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>';
-             +'<p>Current stands: '+currentData[i.toString()].spaces.toString() + '</p>';
-             contentString += '<a onclick="showGraph('+i.toString()+')">Show Analytics</a></div>';
-
+             var contentString='<div id="nooo"><p>'+staticlocations[i.toString()].address.toString()+'</p>'
+            contentString+='<p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>'+'<p>Current stands: '+currentData[i.toString()].spaces.toString() + '</p><p><button type="button" onclick="showGraph('+i.toString()+')">analytics</button></p>';
+             contentString += '<canvas id="myCanvas'+i.toString()+'"  width="1000px"; height="200px" style="cursor:pointer; width:100%;"></canvas><br></div>';
+             console.log(i.toString())
              var icon = {
                //this determines what the marker will look like.
                // to do : fix origin and anchor so that markers don't end up in the liffey/grand canal dock
@@ -129,6 +128,7 @@ console.log(staticlocations[i.toString()])
     });
 
     var infowindow = new google.maps.InfoWindow();
+
     //create the window that the user will see when they click the marker
     google.maps.event.addListener(marker,'click', (function(marker,contentString,infowindow){
       return function() {
@@ -136,6 +136,8 @@ console.log(staticlocations[i.toString()])
         //create an event listener to open the infowindow when the user clicks on the marker
           infowindow.setContent(contentString);
           infowindow.open(map,marker);
+
+
       };  //some closure that I don't understand. I think it's to stop all of the markers getting assigned the same info window
   })(marker,contentString,infowindow));
 

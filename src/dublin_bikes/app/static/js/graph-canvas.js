@@ -8,15 +8,17 @@ function showMap(){
 
 
 function showGraph(stand){
+  console.log('showingGraph for' + stand.toString())
 
 var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           var myArr = JSON.parse(this.responseText);
-          document.getElementById('map').style.display='none';
-          document.getElementById('myCanvas').style.display='';
 
-          makeCanvas(myArr);
+          document.getElementById('myCanvas'+stand.toString()).style.display='';
+
+
+          makeCanvas(myArr, stand);
 
       }
   };
@@ -27,12 +29,12 @@ var xmlhttp = new XMLHttpRequest();
 
 
 
-function makeCanvas(data){
+function makeCanvas(data, stand){
   console.log(data)
   var color_bikes = 'red'
   var color_spaces = 'blue'
 
-  var canvas = document.getElementById('myCanvas');
+  var canvas = document.getElementById('myCanvas'+stand.toString());
     var ctx = canvas.getContext('2d');
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
