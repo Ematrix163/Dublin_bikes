@@ -2,7 +2,7 @@ from flask import render_template
 from app import app
 import time
 from flask import request
-from dublin_bikes.db import simple_query as query
+from dublin_bikes.db import query as query
 from dublin_bikes.analytics import single_stand as graph
 import json
 
