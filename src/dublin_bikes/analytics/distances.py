@@ -57,9 +57,9 @@ if __name__=='__main__':
     getClosestStand(rathmines)
 
     #test for clontarf
-    clontarf =  {'lat':53.3660, 'long': 6.2045}
+    clontarf =  {'lat':53.3660, 'long': -6.2045}
     getClosestStand(clontarf)
-    ucd = {'lat':53.3053, 'long':6.2207}
+    ucd = {'lat':53.3053, 'long':-6.2207}
     getClosestStand(ucd)
 
 

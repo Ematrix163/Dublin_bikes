@@ -10,14 +10,22 @@ var map;
   function initMap() {
 
 
+    var origin = new google.maps.LatLng(53.3053, -6.2207);
+
+    var directionsService = new google.maps.DirectionsService();
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+
+
 //this entire script is a patchwork of stack over flow copy pasta //
 
 
     var dublin = {lat:  53.349, lng:-6.2603};
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
-      center: dublin
+      center: origin
     });
+    directionsDisplay.setMap(map);
+
     var xmlhttp = new XMLHttpRequest();
 
 
@@ -32,6 +40,7 @@ var map;
   //request data from database
   xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
   xmlhttp.send();
+  routify(origin, directionsService, directionsDisplay);
 
   }
 
@@ -49,11 +58,21 @@ xmlhttp.onreadystatechange = function() {
         // add markers to the map using all of this data
         addMarkers(staticlocations, currentData);
 
+
+
+
+
+
+
+
     }
+
+
 };
 //request data from database
 xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
 xmlhttp.send();
+
 
 
 
@@ -182,4 +201,49 @@ console.log(staticlocations[i.toString()])
 
 
            }
+      }
+
+
+function routify(origin, directionsService, directionsDisplay){
+  console.log('routifying')
+  var xmlhttp = new XMLHttpRequest();
+
+
+//get static data
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myArr = JSON.parse(this.responseText);
+        var lat = myArr.coords.lat;
+        var long = myArr.coords.long;
+        var destination = new google.maps.LatLng(lat, long);
+        calcRoute(origin, destination, directionsService, directionsDisplay)
+    }
+};
+//request data from database
+xmlhttp.open("GET", 'http://0.0.0.0:5000/distance', true);
+xmlhttp.send();
+
+
+
+
+}
+
+
+      function calcRoute(origin, destination, directionsService, directionsDisplay) {
+        console.log('calculating route')
+        //ripped from google documentation
+        var selectedMode = 'WALKING';
+        var request = {
+            origin: origin,
+            destination: destination,
+            // Note that Javascript allows us to access the constant
+            // using square brackets and a string value as its
+            // "property."
+            travelMode: google.maps.TravelMode[selectedMode]
+        };
+        directionsService.route(request, function(response, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+          }
+        });
       }

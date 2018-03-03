@@ -4,6 +4,7 @@ import time
 from flask import request
 from dublin_bikes.db import query as query
 from dublin_bikes.analytics import single_stand as graph
+from dublin_bikes.analytics import distances as distance
 import json
 
 
@@ -31,6 +32,23 @@ def circles():
     #concantenate the js and html files and serve them
     return '<script>'+ mapjs + '</script>' + maphtml + '<script>'+graphjs+'</script>' + graphtml
 
+
+
+@app.route('/distance')
+def findClosestStand():
+    if request.args.get('origin')==None:
+        origin = {'lat':53.3053, 'long': 6.2207}
+
+    else:
+        origin = request.args.get('begin').split(',')
+        origin = {'lat', begin[0], 'long', begin[1]}
+
+    if request.args.get('origin')==None:
+        mode = 'walking'
+    #add other options here
+
+    response = distance.getClosestStand(origin, mode)
+    return json.dumps(response)
 
 
 @app.route('/graph')
