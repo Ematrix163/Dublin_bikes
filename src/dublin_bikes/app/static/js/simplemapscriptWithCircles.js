@@ -9,9 +9,15 @@ var map;
 
   function initMap() {
 
+  //  t=getLocation();
+  //  if (t==0){
+   var origin = new google.maps.LatLng(53.3053, -6.2207);
+  //}
+  //else{
 
-    var origin = new google.maps.LatLng(53.3053, -6.2207);
-
+    //var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
+  //}
+//console.log(t);
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -247,3 +253,41 @@ xmlhttp.send();
           }
         });
       }
+
+
+
+/// getting current location, from w3 schools with edits
+
+/// can only be fullfilled in a secure context? over https:?
+      function getLocation() {
+          if (navigator.geolocation) {
+              return navigator.geolocation.getCurrentPosition(returnPosition, returnError);
+          } else {
+              return 0;
+          }
+      }
+
+      function returnPosition(position) {
+          return {'lat': position.coords.latitude, 'long' : position.coords.longitude};
+      }
+
+      function returnError(error) {
+          switch(error.code) {
+              case error.PERMISSION_DENIED:
+                  return 0;
+                  break;
+              case error.POSITION_UNAVAILABLE:
+                  return 0;
+                  break;
+              case error.TIMEOUT:
+                  return 0;
+                  break;
+              case error.UNKNOWN_ERROR:
+                  return 0;
+                  break;
+          }
+      }
+      </script>
+
+      </body>
+      </html>

@@ -104,10 +104,14 @@ console.log(staticlocations[i.toString()])
              }
 
              //this is the content the user will see when they click a dot
+
+             //it includes the function to display our graph, and the canvas element on which the graph is rendered
              var contentString='<div id="nooo"><p>'+staticlocations[i.toString()].address.toString()+'</p>'
             contentString+='<p>Current bikes: '+currentData[i.toString()].bikes.toString()+'</p>'+'<p>Current stands: '+currentData[i.toString()].spaces.toString() + '</p><p><button type="button" onclick="showGraph('+i.toString()+')">analytics</button></p>';
              contentString += '<canvas id="myCanvas'+i.toString()+'"  width="1000px"; height="200px" style="cursor:pointer; width:100%;"></canvas><br></div>';
              console.log(i.toString())
+
+
              var icon = {
                //this determines what the marker will look like.
                // to do : fix origin and anchor so that markers don't end up in the liffey/grand canal dock
