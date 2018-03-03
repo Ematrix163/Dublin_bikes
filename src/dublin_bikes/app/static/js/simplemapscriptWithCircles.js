@@ -75,8 +75,11 @@ xmlhttp.send();
 console.log(staticlocations)
 
 console.log(staticlocations[i.toString()])
-             lat = staticlocations[i.toString()].lat;
-             long = staticlocations[i.toString()].long;
+             lat = parseFloat(staticlocations[i.toString()].lat)
+             long = parseFloat(staticlocations[i.toString()].long)
+
+
+
 
              if (currentData[i.toString()].bikes > currentData[i.toString()].spaces){
                var bks = currentData[i.toString()].bikes;
