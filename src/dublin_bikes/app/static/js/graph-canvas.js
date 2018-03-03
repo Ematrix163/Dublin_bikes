@@ -73,7 +73,7 @@ for (var i = 1; i<data.length; i++){
 
 ctx.lineWidth = 5;
 ctx.translate(0.5, 0.5);
-ctx.strokeStyle = 'blue';
+ctx.strokeStyle = 'red';
 ctx.stroke();
 
 
@@ -88,7 +88,7 @@ for (var i = 1; i<data.length; i++){
 
 ctx.lineWidth = 5;
 ctx.translate(0.5, 0.5);
-ctx.strokeStyle = 'red';
+ctx.strokeStyle = 'blue';
 ctx.stroke();
 ctx.closePath;
 
