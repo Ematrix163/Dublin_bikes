@@ -28,7 +28,7 @@ function showGraph(stand){
   };
   //request data from database
   //getting data
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/graph?stand='+stand.toString(), true);
+  xmlhttp.open("GET", 'http://ec2-34-217-28-4.us-west-2.compute.amazonaws.com:5000//graph?stand='+stand.toString(), true);
   xmlhttp.send();
 }
 

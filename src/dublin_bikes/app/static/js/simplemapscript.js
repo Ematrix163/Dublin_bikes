@@ -34,7 +34,7 @@ var map;
       }
   };
   //request data from database
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
+  xmlhttp.open("GET", 'http://ec2-34-217-28-4.us-west-2.compute.amazonaws.com:5000/request?type=staticlocations', true);
   xmlhttp.send();
 
   }
@@ -56,7 +56,7 @@ function readNext(myArr){
     }
 };
 //request data from database
-      xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
+      xmlhttp.open("GET", 'http://ec2-34-217-28-4.us-west-2.compute.amazonaws.com:5000/request?type=currentstands', true);
       xmlhttp.send();
 
 
