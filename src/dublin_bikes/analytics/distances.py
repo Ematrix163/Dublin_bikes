@@ -4,6 +4,7 @@ from dublin_bikes.db import query
 
 
 def getDistanceDuration(origin, destination, transportMode='walking'):
+    '''uses google api to find the time from origin to destination'''
 
     lat1 = str(origin['lat'])
     long1 = str(origin['long'])
@@ -24,6 +25,8 @@ def getDistanceDuration(origin, destination, transportMode='walking'):
 
 
 def getClosestStand(origin, transportMode='walking'):
+
+    '''iterates through all stands and finds the closest one to the origin'''
     closetDuration = 1000000
     lat1 = origin['lat']
     long1 = origin['long']
@@ -48,19 +51,22 @@ def getClosestStand(origin, transportMode='walking'):
     return closestStand
 if __name__=='__main__':
 
+#some tests
+
+#test for distance between two points
     a={"lat": 53.349562, "long": -6.278198}
     b={"lat":53.339983, "long": -6.295594}
 
     print(getDistanceDuration(a, b))
     #test for rathmines
     rathmines = {'lat': 53.3219, 'long':-6.2655}
-    getClosestStand(rathmines)
+    print(getClosestStand(rathmines))
 
     #test for clontarf
     clontarf =  {'lat':53.3660, 'long': -6.2045}
-    getClosestStand(clontarf)
+    print(getClosestStand(clontarf))
     ucd = {'lat':53.3053, 'long':-6.2207}
-    getClosestStand(ucd)
+    print(getClosestStand(ucd))
 
 
     #test for ucd

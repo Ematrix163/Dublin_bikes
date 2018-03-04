@@ -4,6 +4,8 @@
 #this just uploads the static information about the bike stands. Super ugly code, sorry
 
 
+'''script used once off to get the static stand data onto our database'''
+
 
 from __future__ import print_function
 from datetime import date, datetime, timedelta

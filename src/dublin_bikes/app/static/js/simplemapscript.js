@@ -3,6 +3,9 @@
 // as such, it'll only work if the webscraper is running!
 
 
+//I think this is what they call 'spaghetti code!
+
+
 
 
 var map;
@@ -25,6 +28,7 @@ var map;
   xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           var myArr = JSON.parse(this.responseText);
+          //go to next function when data is received
           readNext(myArr);
 
       }
@@ -36,24 +40,24 @@ var map;
   }
 
 
-  function readNext(myArr){
+function readNext(myArr){
     //rget the next load of data - 'currentData'
     var xmlhttp = new XMLHttpRequest();
 
-staticlocations = myArr;
-xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var currentData = JSON.parse(this.responseText);
-        console.log(myArr);
+    staticlocations = myArr;
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var currentData = JSON.parse(this.responseText);
+            console.log(myArr);
 
-        // add markers to the map using all of this data
-        addMarkers(staticlocations, currentData);
+            // add markers to the map using all of this data
+            addMarkers(staticlocations, currentData);
 
     }
 };
 //request data from database
-xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
-xmlhttp.send();
+      xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
+      xmlhttp.send();
 
 
 
@@ -65,16 +69,13 @@ xmlhttp.send();
 
 
 
+function addMarkers(staticlocations, currentData) {
 
-  function addMarkers(staticlocations, currentData) {
-    console.log(staticlocations)
     for (var i in staticlocations){
 
       //loop through our staticLocations
 
-console.log(staticlocations)
 
-console.log(staticlocations[i.toString()])
              lat = staticlocations[i.toString()].lat;
              long = staticlocations[i.toString()].long;
 

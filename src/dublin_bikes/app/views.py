@@ -12,6 +12,7 @@ import json
 
 @app.route('/')
 def index():
+    '''loads index page'''
 
     mapjs = open('app/static/js/simplemapscript.js', 'r').read()
     maphtml = open('app/static/html/index.html', 'r').read()
@@ -23,6 +24,7 @@ def index():
 
 @app.route('/circles')
 def circles():
+    '''loads *circles* version page'''
 
     mapjs = open('app/static/js/simplemapscriptWithCircles.js', 'r').read()
     maphtml = open('app/static/html/index.html', 'r').read()
@@ -36,14 +38,18 @@ def circles():
 
 @app.route('/distance')
 def findClosestStand():
+
+    '''will return the closest stand to the stated origin
+    this will unfortunately take almost a minute
+    '''
     if request.args.get('origin')==None:
         origin = {'lat':53.3053, 'long': 6.2207}
 
     else:
-        origin = request.args.get('begin').split(',')
-        origin = {'lat', begin[0], 'long', begin[1]}
+        origin = request.args.get('origin').split(',')
+        origin = {'lat', origin[0], 'long', origin[1]}
 
-    if request.args.get('origin')==None:
+    if request.args.get('mode')==None:
         mode = 'walking'
     #add other options here
 
@@ -53,6 +59,8 @@ def findClosestStand():
 
 @app.route('/graph')
 def getGtaphData():
+    '''returns max 100 data points for producing simple
+    occupancy/time graph'''
     if request.args.get('begin')==None:
         begin = 0
     else:

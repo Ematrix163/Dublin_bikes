@@ -7,7 +7,10 @@ global passw
 passw = input('please enter a password: ')
 
 def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
-    '''gets all historical information about a specific stands occupancy'''
+    '''gets all historical information about a specific stands occupancy
+
+
+    by supplying time parameters, it can also get information within a timeframe'''
 
     #takes a key, and a value for the key
     #returns all the rows who match that key
@@ -36,28 +39,14 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     for (arr) in cursor:
         json[arr[0]] ={'bikes': arr[1], 'spaces' : arr[2]}
 
-
-
-
     cursor.close()
     cnx.close()
-    print(json)
+
     return json
 
 def queryCurrentStands():
     global passw
-    '''seems to return most recent stands'''
-
-
-    # this function isn't working!
-
-
-        #takes a key, and a value for the key
-        #returns all the rows who match that key
-
-        #basically ripped from
-        #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
-
+    '''returns current stand occupancy data for all stands'''
 
     t = time.time()
     t1 = t+1000
@@ -71,9 +60,6 @@ def queryCurrentStands():
     #this can be changed to reflect any query we like
     query = ("SELECT id, bikes, bikestands  FROM testtest "
     "WHERE time < " +str(t1)+" AND time > " +str(t2))
-
-
-
 
 
     cursor.execute(query)
@@ -95,18 +81,7 @@ def queryCurrentStands():
 def queryStaticLocations():
     global passw
 
-
-
-        # this function isn't working!
-
-
-            #takes a key, and a value for the key
-            #returns all the rows who match that key
-
-            #basically ripped from
-            #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
-
-
+    ''' gets name, address and coordinates for all stands '''
 
     cnx = mysql.connector.connect(user='BikesMasterUser',\
     database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
@@ -131,17 +106,17 @@ def queryStaticLocations():
 
     cursor.close()
     cnx.close()
-    print(json)
+
     return json
 
 def dictionaryToJson(dictionary):
-    #do we want to pass dictionary as a string, a 'json' object, or just a dictionary?
+    '''pointless, unused method to make dictionary into http sendable json string'''
     json = js.dumps(dictionary)
     return json
 
 
 if __name__=='__main__':
-    #testing
+    #test all methods
     queryStaticLocations()
     queryCurrentStands()
     queryStandNumber(5)

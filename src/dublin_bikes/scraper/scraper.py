@@ -1,5 +1,4 @@
-from __future__ import print_function
-from datetime import date, datetime, timedelta
+
 
 import json
 from dublin_bikes.db import inserts as inserts
@@ -11,7 +10,11 @@ import requests
 
 
 def scrape():
-    '''simple, naive method for getting api data and saving it in .txt form - every five minutes + uploading it to db'''
+    '''simple, naive method for getting api data
+     Scrapes data every five minutes and uploads it to db
+     Due to time lost uploading, it might not actually scrape every
+     five minutes.
+     To do - make weather database.'''
     while True:
         #run this forever
         t=time.time()
@@ -32,7 +35,7 @@ def scrape():
 
 
 
-
+        #wait five minutes before scraping again
         time.sleep(300)
 
 if __name__ == '__main__':

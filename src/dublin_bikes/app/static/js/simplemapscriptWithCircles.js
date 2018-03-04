@@ -2,12 +2,14 @@
 
 // as such, it'll only work if the webscraper is running!
 
+// this is even worse code spaghetti that the previous script
+
 
 
 
 var map;
 
-  function initMap() {
+function initMap() {
 
 ///blanked out code is for getting user location, which just plain dosn't work!
 
@@ -21,7 +23,6 @@ var map;
 
     //var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
   //}
-console.log(t);
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -40,13 +41,13 @@ console.log(t);
 
 
 //get static data
-  xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          var myArr = JSON.parse(this.responseText);
-          readNext(myArr);
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myArr = JSON.parse(this.responseText);
+            readNext(myArr);
 
-      }
-  };
+        }
+    };
   //request data from database
   xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
   xmlhttp.send();
@@ -59,34 +60,23 @@ console.log(t);
     //rget the next load of data - 'currentData'
     var xmlhttp = new XMLHttpRequest();
 
-staticlocations = myArr;
-xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var currentData = JSON.parse(this.responseText);
-        console.log(myArr);
+      staticlocations = myArr;
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              var currentData = JSON.parse(this.responseText);
+              console.log(myArr);
 
-        // add markers to the map using all of this data
-        addMarkers(staticlocations, currentData);
-
-
-
-
-
-
-
+              // add markers to the map using all of this data
+              addMarkers(staticlocations, currentData);
 
     }
 
 
 };
 //request data from database
-xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
-xmlhttp.send();
-
-
-
-
-  }
+    xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
+    xmlhttp.send();
+}
 
 
 
@@ -95,24 +85,20 @@ xmlhttp.send();
 
 
 
-  function addMarkers(staticlocations, currentData) {
-    console.log(staticlocations)
+function addMarkers(staticlocations, currentData) {
+
     for (var i in staticlocations){
 
       //loop through our staticLocations
-
-console.log(staticlocations)
-
-console.log(staticlocations[i.toString()])
              lat = parseFloat(staticlocations[i.toString()].lat)
              long = parseFloat(staticlocations[i.toString()].long)
 
-
-
-
              if (currentData[i.toString()].bikes > currentData[i.toString()].spaces){
                var bks = currentData[i.toString()].bikes;
-               //assign a red marker if there are more bikes than free stands
+
+
+              //determine the color of the circle to be drawn.
+              //add more eloquent function
             if (bks > 30){
             var color = '#FF0000'
           }
@@ -144,10 +130,10 @@ console.log(staticlocations[i.toString()])
              }
              else{
                if (spcs>20){
-                 var color = ''
+                 var color = '#FF0000'
                }
                else{
-                 var color = ''
+                 var color = '#FF0000'
 
                }
 
@@ -184,6 +170,7 @@ console.log(staticlocations[i.toString()])
 
 
     var cityCircle = new google.maps.Circle({
+      //google docs copy pasta
             strokeColor: color,
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -215,6 +202,10 @@ console.log(staticlocations[i.toString()])
 
 
 function routify(origin, directionsService, directionsDisplay){
+
+  //tries to find and display a route from the user to the nearest bike stand
+  //not functioning properly
+  // see project issues
   console.log('routifying')
   var xmlhttp = new XMLHttpRequest();
 
@@ -246,9 +237,7 @@ xmlhttp.send();
         var request = {
             origin: origin,
             destination: destination,
-            // Note that Javascript allows us to access the constant
-            // using square brackets and a string value as its
-            // "property."
+            
             travelMode: google.maps.TravelMode[selectedMode]
         };
         directionsService.route(request, function(response, status) {

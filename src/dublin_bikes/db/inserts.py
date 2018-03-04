@@ -9,10 +9,8 @@ passw = input('please enter a password: ')
 
 def insertLiveDB(data, timestamp):
 
-    #make this a db method
-    #this is the same function as in upload_static.py
-    #i just copied it word for word off mysql.com
-    #let's replace it with something better
+    '''inserts new stand data (from the bikes api) into the database. Used by webscraper.
+    Largely composed of copypasta from mysql.com/stack overflow'''
     global passw
 
     cnx = mysql.connector.connect(user='BikesMasterUser',\
@@ -32,7 +30,7 @@ def insertLiveDB(data, timestamp):
         data_stand=(int(thing['number']), timestamp, str(thing['bonus'])[0],str(thing['banking'])[0], str(thing['status']),int(thing['available_bike_stands']), int(thing['available_bikes']))
 
 
-        # Insert new employee
+
         cursor.execute(add_stand, data_stand)
 
 
