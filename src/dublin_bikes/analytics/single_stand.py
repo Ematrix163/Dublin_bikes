@@ -4,6 +4,12 @@ import time
 
 
 def prepareData(stand, begin, end):
+    '''return 100 data points representative of a stand's occupancy
+    over a given time period
+
+    Works for drawing simplistic graph (mainly to demonstrate the graph fucntion)
+
+    Can be deleted soon'''
 
     #this gets graph data for a specified period
     #the period is set by two unix timestamps,
@@ -17,12 +23,7 @@ def prepareData(stand, begin, end):
     #this tries to cut the data into 100 bins, from which we take just one point.
     #we then return these points as a dictionary that can hopefully be graphed in javascript
 
-'''return 100 data points representative of a stand's occupancy
-over a given time period
 
-Works for drawing simplistic graph (mainly to demonstrate the graph fucntion)
-
-Can be deleted soon'''
 
     max_points = 100
     arr=[]
