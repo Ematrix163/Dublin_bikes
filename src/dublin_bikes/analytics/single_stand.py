@@ -4,7 +4,11 @@ import time
 
 
 def prepareData(stand, begin, end):
-    #this is returning nonsense
+
+    #this gets graph data for a specified period
+    #the period is set by two unix timestamps,
+    #it can't. as of yet, handle date times.
+
     data = query.queryStandNumber(stand, t1=begin, t2=end)
 
     #there could be a ridiculous amount of data points, and ideally we want
@@ -72,10 +76,83 @@ def prepareData(stand, begin, end):
     return arr
 
 
+def prepareDayOfTheWeekData(stand, dayOfWeek):
+    '''crude method for getting the average stand occupancy,
+
+    for every five minute interval in a given day
+
+    returns json like object that can easily be graphed
+
+    however, statistically speaking, this might just be junk'''
+    import time
+    data = query.queryStandNumber(stand, 0, time.time())
+
+    #as default, requests all data. I think a further method for finding everyday at once,
+
+    #this method is a test, to be thrown away once we have a function for getting all the days data
+
+    obj = makeEmptyJsonDayObject()
+    for t in data:
+
+        dtime = datetime.datetime.fromtimestamp(t)
+        if dtime.weekday()==dayOfWeek:
+
+            hour = dtime.hour
+            minute = dtime.minute - (dtime.minute%5)
+            obj[hour*100+minute]['bikes'].append(data[t]['bikes'])
+            obj[hour*100+minute]['spaces'].append(data[t]['spaces'])
+
+
+    for t in obj:
+
+        if len(obj[t]['bikes'])==0:
+            obj[t]['bikes']==obj[t-5]['bikes']
+
+        else:
+            obj[t]['bikes']=sum(obj[t]['bikes'])/len(obj[t]['bikes'])
+
+        if len(obj[t]['spaces'])==0:
+            obj[t]['spaces']==obj[t-5]['spaces']
+        else:
+            obj[t]['spaces']=sum(obj[t]['spaces'])/len(obj[t]['spaces'])
+
+
+
+    return obj
+
+
+
+def makeEmptyJsonDayObject():
+    import time
+    json = {}
+    for i in range(0, 24):
+
+        for z in range(0, 60, 5):
+
+            json[100*i+z]={'bikes':[], 'spaces':[]}
+    return json
+
+
+
+
+
 if __name__ == '__main__':
     # test to see if this is working
 
-    print(prepareData(68, 0, time.time()))
+    #print(prepareDayOfTheWeekData(), 6)
+    #expet to see a json list grouped by g minute intervals with averages
+    #e.g {'00':averageTime, '06':averageTime, '12':averageTime
+
+    print(prepareDayOfTheWeekData(7, 5))
+
+    print('\n\n\n\n\n')
+
+
+    #print(prepareData(68, 0, time.time()))
+
+
+
+
 
     #works fine, returning object of length 100, for files that have enough data
     #don't know yet wha happens if this isn't true

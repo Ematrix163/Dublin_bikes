@@ -9,15 +9,19 @@ var map;
 
   function initMap() {
 
-  //  t=getLocation();
-  //  if (t==0){
+///blanked out code is for getting user location, which just plain dosn't work!
+
+  //t=getLocation();
+  //if (t==0){
    var origin = new google.maps.LatLng(53.3053, -6.2207);
   //}
   //else{
 
+
+
     //var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
   //}
-//console.log(t);
+console.log(t);
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -259,7 +263,10 @@ xmlhttp.send();
 /// getting current location, from w3 schools with edits
 
 /// can only be fullfilled in a secure context? over https:?
+
+///doesn't work!
       function getLocation() {
+        console.log('getting location')
           if (navigator.geolocation) {
               return navigator.geolocation.getCurrentPosition(returnPosition, returnError);
           } else {
@@ -268,15 +275,20 @@ xmlhttp.send();
       }
 
       function returnPosition(position) {
+        console.log('returning position')
           return {'lat': position.coords.latitude, 'long' : position.coords.longitude};
       }
 
       function returnError(error) {
+        console.log('getting an error')
+        console.log(error.code)
           switch(error.code) {
               case error.PERMISSION_DENIED:
+              console.log('denied')
                   return 0;
                   break;
               case error.POSITION_UNAVAILABLE:
+              console.log('unavaliable')
                   return 0;
                   break;
               case error.TIMEOUT:
