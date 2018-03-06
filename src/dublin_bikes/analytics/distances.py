@@ -8,8 +8,7 @@ def getDistanceDuration(origin, destination, transportMode='walking'):
 
     lat1 = str(origin['lat'])
     long1 = str(origin['long'])
-    lat2 = str(destination['lat'])
-    long2 = str(destination['long'])
+
 
 
     requestString = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='
@@ -20,6 +19,29 @@ def getDistanceDuration(origin, destination, transportMode='walking'):
     response = requests.get(requestString)
     response = json.loads(response.text)
     return response
+
+
+def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'):
+
+    requestString = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='
+    requestString+='&destinations='
+    for location in staticlocations:
+
+        lat2 = str(staticlocations[location]['lat'])
+        long2 = str(staticlocation[location]['long'])
+        requestString+=lat2 + ',' + long2 +'|'
+
+
+    requestString+='&mode='+transportMode+'&key=AIzaSyBSrSbeZwb9AeX2X8gh_AVErGaXVfpkriU'
+
+    response = requests.get(requestString)
+    response = json.loads(response.text)
+    return response
+
+
+
+
+
 
 
 

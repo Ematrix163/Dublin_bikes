@@ -98,7 +98,8 @@ def queryStaticLocations():
 
     json={}
     for (arr) in cursor:
-        print(arr)
+
+    
         json[arr[0]]={'name' : arr[1], 'address' : arr[2], \
         'lat': arr[3], 'long':arr[4]}
 
@@ -109,10 +110,8 @@ def queryStaticLocations():
 
     return json
 
-def dictionaryToJson(dictionary):
-    '''pointless, unused method to make dictionary into http sendable json string'''
-    json = js.dumps(dictionary)
-    return json
+
+
 
 
 if __name__=='__main__':

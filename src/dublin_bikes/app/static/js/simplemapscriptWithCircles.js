@@ -13,16 +13,17 @@ function initMap() {
 
 ///blanked out code is for getting user location, which just plain dosn't work!
 
-  //t=getLocation();
-  //if (t==0){
+  t=getLocation();
+  if (t==0){
    var origin = new google.maps.LatLng(53.3053, -6.2207);
-  //}
-  //else{
+  }
+  else{
 
 
 
-    //var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
-  //}
+
+    var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
+  }
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -237,7 +238,7 @@ xmlhttp.send();
         var request = {
             origin: origin,
             destination: destination,
-            
+
             travelMode: google.maps.TravelMode[selectedMode]
         };
         directionsService.route(request, function(response, status) {
