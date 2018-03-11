@@ -50,7 +50,7 @@ function initMap() {
         }
     };
   //request data from database
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
+  xmlhttp.open("GET", 'http://localhost:5000/request?type=staticlocations', true);
   xmlhttp.send();
   routify(origin, directionsService, directionsDisplay);
 
@@ -75,7 +75,7 @@ function initMap() {
 
 };
 //request data from database
-    xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
+    xmlhttp.open("GET", 'http://localhost:5000/request?type=currentstands', true);
     xmlhttp.send();
 }
 
@@ -222,7 +222,7 @@ xmlhttp.onreadystatechange = function() {
     }
 };
 //request data from database
-xmlhttp.open("GET", 'http://0.0.0.0:5000/distance', true);
+xmlhttp.open("GET", 'http://localhost:5000/distance', true);
 xmlhttp.send();
 
 

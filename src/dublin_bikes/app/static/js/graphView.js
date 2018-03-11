@@ -1,7 +1,16 @@
 
-global standNumber = 1;
+//from here on the graphs will be developed in a seperate view.
+//this could potentially be used in the larger application, but probably won't
+var standNumber;
+standNumber = 1
+function changeStand(x){
 
-function 
+  standNumber += x;
+  showGraph(standNumber);
+
+
+}
+
 
 function showGraph(stand){
 
@@ -13,19 +22,21 @@ function showGraph(stand){
 
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
+            console.log('received')
 
   //on retrieving data, make the graph
-            document.getElementById('myCanvas'+stand.toString()).style.display='';
+            document.getElementById('myCanvas').style.display='';
 
-
+            console.log(myArr)
             makeCanvas(myArr, stand);
 
       }
   };
   //request data from database
   //getting data
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/graph?stand='+stand.toString(), true);
+  xmlhttp.open("GET", 'http://localhost:5000/graph?stand=3', true);
   xmlhttp.send();
+  console.log('sent')
 }
 
 
@@ -35,7 +46,7 @@ function makeCanvas(data, stand){
   var color_bikes = 'red'
   var color_spaces = 'blue'
 
-  var canvas = document.getElementById('myCanvas'+stand.toString());
+  var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);

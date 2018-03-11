@@ -9,6 +9,14 @@ import json
 
 
 
+@app.route('/graphview')
+def graphView():
+
+    graphView = open('app/static/html/graph-view.html').read()
+    graphJs = open('app/static/js/graphView.js').read()
+    return '<script>' + graphJs + '</script>' + graphView
+
+
 
 @app.route('/')
 def index():
@@ -61,6 +69,7 @@ def findClosestStand():
 def getGtaphData():
     '''returns max 100 data points for producing simple
     occupancy/time graph'''
+    print('getting data')
     if request.args.get('begin')==None:
         begin = 0
     else:
@@ -77,6 +86,7 @@ def getGtaphData():
     stand = request.args.get('stand')
 
 
+    print('getting data')
     return json.dumps(graph.prepareData(stand, begin, end))
 
 

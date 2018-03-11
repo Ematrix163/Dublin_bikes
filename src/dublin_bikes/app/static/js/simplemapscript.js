@@ -139,7 +139,9 @@ function addMarkers(staticlocations, currentData) {
       return function() {
 
         //create an event listener to open the infowindow when the user clicks on the marker
+       
           infowindow.setContent(contentString);
+          showGraph(id);
           infowindow.open(map,marker);
 
 
