@@ -1,7 +1,7 @@
 
-global standNumber = 1;
+var standNumber = 1;
 
-function 
+
 
 function showGraph(stand){
 
@@ -24,7 +24,7 @@ function showGraph(stand){
   };
   //request data from database
   //getting data
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/graph?stand='+stand.toString(), true);
+  xmlhttp.open("GET", 'http://localhost:5000/graph?stand='+stand.toString(), true);
   xmlhttp.send();
 }
 

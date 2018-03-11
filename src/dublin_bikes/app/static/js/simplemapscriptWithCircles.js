@@ -11,32 +11,38 @@ var map;
 
 function initMap() {
 
-///blanked out code is for getting user location, which just plain dosn't work!
 
-  t=getLocation();
-  if (t==0){
-   var origin = new google.maps.LatLng(53.3053, -6.2207);
-  }
-  else{
-
-
-
-
-    var origin = new google.maps.LatLng(parseFloat(t['lat']), parseFloat(t['long']))
-  }
-    var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay = new google.maps.DirectionsRenderer();
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
 
 
 //this entire script is a patchwork of stack over flow copy pasta //
 
 
-    var dublin = {lat:  53.349, lng:-6.2603};
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: origin
-    });
-    directionsDisplay.setMap(map);
+  var dublin = {lat:  53.349, lng:-6.2603};
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: dublin
+  });
+  directionsDisplay.setMap(map);
+
+///blanked out code is for getting user location, which just plain dosn't work!
+
+
+async function locationGet(){
+
+  var result = await getLocation()
+  var origin = new google.maps.LatLng(parseFloat(result['lat']), parseFloat(result['long']))
+  return origin;
+}
+
+var origin = locationGet()
+
+
+
+
+  }
+
 
     var xmlhttp = new XMLHttpRequest();
 
@@ -54,7 +60,7 @@ function initMap() {
   xmlhttp.send();
   routify(origin, directionsService, directionsDisplay);
 
-  }
+
 
 
   function readNext(myArr){
@@ -218,11 +224,11 @@ xmlhttp.onreadystatechange = function() {
         var lat = myArr.coords.lat;
         var long = myArr.coords.long;
         var destination = new google.maps.LatLng(lat, long);
-        calcRoute(origin, destination, directionsService, directionsDisplay)
+        calcRoute(destination, directionsService, directionsDisplay)
     }
 };
 //request data from database
-xmlhttp.open("GET", 'http://localhost:5000/distance', true);
+xmlhttp.open("GET", 'http://localhost:5000/distance&origin='+origin.lat.toString()+','+origin.long.toString(), true);
 xmlhttp.send();
 
 
@@ -231,7 +237,9 @@ xmlhttp.send();
 }
 
 
-      function calcRoute(origin, destination, directionsService, directionsDisplay) {
+      function calcRoute(destination, directionsService, directionsDisplay) {
+
+
         console.log('calculating route')
         //ripped from google documentation
         var selectedMode = 'WALKING';

@@ -72,10 +72,3 @@ def getClosestStand(origin, transportMode='walking'):
 
 
     return coords[closest_index]
-if __name__=='__main__':
-
-#some tests
-
-#test for distance between two points
-
-    print(getClosestStand({'lat':52.498, 'long':-6.2603}))

@@ -34,7 +34,7 @@ var map;
       }
   };
   //request data from database
-  xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=staticlocations', true);
+  xmlhttp.open("GET", 'http://localhost:5000/request?type=staticlocations', true);
   xmlhttp.send();
 
   }
@@ -56,7 +56,7 @@ function readNext(myArr){
     }
 };
 //request data from database
-      xmlhttp.open("GET", 'http://0.0.0.0:5000/request?type=currentstands', true);
+      xmlhttp.open("GET", 'http://localhost:5000/request?type=currentstands', true);
       xmlhttp.send();
 
 
@@ -139,7 +139,7 @@ function addMarkers(staticlocations, currentData) {
       return function() {
 
         //create an event listener to open the infowindow when the user clicks on the marker
-       
+
           infowindow.setContent(contentString);
           showGraph(id);
           infowindow.open(map,marker);
