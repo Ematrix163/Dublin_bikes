@@ -94,45 +94,52 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     import time
     data = query.queryStandNumber(stand, 0, time.time())
 
+
     #as default, requests all data. I think a further method for finding everyday at once,
 
     #this method is a test, to be thrown away once we have a function for getting all the days data
 
-    obj = makeEmptyJsonDayObject()
-    print(data)
+    json = makeEmptyJsonDayObject()
+
     for t in data:
 
         dtime = datetime.datetime.fromtimestamp(t)
+        hour = dtime.hour
+
+        print(dtime.weekday())
         if dtime.weekday()==dayOfWeek:
             #if day of week is the same
 
-            hour = dtime.hour
-            minute = dtime.minute - (dtime.minute%5)
-            #place this data in the nearest five minute intereval
-            print(t, hour, minute)
-            obj[hour*100+minute]['bikes'].append(data[t]['bikes'])
-            obj[hour*100+minute]['spaces'].append(data[t]['spaces'])
 
-    print(obj)
-    for t in obj:
+
+
+            #place this data in the nearest five minute intereval
+
+            json[hour]['bikes'].append(int(data[t]['bikes']))
+            json[hour]['spaces'].append(int(data[t]['spaces']))
+
+    print(json)
+    response = {'spaces':[], 'bikes':[]}
+    for t in json:
 
         #loop through the arrays, and reduce them to their average value
 
 
 
-        print(t, obj[t])
-        if len(obj[t]['bikes'])==0:
-            obj[t]['bikes']=obj[t-5]['bikes']
-            obj[t]['spaces']=obj[t-5]['spaces']
+
+        if len(json[t]['bikes'])==0:
+            response['bikes'].append(0)
+            response['spaces'].append(0)
         else:
-            obj[t]['bikes']=sum(obj[t]['bikes'])/len(obj[t]['bikes'])
+            response['bikes'].append(int(sum(json[t]['bikes'])/len(json[t]['bikes'])))
 
 
-            obj[t]['spaces']=sum(obj[t]['spaces'])/len(obj[t]['spaces'])
+            response['spaces'].append(int(sum(json[t]['spaces'])/len(json[t]['spaces'])))
 
 
 
-    return obj
+
+    return response
 
 
 
@@ -144,9 +151,9 @@ def makeEmptyJsonDayObject():
     json = {}
     for i in range(0, 24):
 
-        for z in range(0, 60, 5):
+        json[i] = {'bikes':[], 'spaces':[]}
 
-            json[(100*i)+z]={'bikes':[], 'spaces':[]}
+
     return json
 
 
@@ -160,7 +167,7 @@ if __name__ == '__main__':
     #expet to see a json list grouped by g minute intervals with averages
     #e.g {'00':averageTime, '06':averageTime, '12':averageTime
 
-    print(prepareDayOfTheWeekData(34, 2))
+    print(prepareDayOfTheWeekData(78, 5))
 
     print('\n\n\n\n\n')
 
