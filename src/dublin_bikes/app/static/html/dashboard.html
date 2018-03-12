@@ -78,7 +78,7 @@ html+='<li style="cursor:pointer" id="button'+stand.toString()+'" onclick="loadC
 }
   html+='</ul>'
   document.getElementById('standsList').innerHTML = html;
-
+  loadChart(1,1);
 }
 
 function loadChart(stand, day){
@@ -116,21 +116,21 @@ function makeChart(data){
   console.log(data.bikes)
   console.log(data.spaces)
   console.log('making chart')
-  var labels = makeTimeLabels();
+  var labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
   new Chart(document.getElementById("chart"), {
   type: 'line',
   data: {
-    labels: makeTimeLabels(),
+    labels: labels,
     datasets: [{
         data: data.bikes,
         label: "Bikes",
         borderColor: "#3e95cd",
-        fill: false
+        fill: true
       }, {
         data: data.spaces,
         label: 'Spaces',
         borderColor: "#8e5ea2",
-        fill: false
+        fill: true
       }
     ]
   },

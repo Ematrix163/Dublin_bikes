@@ -91,6 +91,8 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     returns json like object that can easily be graphed
 
     however, statistically speaking, this might just be junk'''
+    stand = int(stand)
+    dayOfWeek = int(dayOfWeek)
     import time
     data = query.queryStandNumber(stand, 0, time.time())
 
