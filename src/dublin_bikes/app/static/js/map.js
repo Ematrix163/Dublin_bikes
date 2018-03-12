@@ -149,18 +149,27 @@ function returnError(error) {
   console.log('getting an error')
   console.log(error.code)
     switch(error.code) {
+      //default to UCD coordinates if there is an error
         case error.PERMISSION_DENIED:
         console.log('denied')
+        var origin = {'lat':53.3083, 'long':-6.2236}
+        routify(origin);
             return 0;
             break;
         case error.POSITION_UNAVAILABLE:
         console.log('unavaliable')
+        var origin = {'lat':53.3083, 'long':-6.2236}
+        routify(origin);
             return 0;
             break;
         case error.TIMEOUT:
+        var origin = {'lat':53.3083, 'long':-6.2236}
+        routify(origin);
             return 0;
             break;
         case error.UNKNOWN_ERROR:
+        var origin = {'lat':53.3083, 'long':-6.2236}
+        routify(origin);
             return 0;
             break;
     }
