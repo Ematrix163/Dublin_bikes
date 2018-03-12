@@ -2,7 +2,7 @@
 //from here on the graphs will be developed in a seperate view.
 //this could potentially be used in the larger application, but probably won't
 var standNumber;
-standNumber = 1
+standNumber = 1;
 function changeStand(x){
 
   standNumber += x;

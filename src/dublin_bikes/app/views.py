@@ -22,7 +22,7 @@ def graphView():
 def index():
     '''loads index page'''
 
-    mapjs = open('app/static/js/simplemapscript.js', 'r').read()
+    mapjs = open('app/static/js/map.js', 'r').read()
     maphtml = open('app/static/html/index.html', 'r').read()
     graphtml = open('app/static/html/graph-canvas.html', 'r').read()
     graphjs = open('app/static/js/graph-canvas.js', 'r').read()
@@ -55,7 +55,7 @@ def findClosestStand():
 
     else:
         origin = request.args.get('origin').split(',')
-        origin = {'lat', origin[0], 'long', origin[1]}
+        origin = {'lat': float(origin[0]), 'long': float(origin[1])}
 
     if request.args.get('mode')==None:
         mode = 'walking'
@@ -129,5 +129,10 @@ def getCurrentData():
     elif request_type == 'liveData':
         obj1 = query.queryCurrentStands()
         obj2 = query.queryStaticLocations()
-        obj = {'current':obj1, 'static':obj2}
-        return json.dumps(obj)
+        for thing in obj1:
+
+            obj2[thing]['bikes']=obj1[thing]['bikes']
+            obj2[thing]['spaces']=obj1[thing]['spaces']
+
+
+        return json.dumps(obj2)
