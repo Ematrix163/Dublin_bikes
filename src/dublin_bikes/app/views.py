@@ -18,7 +18,7 @@ def graphView():
 
 @app.route('/dash')
 def dashboard():
-    return open('app/static/html/dashboard.html').read() +'<script>'+open('app/static/js/charts.js').read()+'</script>'
+    return '<script>'+open('app/static/js/charts.js').read()+'</script>'+open('app/static/html/dashboard.html').read()
 
 
 
