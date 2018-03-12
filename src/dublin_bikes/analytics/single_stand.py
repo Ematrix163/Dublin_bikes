@@ -99,6 +99,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     #this method is a test, to be thrown away once we have a function for getting all the days data
 
     obj = makeEmptyJsonDayObject()
+    print(data)
     for t in data:
 
         dtime = datetime.datetime.fromtimestamp(t)
@@ -108,24 +109,25 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
             hour = dtime.hour
             minute = dtime.minute - (dtime.minute%5)
             #place this data in the nearest five minute intereval
-
+            print(t, hour, minute)
             obj[hour*100+minute]['bikes'].append(data[t]['bikes'])
             obj[hour*100+minute]['spaces'].append(data[t]['spaces'])
 
-
+    print(obj)
     for t in obj:
 
         #loop through the arrays, and reduce them to their average value
 
-        if len(obj[t]['bikes'])==0:
-            obj[t]['bikes']==obj[t-5]['bikes']
 
+
+        print(t, obj[t])
+        if len(obj[t]['bikes'])==0:
+            obj[t]['bikes']=obj[t-5]['bikes']
+            obj[t]['spaces']=obj[t-5]['spaces']
         else:
             obj[t]['bikes']=sum(obj[t]['bikes'])/len(obj[t]['bikes'])
 
-        if len(obj[t]['spaces'])==0:
-            obj[t]['spaces']==obj[t-5]['spaces']
-        else:
+
             obj[t]['spaces']=sum(obj[t]['spaces'])/len(obj[t]['spaces'])
 
 
@@ -144,7 +146,7 @@ def makeEmptyJsonDayObject():
 
         for z in range(0, 60, 5):
 
-            json[100*i+z]={'bikes':[], 'spaces':[]}
+            json[(100*i)+z]={'bikes':[], 'spaces':[]}
     return json
 
 
@@ -158,7 +160,7 @@ if __name__ == '__main__':
     #expet to see a json list grouped by g minute intervals with averages
     #e.g {'00':averageTime, '06':averageTime, '12':averageTime
 
-    print(prepareDayOfTheWeekData(18, 5))
+    print(prepareDayOfTheWeekData(34, 2))
 
     print('\n\n\n\n\n')
 

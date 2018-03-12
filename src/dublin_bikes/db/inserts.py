@@ -23,11 +23,11 @@ def insertLiveDB(data, timestamp):
 
         #upload each entry
         add_stand = ("INSERT INTO testtest "
-                     "(id, time, bonus, banking, status, bikestands, bikes) "
-                       "VALUES (%s,%s,%s,%s,%s,%s,%s)" )
+                     "(id, time, status, bikestands, bikes) "
+                       "VALUES (%s,%s,%s,%s,%s)" )
 
 
-        data_stand=(int(thing['number']), timestamp, str(thing['bonus'])[0],str(thing['banking'])[0], str(thing['status']),int(thing['available_bike_stands']), int(thing['available_bikes']))
+        data_stand=(int(thing['number']), timestamp, str(thing['status']),int(thing['available_bike_stands']), int(thing['available_bikes']))
 
 
 

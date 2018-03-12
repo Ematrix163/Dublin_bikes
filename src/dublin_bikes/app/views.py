@@ -67,27 +67,9 @@ def findClosestStand():
 
 @app.route('/graph')
 def getGtaphData():
-    '''returns max 100 data points for producing simple
-    occupancy/time graph'''
-    print('getting data')
-    if request.args.get('begin')==None:
-        begin = 0
-    else:
-
-        begin = request.args.get('begin')
-
-    if request.args.get('end')==None:
-        end = time.time()
-
-    else:
-
-        end = request.args.get('end')
-
     stand = request.args.get('stand')
-
-
-    print('getting data')
-    return json.dumps(graph.prepareData(stand, begin, end))
+    day = str(request.args.get('day'))
+    return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
 
 
 
@@ -134,7 +116,18 @@ def getCurrentData():
             stand = str(request.args.get('stand'))
             obj = query.queryStandNumber(stand, t1=begin, t2=end)
 
+
+
+
+
+
         else:
             obj = query.queryStandNumber(str(request.args.get('stand')))
             print(obj)
             return json.dumps(obj)
+
+    elif request_type == 'liveData':
+        obj1 = query.queryCurrentStands()
+        obj2 = query.queryStaticLocations()
+        obj = {'current':obj1, 'static':obj2}
+        return json.dumps(obj)
