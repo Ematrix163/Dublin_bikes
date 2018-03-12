@@ -16,6 +16,11 @@ def graphView():
     graphJs = open('app/static/js/graphView.js').read()
     return '<script>' + graphJs + '</script>' + graphView
 
+@app.route('/dash')
+def index():
+    return open('app/static/html/dashboard.html').read()+'<srcipt>'+open('app/static/js/dashboard.js'+'</script>')
+    '''loads index page'''
+
 
 
 @app.route('/')

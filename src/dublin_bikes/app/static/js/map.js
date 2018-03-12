@@ -54,17 +54,17 @@ function addMarkers(data) {
 
       if (data[i].bikes > data[i].spaces){
 
-        var color = 'FF2222'
+        var color = '#FF2222'
         var scale = 2 + 5 * (data[i].spaces / data[i].bikes)
       }
       else if (data[i].bikes < data[i].spaces + 5 || data[i].spaces < data[i].bikes + 5) {
 
-        var color = '2AFF22'
+        var color = '#2AFF22'
         var scale = 4;
       }
       else{
 
-        var color = '2265FF'
+        var color = '#2265FF'
         var scale = 4 + 5 * (data[i].bikes / data[i].spaces)
       }
 
