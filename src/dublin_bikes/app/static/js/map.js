@@ -52,6 +52,8 @@ function addMarkers(data) {
       var lat = parseFloat(data[i].lat);
       var long = parseFloat(data[i].long);
 
+
+//need like a continuous function to do this part elegantly
       if (data[i].bikes > data[i].spaces){
 
         var color = '#FF2222'

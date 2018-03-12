@@ -11,10 +11,10 @@
 <body>
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-12"><h1>Dashboard</h1></div></div>
+<div class="col-md-12"><h1>Dublin Bikes Dashboard</h1></div></div>
 <div class="row" id="dayBar"></div>
 <div class="row">
-<div class = "col-md-2" stlye="overflow-y:scroll;" id="standsList"></div>
+<div class = "col-md-2" style="height:700px;overflow-y:scroll;" id="standsList"></div>
 
 <div class = "col-md-10">
 <canvas id="chart" width="800" height="450"></canvas>
@@ -40,8 +40,9 @@ else{
 arr.push(i.toString()+':00')
 
 }
-return arr
+
   }
+  return arr
 
 }
 
@@ -84,9 +85,10 @@ html+='<li style="cursor:pointer" id="button'+stand.toString()+'" onclick="loadC
 function loadChart(stand, day){
   document.getElementById('button'+currentStand.toString()).style.backgroundColor = 'white';
   document.getElementById('button'+stand.toString()).style.backgroundColor='deepskyblue';
+  console.log(currentDay, day)
   document.getElementById('dayButton'+currentDay.toString()).style.backgroundColor = 'white';
   document.getElementById('dayButton'+day.toString()).style.backgroundColor='deepskyblue';
-  curentDay = day;
+  currentDay = day;
   currentStand = stand;
   console.log('getting chart information')
   var xmlhttp = new XMLHttpRequest();
@@ -113,6 +115,7 @@ function loadChart(stand, day){
 }
 
 function makeChart(data){
+  //interent chart.js copypasta
   console.log(data.bikes)
   console.log(data.spaces)
   console.log('making chart')
@@ -120,16 +123,16 @@ function makeChart(data){
   new Chart(document.getElementById("chart"), {
   type: 'line',
   data: {
-    labels: labels,
+    labels: makeTimeLabels(),
     datasets: [{
         data: data.bikes,
         label: "Bikes",
-        borderColor: "#3e95cd",
+        borderColor: "red",
         fill: true
       }, {
         data: data.spaces,
         label: 'Spaces',
-        borderColor: "#8e5ea2",
+        borderColor: "blue",
         fill: true
       }
     ]
