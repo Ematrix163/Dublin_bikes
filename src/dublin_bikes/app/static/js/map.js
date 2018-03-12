@@ -73,8 +73,8 @@ function addMarkers(data) {
 
             //this is the html that will appear in marker windows
              var contentString='<div id="nooo"><p>'+data[i.toString()].address.toString()+'</p>'
-            contentString+='<p>Current bikes: '+data[i.toString()].bikes.toString()+'</p>'+'<p>Current stands: '+data[i.toString()].spaces.toString() + '</p><p><button type="button" onload="showGraph('+i.toString()+')">analytics</button></p>';
-             contentString += '<canvas id="myCanvas'+i.toString()+'"  width="1000px"; height="200px" style="cursor:pointer; width:100%;"></canvas><br></div>';
+            contentString+='<p>Current bikes: '+data[i.toString()].bikes.toString()+'</p>'+'<p>Current stands: '+data[i.toString()].spaces.toString() + '</p>';
+             contentString += '<canvas id="chart"  width="1000px"; height="500px" style="cursor:pointer; width:100%;"></canvas><br></div>';
 
 
 
@@ -114,6 +114,9 @@ function addMarkers(data) {
         //create an event listener to open the infowindow when the user clicks on the marker
           infowindow.setContent(contentString);
           infowindow.open(map,marker);
+          var d = new Date()
+          var day = d.getDay()-1
+          loadChart(parseInt(i),day, buttons=false);
 
 
       };  //some closure that I don't understand. I think it's to stop all of the markers getting assigned the same info window

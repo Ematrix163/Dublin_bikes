@@ -29,11 +29,11 @@ def index():
 
     mapjs = open('app/static/js/map.js', 'r').read()
     maphtml = open('app/static/html/index.html', 'r').read()
-    graphtml = open('app/static/html/graph-canvas.html', 'r').read()
-    graphjs = open('app/static/js/graph-canvas.js', 'r').read()
+
+    chartjs = open('app/static/js/charts.js', 'r').read()
 
     #concantenate the js and html files and serve them
-    return '<script>'+ mapjs + '</script>' + maphtml + '<script>'+graphjs+'</script>' + graphtml
+    return '<script>'+ mapjs + '</script>' + maphtml + '<script>'+chartjs+'</script>'
 
 @app.route('/circles')
 def circles():

@@ -52,7 +52,8 @@ html+='<li style="cursor:pointer" id="button'+stand.toString()+'" onclick="loadC
   loadChart(1,1);
 }
 
-function loadChart(stand, day){
+function loadChart(stand, day, buttons=true){
+  if(buttons===true){
   document.getElementById('button'+currentStand.toString()).style.backgroundColor = 'white';
   document.getElementById('button'+stand.toString()).style.backgroundColor='deepskyblue';
   console.log(currentDay, day)
@@ -60,6 +61,7 @@ function loadChart(stand, day){
   document.getElementById('dayButton'+day.toString()).style.backgroundColor='deepskyblue';
   currentDay = day;
   currentStand = stand;
+}
   console.log('getting chart information')
   var xmlhttp = new XMLHttpRequest();
   //get all data for drawing map markers
@@ -85,7 +87,8 @@ function loadChart(stand, day){
 }
 
 function makeChart(data){
-  //interent chart.js copypasta
+  //this part is largely
+  //internet chart.js copypasta
   console.log(data.bikes)
   console.log(data.spaces)
   console.log('making chart')
