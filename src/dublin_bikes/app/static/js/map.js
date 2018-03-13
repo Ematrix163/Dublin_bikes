@@ -33,7 +33,7 @@ var xmlhttp = new XMLHttpRequest();
     }
 };
 //request data from database
-  xmlhttp.open("GET", 'http://localhost:5000/request?type=liveData', true);
+  xmlhttp.open("GET", '/request?type=liveData', true);
   xmlhttp.send();
 
 }
@@ -54,12 +54,12 @@ function addMarkers(data) {
 
 
 //need like a continuous function to do this part elegantly
-      if (data[i].bikes > data[i].spaces){
+      if (data[i].bikes > data[i].spaces + 5){
 
         var color = '#FF2222'
         var scale = 2 + 5 * (data[i].spaces / data[i].bikes)
       }
-      else if (data[i].bikes < data[i].spaces + 5 || data[i].spaces < data[i].bikes + 5) {
+      else if (data[i].bikes + 5 < data[i].spaces || data[i].spaces < data[i].bikes + 5) {
 
         var color = '#2AFF22'
         var scale = 4;
@@ -201,7 +201,7 @@ xmlhttp.onreadystatechange = function() {
     }
 };
 //request data from database
-xmlhttp.open("GET", 'http://localhost:5000/distance?origin='+origin.lat.toString()+','+origin.long.toString(), true);
+xmlhttp.open("GET", '/distance?origin='+origin.lat.toString()+','+origin.long.toString(), true);
 xmlhttp.send();
 
 

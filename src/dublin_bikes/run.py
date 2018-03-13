@@ -6,7 +6,7 @@ def run():
 	or view at :5000/
 	or :5000/circles'''
 
-	app.run(host='0.0.0.0', port = 5000)
+	app.run()
 
 
 if __name__ == "__main__":
@@ -14,4 +14,4 @@ if __name__ == "__main__":
 
 
 
-	app.run(host='0.0.0.0', port = 5000)
+	app.run()

@@ -32,7 +32,7 @@ var xmlhttp = new XMLHttpRequest();
     }
 };
 //request data from database
-  xmlhttp.open("GET", 'http://localhost:5000/request?type=staticlocations', true);
+  xmlhttp.open("GET", '/request?type=staticlocations', true);
   xmlhttp.send();
 
 
@@ -77,7 +77,7 @@ function loadChart(stand, day, buttons=true){
       }
   };
   //request data from database
-    xmlhttp.open("GET", 'http://localhost:5000/graph?stand='+stand.toString()+'&day='+day.toString(), true);
+    xmlhttp.open("GET", '/graph?stand='+stand.toString()+'&day='+day.toString(), true);
     xmlhttp.send();
 
 
@@ -118,15 +118,9 @@ function makeChart(data){
   }
 });
 
-
-
-
-
-
-
-
-
 }
+
+
 function createDayBar(){
  document.getElementById('dayBar').innerHTML
   html='<div class="col-md-5"></div>'

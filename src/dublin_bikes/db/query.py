@@ -2,9 +2,9 @@ import datetime
 import mysql.connector
 import time
 import json as js
-
+import getpass
 global passw
-passw = input('please enter a password: ')
+passw = getpass.getpass('Enter db password:')
 
 def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     '''gets all historical information about a specific stands occupancy
@@ -99,7 +99,7 @@ def queryStaticLocations():
     json={}
     for (arr) in cursor:
 
-    
+
         json[arr[0]]={'name' : arr[1], 'address' : arr[2], \
         'lat': arr[3], 'long':arr[4]}
 
