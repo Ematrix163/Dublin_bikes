@@ -11,6 +11,7 @@ from __future__ import print_function
 from datetime import date, datetime, timedelta
 import mysql.connector
 import json
+
 data = json.load(open('dublin-bikes-api-static-data.json'))
 passw = input('please enter the password for this database:')
 cnx = mysql.connector.connect(user='BikesMasterUser',\
@@ -19,7 +20,6 @@ port = 3306, password = passw )
 cursor = cnx.cursor()
 
 for thing in data:
-
 
     #upload each entry
     add_stand = ("INSERT INTO bikestands "

@@ -78,6 +78,7 @@ def queryCurrentStands():
     print(json)
     return json
 
+
 def queryStaticLocations():
     global passw
 

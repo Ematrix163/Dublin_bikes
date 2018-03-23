@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/*Side Bar style*/
+
+#sidebar {
+    width: 300px;
+    background: #000;
+    color: #909090;
+    transition: all 0.3s;
+    height: 100vh;
+    flex: none;
+}
+
+#sidebar.active {
+    margin-left: -300px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.sidebar-header {
+    padding: 20px 25px 10px 25px;
+}
+
+#location {
+    width: 100%;
+}
+
+.search {
+    width: 100%;
+    height: 35px;
+}
+
+nav {
+    overflow-y: scroll;
+}
+
+#result {
+    list-style-type: none;
+    padding: 0;
+}
+
+#result li {
+    padding: 15px 0 0 15px;
+}
+
+#result li:hover {
+    background-color: #434343;
+    cursor: pointer;
+}
+
+
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    position: relative;
+    left: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #555;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+}
+
+#sidebarCollapse span:first-of-type {
+    /* rotate first one */
+    transform: rotate(45deg) translate(2px, 2px);
+}
+
+#sidebarCollapse span:nth-of-type(2) {
+    /* second one is not visible */
+    opacity: 0;
+}
+
+#sidebarCollapse span:last-of-type {
+    /* rotate third one */
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+#sidebarCollapse.active span {
+    /* no rotation */
+    transform: none;
+    /* all bars are visible */
+    opacity: 1;
+    margin: 5px auto;
+}
+
+/*Responsive Design*/
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 200px;
+        margin-left: -200px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    .sidebar-header h3 {
+        font-size: 23px;
+    }
+
+    #pano {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+
+/*Content Style*/
+
+#content {
+    flex: 1;
+}
+
+.content-header {
+    height: 71px;
+    background-color: #272727;
+}
+
+#map {
+    width: 100%;
+    height: calc(100vh - 71px);
+}
+
+
+/*Google map*/
+#pano {
+    width: 300px;
+    height: 300px;
+}
+
+
+.marker-title {
+    font-size: 20px;
+}
+
+
+.infowindow {
+    width: 300px;
+    height: 300px;
+}
+
+.infowindow img{
+    width: 100px;
+    height: auto;
+}
