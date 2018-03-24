@@ -9,113 +9,33 @@ let directionsDisplay;
 let directionsService;
 
 
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        sweetNote('your location!')
+        initMap();
+    }
+}
+
+
+function showPosition(position) {
+    userLocation.lat = position.coords.latitude;
+    userLocation.lng =  position.coords.longitude;
+    initMap();
+}
+
+
+function start() {
+    getLocation();
+}
 
 
 function initMap() {
     
     /*This function is to initialising the map*/
   
-    let style = [
-    {
-        "featureType": "all",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "32"
-            },
-            {
-                "lightness": "-3"
-            },
-            {
-                "visibility": "on"
-            },
-            {
-                "weight": "1.18"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.man_made",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "-70"
-            },
-            {
-                "lightness": "14"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "100"
-            },
-            {
-                "lightness": "-14"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            },
-            {
-                "lightness": "12"
-            }
-        ]
-    }
-];
+    
     largeInfowindow = new google.maps.InfoWindow();
     
     //route service
@@ -125,7 +45,6 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: userLocation,
         zoom: 15,
-        styles:style
     });
 
     //Use ajax request to get static data
@@ -145,7 +64,6 @@ function initMap() {
         	allStations.push(station);
         })
         fitMap();
-        let markerCluster = new MarkerClusterer(map, allMarkers,{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     });
 
     //If the ajax request fail
@@ -165,6 +83,7 @@ function initMap() {
     //     map.fitBounds(bounds);
     // }
     
+
     // This function is to make circles fit the map
     function fitMap() {
         let bounds = new google.maps.LatLngBounds();
@@ -176,9 +95,17 @@ function initMap() {
     }
     
     directionsDisplay = new google.maps.DirectionsRenderer();
+    
     directionsDisplay.setMap(map);
+    
+    // markthe user location
+    var Marker = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        position: userLocation,
+        icon: 'images/bluedot.png'
+    });
 }
-
 
 
 
@@ -215,21 +142,48 @@ function createMarkerInfoWindow(station, infowindow) {
     // allMarkers.push(marker);
     allCircles.push(stationCircle);
     
+    
+//    google.maps.event.addListener(stationCircle, 'click', function(ev){
+//        infowindow.setPosition(ev.latLng);
+//        infowindow.setContent('<div>' + stationCircle.title + '</div>');
+//        infowindow.open(map);
+//    });
+
     // add event listener to the circle object when user click the circle
     google.maps.event.addListener(stationCircle, 'click', function(ev){
-        infowindow.setPosition(ev.latLng);
-        infowindow.setContent('<div>' + stationCircle.title + '</div>');
-        infowindow.open(map);
-    });
+        populateInfoWindow(this, largeInfowindow, ev, station);
+    });    
     
     // //binding click event with marker
     // stationCircle.addListener('click', function () {
     //     populateInfoWindow(this, largeInfowindow)
     // });
+ 
+    
 }
 
 
-
+function populateInfoWindow(circle, infowindow, ev, station) {
+    
+    /*This function is to populate infowindow when user click*/
+    
+    infowindow.setPosition(ev.latLng);
+    infowindow.setContent(
+        `<div class='infowindow'>
+            <div class='circle-title'>${circle.title}</div>
+            <div class='bike'>
+                <P>Status: ${station.status}</P>
+                <p>Total Bike stands: ${station.bike_stands}</p>
+                <p>Available Bike stands: ${station.available_bike_stands}</p>
+                <p>Available Bikes: ${station.available_bikes}</p>
+            </div>
+        </div>`
+    );
+    
+    
+    infowindow.open(map);
+    showDeatil();
+}
 
 
 
@@ -240,25 +194,6 @@ function sweetNote(source) {
         title: 'Oops',
         text: `Sorry, cannot get ${source}!`
     })
-}
-
-
-
-
-
-
-function populateInfoWindow(marker, infowindow) {
-    
-   /*This function is to populate infowindow when user click*/
-    if (infowindow.marker != marker) {
-        infowindow.marker = marker;
-        infowindow.setContent(`<div>${marker.title}</div>`);
-        infowindow.addListener('closeclick', function () {
-            infowindow.marker = null;
-        });
-        infowindow.open(map, marker);
-    }
-    showDeatil();
 }
 
 
