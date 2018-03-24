@@ -12,7 +12,6 @@ import mysql.connector
 
 psd = '100pinkElephants'
 
-
 def scrape(url, sleeptime, f):
     while True:
         #run this forever
@@ -21,7 +20,6 @@ def scrape(url, sleeptime, f):
         f(data)
         #wait sleeptime before scraping again
         time.sleep(sleeptime)
-        
         
         
 def insertWeather(rawData):
@@ -65,9 +63,6 @@ def insertLiveDB(data):
     port = 3306, password = psd )
     cursor = cnx.cursor()
     
-    
- 
-    
     for thing in data:
         
         cursor.execute('SELECT time, number From dynamic_bikes WHERE time=%s AND number=%s', (thing['last_update'], thing['number']))
@@ -94,7 +89,7 @@ def main():
     
     # I use multiprocess here because we don't need to get whether data every 5 minutes
     
-#    # get the whether data every 3 hour
+    # get the whether data every 3 hour
     weather = Process(target=scrape, args=('http://api.openweathermap.org/data/2.5/find?q=Dublin&units=imperial&type=accurate&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e', 10800, insertWeather))
     
     # get bike stations every 5 minutes

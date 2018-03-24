@@ -3,19 +3,24 @@
     margin: 0;
 }
 
-/*Side Bar style*/
 
+body {
+    overflow-y: hidden;
+}
+
+
+/*Side Bar style*/
 #sidebar {
-    width: 300px;
-    background: #000;
-    color: #909090;
+    width: 350px;
+    background: #bfbfbf;
+    color: #000000;
     transition: all 0.3s;
     height: 100vh;
     flex: none;
 }
 
 #sidebar.active {
-    margin-left: -300px;
+    margin-left: -350px;
 }
 
 .wrapper {
@@ -34,10 +39,6 @@
 .search {
     width: 100%;
     height: 35px;
-}
-
-nav {
-    overflow-y: scroll;
 }
 
 #result {
@@ -98,7 +99,6 @@ nav {
 }
 
 /*Responsive Design*/
-
 @media (max-width: 768px) {
     #sidebar {
         width: 200px;
@@ -116,12 +116,13 @@ nav {
         width: 100px;
         height: 100px;
     }
+    
+    #chart {
+        width: 100%;
+    }
 }
 
-
-
 /*Content Style*/
-
 #content {
     flex: 1;
 }
@@ -136,25 +137,17 @@ nav {
     height: calc(100vh - 71px);
 }
 
+#chart {
+    position: relative;
+    display: inline-block;
+    width: 60%;
+    height: 100%;
+}
 
-/*Google map*/
-#pano {
-    width: 300px;
+#detail {
+    position: relative;
+    text-align: center;
+    width: 100%;
     height: 300px;
-}
-
-
-.marker-title {
-    font-size: 20px;
-}
-
-
-.infowindow {
-    width: 300px;
-    height: 300px;
-}
-
-.infowindow img{
-    width: 100px;
-    height: auto;
+    transition: all 0.4s;
 }

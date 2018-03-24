@@ -4,6 +4,7 @@ import time
 import json as js
 import getpass
 global passw
+
 passw = getpass.getpass('Enter db password:')
 
 def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
