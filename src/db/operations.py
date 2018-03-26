@@ -10,7 +10,7 @@ import json
 import time
 import mysql.connector
 
-psd = '100pinkElephants'
+psd = input('Please enter password: ')
 
 def scrape(url, sleeptime, f):
     while True:
