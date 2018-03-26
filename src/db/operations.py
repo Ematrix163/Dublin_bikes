@@ -24,7 +24,7 @@ def scrape(url, sleeptime, f):
 
         except:
 
-            pass
+            print('request failed')
 
 
 def insertWeather(rawData):
