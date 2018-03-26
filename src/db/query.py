@@ -118,7 +118,6 @@ def queryStaticLocations():
 
 if __name__=='__main__':
     #test all methods
-    queryStaticLocations()
-    queryCurrentStands()
-    queryStandNumber(5)
-    queryCurrentStands()
+    
+    print(queryStandNumber(5))
+    print(queryCurrentStands())

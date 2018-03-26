@@ -1,0 +1,41 @@
+<html>
+<head>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12"><h1><a href="/">Dublin Bikes</a> Dashboard</h1></div></div>
+<div class="row" id="dayBar"></div>
+<div class="row">
+<div class = "col-md-2" style="height:700px;overflow-y:scroll;" id="standsList"></div>
+
+<div class = "col-md-10">
+<canvas id="chart" width="800" height="450"></canvas>
+</div>
+</div>
+</div>
+
+
+</body>
+
+<script>
+var currentStand = 1
+var currentDay = 1
+createDayBar()
+getStaticLocations()
+
+
+
+
+
+
+
+</script>
+</html>

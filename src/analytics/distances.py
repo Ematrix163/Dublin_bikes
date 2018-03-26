@@ -1,6 +1,6 @@
 import requests
 import json
-from dublin_bikes.db import query
+from db import query
 from math import inf
 
 

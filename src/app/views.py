@@ -2,9 +2,9 @@ from flask import render_template
 from app import app
 import time
 from flask import request
-from dublin_bikes.db import query as query
-from dublin_bikes.analytics import single_stand as graph
-from dublin_bikes.analytics import distances as distance
+from db import query
+from analytics import single_stand as graph
+from analytics import distances as distance
 import json
 
 
@@ -115,6 +115,7 @@ def getCurrentData():
 
     elif request_type == 'liveData':
         obj1 = query.queryCurrentStands()
+        print(obj1)
         obj2 = query.queryStaticLocations()
         for thing in obj1:
 

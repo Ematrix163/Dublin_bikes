@@ -1,4 +1,4 @@
-from dublin_bikes.db import query as query
+from db import query as query
 import datetime
 import time
 

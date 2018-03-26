@@ -46,7 +46,7 @@ function processData(data){
 }
 
 function addMarkers(data) {
-
+    console.log(data);
     for (var i in data){
 
       var lat = parseFloat(data[i].lat);
