@@ -9,25 +9,16 @@ import json
 
 
 
+@app.route('/')
+def index():
+    '''loads index page'''
+    return render_template("index.html")
+
 
 @app.route('/dash')
 def dashboard():
     return '<script>'+open('app/static/js/charts.js').read()+'</script>'+open('app/static/html/dashboard.html').read()
 
-
-
-
-@app.route('/')
-def index():
-    '''loads index page'''
-
-    mapjs = open('app/static/js/map.js', 'r').read()
-    maphtml = open('app/static/html/index.html', 'r').read()
-
-    chartjs = open('app/static/js/charts.js', 'r').read()
-
-    #concantenate the js and html files and serve them
-    return '<script>'+ mapjs + '</script>' + maphtml + '<script>'+chartjs+'</script>'
 
 
 
@@ -78,12 +69,23 @@ def getCurrentData():
     should be able to use /request?type=standnumber&stand=52&begin=123718&end=11471847
     to find data for a bike stand from a begin time to an end time
 
-    begin and end default to only times within the last five minutes'''
+    begin and end default to only times within the last five minutes
+    
+    '''
+    
+    
+    
+    '''
+    I think here we should use 'POST' methond ranther than 'GET', because 'GET' API is not safety in network. 
+    Here we try to make it private not public. So I just change your code.
+    
+    2018-03-27  Chen
+    
+    '''
 
     request_type = request.args.get('type')
 
     if request_type == 'currentstands':
-
         obj = query.queryCurrentStands()
         print (obj)
         return json.dumps(obj)
