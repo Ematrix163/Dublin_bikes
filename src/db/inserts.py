@@ -3,8 +3,10 @@ import mysql.connector
 import time
 import json as js
 
+import getpass
 global passw
-passw = input('please enter a password: ')
+
+passw = getpass.getpass('Enter db password:')
 
 
 def insertLiveDB(data, timestamp):

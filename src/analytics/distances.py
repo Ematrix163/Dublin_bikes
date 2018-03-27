@@ -4,22 +4,7 @@ from db import query
 from math import inf
 
 
-def getDistanceDuration(origin, destination, transportMode='walking'):
-    '''uses google api to find the time from origin to destination'''
 
-    lat1 = str(origin['lat'])
-    long1 = str(origin['long'])
-
-
-
-    requestString = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='
-    requestString+=lat1+','+long1
-    requestString+='&destinations='+lat2+','+long2
-    requestString+='&mode='+transportMode+'&key=AIzaSyBSrSbeZwb9AeX2X8gh_AVErGaXVfpkriU'
-
-    response = requests.get(requestString)
-    response = json.loads(response.text)
-    return response
 
 
 def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'):

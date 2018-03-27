@@ -10,7 +10,10 @@ import json
 import time
 import mysql.connector
 
-psd = input('Please enter password: ')
+import getpass
+global psd
+
+psd = getpass.getpass('Enter db password:')
 
 def scrape(url, sleeptime, f):
     while True:

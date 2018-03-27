@@ -81,5 +81,5 @@ def insertWeather(rawData):
         cnx.close()
 
 if __name__ == '__main__':
-    psd = input('please enter db password: ')
+    
     scrape()
