@@ -23,11 +23,12 @@ function initMap() {
 var xmlhttp = new XMLHttpRequest();
 //get all data for drawing map markers
   xmlhttp.onreadystatechange = function() {
-
+    console.log('requesting')
     if (this.readyState == 4 && this.status == 200) {
 
           var data = JSON.parse(this.responseText);
         //go to next function when data is received
+        console.log('received')
           processData(data);
 
     }
@@ -101,7 +102,7 @@ function addMarkers(data) {
             fillOpacity: 0.35,
             map: map,
             center: {lat: parseFloat(lat), lng: parseFloat(long)},
-            radius: scale*10
+            radius: scale*20
           });
 
 
