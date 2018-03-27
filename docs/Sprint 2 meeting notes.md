@@ -5,5 +5,7 @@ Louis has dropped out of the team. All else seems to be going well.
 
 New project backlog includes -->
 
+![picture](https://github.com/Ematrix163/Dublin_bikes/blob/master/docs/Dublin%20Bikes%20Sprint%202%20%20%20Trello.png)
+
 
 
