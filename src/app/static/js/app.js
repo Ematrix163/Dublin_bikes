@@ -8,6 +8,23 @@ let userLocation = {lat: 53.345228, lng: -6.272145};
 let directionsDisplay;
 let directionsService;
 
+function getBadGraidentColor(available_bikes, available_bike_stands) {
+
+let blue = [0,0,255];
+let red = [255,0,0];
+let color = [0,0,0]
+let total = available_bikes + available_bike_stands;
+
+
+let bluepart = Math.floor(255 * (available_bikes/total))
+let redpart = Math.floor(255 * available_bike_stands/total)
+let greenpart = Math.floor(255 * Math.abs(available_bikes - available_bike_stands)
+return '#'+redpart.toString(16)+greenpart.toString(16)+bluepart.toString(16)
+
+
+
+}
+
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -32,10 +49,10 @@ function start() {
 
 
 function initMap() {
-    
+
     /*This function is to initialising the map*/
     largeInfowindow = new google.maps.InfoWindow();
-    
+
     //route service
     directionsService = new google.maps.DirectionsService();
 
@@ -62,7 +79,7 @@ function initMap() {
         data.map(station => {
         	//Display the marker on the map
         	createMarkerInfoWindow(station, largeInfowindow);
-           
+
         	//push current station to all station
         	allStations.push(station);
         })
@@ -74,10 +91,10 @@ function initMap() {
         //alert
         sweetNote('Static Data!');
     });
-    
-    
+
+
     // Make markers fit the map, this is optional.
-    
+
     // function fitMap() {
     //     let bounds = new google.maps.LatLngBounds();
 
@@ -87,7 +104,7 @@ function initMap() {
     //     }
     //     map.fitBounds(bounds);
     // }
-    
+
 
     // This function is to make all circles fit the map
     function fitMap() {
@@ -98,11 +115,11 @@ function initMap() {
         })
         map.fitBounds(bounds);
     }
-    
+
     directionsDisplay = new google.maps.DirectionsRenderer();
-    
+
     directionsDisplay.setMap(map);
-    
+
     // This marker is to show markthe user location
         user = new google.maps.Marker({
         map: map,
@@ -126,8 +143,8 @@ function createMarkerInfoWindow(station, infowindow) {
     //     position: location,
     //     id: station.number
     // });
-    
-    
+
+
     // create a new circle
     let stationCircle = new google.maps.Circle({
         strokeColor: '#FF0000',
@@ -141,11 +158,11 @@ function createMarkerInfoWindow(station, infowindow) {
         clickable: true,
         title: station.name
     })
-        
+
     // allMarkers.push(marker);
     allCircles.push(stationCircle);
-    
-    
+
+
 //    google.maps.event.addListener(stationCircle, 'click', function(ev){
 //        infowindow.setPosition(ev.latLng);
 //        infowindow.setContent('<div>' + stationCircle.title + '</div>');
@@ -155,21 +172,21 @@ function createMarkerInfoWindow(station, infowindow) {
     // add event listener to the circle object when user click the circle
     google.maps.event.addListener(stationCircle, 'click', function(ev){
         populateInfoWindow(this, largeInfowindow, ev, station);
-    });    
-    
+    });
+
     // //binding click event with marker
     // stationCircle.addListener('click', function () {
     //     populateInfoWindow(this, largeInfowindow)
     // });
- 
-    
+
+
 }
 
 
 function populateInfoWindow(circle, infowindow, ev, station) {
-    
+
     /*This function is to populate infowindow when user click*/
-    
+
     infowindow.setPosition(ev.latLng);
     infowindow.setContent(
         `<div class='infowindow'>
@@ -182,7 +199,7 @@ function populateInfoWindow(circle, infowindow, ev, station) {
             </div>
         </div>`
     );
-    
+
     infowindow.open(map);
 }
 
