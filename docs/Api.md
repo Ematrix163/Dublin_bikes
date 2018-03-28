@@ -1,23 +1,33 @@
-*** Api Documentations **
+## Api Documentations 
 
-1) /distance?origin=lat,long1
+** 1) Distances *
+
+``` /distance?origin=lat,long1
+
+```
 
 Used to find the closest bikestand to the user.
 If no origin is specified, defaults to UCD's locations
 
-2) /graph?stand=standNumber&day=dayNumber
+*2) Graph data* /graph?stand=standNumber&day=dayNumber
 
 Used to return graphable data, showing average stand occupancy for every hour of the stated days
 
-3) /request?type=queryCurrentStands
+*3) Request single stand*
+
+/request?type=queryCurrentStands
 
 Returns the current stand occupancy for all bike bike_stands
 
-3) /request?type=queryStaticLocations
+*4) Request static data*
+
+ /request?type=queryStaticLocations
 
 Returns the static data for every bike stand
 
-4) /request?type=standNumber&begin=begintimestamp&end=endtimestamp
+*5) Get single stand data*
+
+ /request?type=standNumber&begin=begintimestamp&end=endtimestamp
 
 Returns the current stand occupancy for a single given stand between two stated times.
 

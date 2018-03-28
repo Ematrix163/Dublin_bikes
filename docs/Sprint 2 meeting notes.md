@@ -5,11 +5,11 @@ Louis has dropped out of the team. All else seems to be going well.
 
 *Screenshots of the current front end -->*
 
-![alt](images/s1.png)
-![alt](images/s2.png)
-![alt](images/s3.png)
-![alt](images/s4.png)
-![alt](images/s5.png)
+![alt](images/s11.png)
+![alt](images/s12.png)
+![alt](images/s13.png)
+![alt](images/s14.png)
+![alt](images/s15.png)
 
 *New project backlog includes -->*
 
