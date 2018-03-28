@@ -27,7 +27,7 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
 
 #this can be changed to reflect any query we like
 
-    query = ("SELECT time, bikes, bikestands FROM testtest "
+    query = ("SELECT time, bike_stands, available_bike_stands, available_bikes FROM dynamic_bikes"
              "WHERE " +key+" = " + str(x) +" AND time > " +str(t1)+" AND time < " +str(t2))
 
 
@@ -44,6 +44,9 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
     cnx.close()
 
     return json
+
+
+
 
 def queryCurrentStands():
     global passw
@@ -87,37 +90,34 @@ def queryStaticLocations():
 
     cnx = mysql.connector.connect(user='BikesMasterUser',\
     database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = passw )
+    port = 3306, password = passw)
     cursor = cnx.cursor()
 
-        #this can be changed to reflect any query we like
+    #this can be changed to reflect any query we like
 
     query = ("SELECT standid, name, address, lat, longitude  FROM bikestands ")
 
     cursor.execute(query)
 
-        #should change to return data in json like format
-
-    json={}
+    #should change to return data in json like format
+    
+    # I've changed the type here because it is easy for me to loop the list in js
+    json=[]
     for (arr) in cursor:
-
-
-        json[arr[0]]={'name' : arr[1], 'address' : arr[2], \
-        'lat': arr[3], 'long':arr[4]}
-
-
+        json.append({'number':arr[0], 'name' : arr[1], 'address' : arr[2], 'lat': arr[3], 'long':arr[4]})
 
     cursor.close()
     cnx.close()
-
+    
     return json
-
-
+    
+    
 
 
 
 if __name__=='__main__':
     #test all methods
-    
-    print(queryStandNumber(5))
-    print(queryCurrentStands())
+#    
+#    print(queryStandNumber(5))
+#    print(queryCurrentStands())
+    print(queryStaticLocations())

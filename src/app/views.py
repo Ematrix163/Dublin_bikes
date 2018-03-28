@@ -51,11 +51,26 @@ def getGtaphData():
 
 
 
+
+
+@app.route('/static', methods=["POST"])
+def getStatic():
+    if request.method == 'POST':
+        
+        dataType = request.args.get('key')
+#        if dataType == 'staticlocations':
+        obj = query.queryStaticLocations()
+
+        return json.dumps(obj)
+        
+
+
+
+
+
 #for requesting
-
-@app.route('/request')
+@app.route('/request', methods=["GET", "POST"])
 def getCurrentData():
-
 
     ''' should be able to use /request?type=currentstands
     to get a json object describing current stand occupancy
@@ -65,33 +80,29 @@ def getCurrentData():
     to get a json object describing the locations
     (address, name, latitude, longitude etc)
 
-
     should be able to use /request?type=standnumber&stand=52&begin=123718&end=11471847
     to find data for a bike stand from a begin time to an end time
 
     begin and end default to only times within the last five minutes
     
     '''
-    
-    
-    
     '''
     I think here we should use 'POST' methond ranther than 'GET', because 'GET' API is not safety in network. 
     Here we try to make it private not public. So I just change your code.
     
     2018-03-27  Chen
-    
     '''
-
-    request_type = request.args.get('type')
-
+    
+    request_type = request.args.type
+    
+    print(request_type)
+    
     if request_type == 'currentstands':
         obj = query.queryCurrentStands()
         print (obj)
         return json.dumps(obj)
 
     elif request_type == 'staticlocations':
-
         obj = query.queryStaticLocations()
         print(obj)
         return json.dumps(obj)
@@ -104,11 +115,6 @@ def getCurrentData():
             end= str(request.args.get('end'))
             stand = str(request.args.get('stand'))
             obj = query.queryStandNumber(stand, t1=begin, t2=end)
-
-
-
-
-
 
         else:
             obj = query.queryStandNumber(str(request.args.get('stand')))

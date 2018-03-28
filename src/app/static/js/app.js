@@ -47,16 +47,18 @@ function initMap() {
 
     //Use ajax request to get static data
     let getBikeStation = $.ajax({
-        url: '/request',
+        url: '/static',
         /*I think we should use post method here*/
-        data: 'type',
-        dataType : 'json',
+        // Here we just request static locations
+        data: {key : 'staticlocations'},
+        contentType: 'application/json;charset=UTF-8',
         method: 'POST'
     })
 
     //If the ajax request success
     getBikeStation.done(function (data) {
         console.log('Get data successfully!');
+        data = JSON.parse(data);
         data.map(station => {
         	//Display the marker on the map
         	createMarkerInfoWindow(station, largeInfowindow);
@@ -106,7 +108,7 @@ function initMap() {
         map: map,
         animation: google.maps.Animation.DROP,
         position: userLocation,
-        icon: 'images/bluedot.png'
+        icon: 'https://github.com/Ematrix163/Dublin_bikes/blob/master/src/app/static/images/bluedot.png'
     });
 }
 
@@ -115,7 +117,7 @@ function initMap() {
 
 function createMarkerInfoWindow(station, infowindow) {
 
-    let location = {lat: station.position.lat, lng: station.position.lng};
+    let location = {lat: station.lat, lng: station.long};
     /*new marker object， i'm not sure should we use marker so I just comment it*/
     // let marker = new google.maps.Marker({
     //     map: map,
