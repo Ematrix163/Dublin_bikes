@@ -17,8 +17,8 @@ let total = available_bikes + available_bike_stands;
 
 
 let bluepart = Math.floor(255 * (available_bikes/total))
-let redpart = Math.floor(255 * available_bike_stands/total)
-let greenpart = Math.floor(255 * 1-(Math.abs(available_bikes - available_bike_stands)/total)
+let redpart = Math.floor(255 * (available_bike_stands/total))
+let greenpart = Math.floor(255 * (1-(Math.abs(available_bikes - available_bike_stands)/total)))
 return '#'+redpart.toString(16)+greenpart.toString(16)+bluepart.toString(16)
 
 
