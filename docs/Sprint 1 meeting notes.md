@@ -7,7 +7,7 @@ Original product backlog on trello looked something like this...
 
 ![original trello board](images/trello1.png)
 
-**Tues 3rd April**
+**Tues 3rd March**
 
 Lots of progress made. The snow break had been highly productive, and many of the essential features, and even a few of the ideal features had been struck from the project backlog. Issues had, however, been encountered.
 
@@ -18,6 +18,10 @@ Directions were working, but took about a minute to load and didn't return the n
 Markers windows contained graphs, but these graphs were ugly and wouldn't load automatically. In addition, the marker windows wouldn't close when you clicked on a new marker.
 
 There were two versions of the front end in operation, and they looked like this -->
+
+**Thursday 5th March**
+
+Louis failed to show up to the meeting. Discussed nginx with Jake. Diarmuid made progress on directions - the app now retrieved directions in a reasonable timeframe, but didn't necessarily point to a stand with  bikes.
 
 ![picture](images/s1.png)
 
