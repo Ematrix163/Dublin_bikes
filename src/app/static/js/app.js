@@ -4,29 +4,31 @@ let allMarkers = [];
 let allCircles = [];
 let map, user;
 let largeInfowindow;
-let userLocation = {lat: 53.345228, lng: -6.272145};
+let userLocation = {
+    lat: 53.345228,
+    lng: -6.272145
+};
 let directionsDisplay;
 let directionsService;
 
+
 function getBadGraidentColor(available_bikes, available_bike_stands) {
 
-let blue = [0,0,255];
-let red = [255,0,0];
-let color = [0,0,0]
-let total = available_bikes + available_bike_stands;
+    let blue = [0, 0, 255];
+    let red = [255, 0, 0];
+    let color = [0, 0, 0]
+    let total = available_bikes + available_bike_stands;
 
 
-let bluepart = Math.floor(255 * (available_bikes/total))
-let redpart = Math.floor(255 * (available_bike_stands/total))
-let greenpart = Math.floor(255 * (1-(Math.abs(available_bikes - available_bike_stands)/total)))
-return '#'+redpart.toString(16)+greenpart.toString(16)+bluepart.toString(16)
-
-
+    let bluepart = Math.floor(255 * (available_bikes / total))
+    let redpart = Math.floor(255 * (available_bike_stands / total))
+    let greenpart = Math.floor(255 * (1 - (Math.abs(available_bikes - available_bike_stands) / total)))
+    return '#' + redpart.toString(16) + greenpart.toString(16) + bluepart.toString(16);
 
 }
 
 
-function getLocation() {
+function start() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -38,14 +40,12 @@ function getLocation() {
 
 function showPosition(position) {
     userLocation.lat = position.coords.latitude;
-    userLocation.lng =  position.coords.longitude;
+    userLocation.lng = position.coords.longitude;
     initMap();
 }
 
 
-function start() {
-    getLocation();
-}
+
 
 
 function initMap() {
@@ -64,26 +64,22 @@ function initMap() {
 
     //Use ajax request to get static data
     let getBikeStation = $.ajax({
-        url: '/static',
-        /*I think we should use post method here*/
-        // Here we just request static locations
-        data: {key : 'staticlocations'},
-        contentType: 'application/json;charset=UTF-8',
-        method: 'POST'
+        url: './static.json'
     })
 
     //If the ajax request success
     getBikeStation.done(function (data) {
         console.log('Get data successfully!');
-        data = JSON.parse(data);
+//        data = JSON.parse(data);
         data.map(station => {
-        	//Display the marker on the map
-        	createMarkerInfoWindow(station, largeInfowindow);
+            //Display the marker on the map
+            createMarkerInfoWindow(station, largeInfowindow);
 
-        	//push current station to all station
-        	allStations.push(station);
+            //push current station to all station
+            allStations.push(station);
         })
         fitMap();
+        ko.applyBindings(new viewModel());
     });
 
     //If the ajax request fail
@@ -106,6 +102,12 @@ function initMap() {
     // }
 
 
+    let input = document.getElementById('userLocation');
+    let searchBox = new google.maps.places.SearchBox(input);
+
+
+    
+
     // This function is to make all circles fit the map
     function fitMap() {
         let bounds = new google.maps.LatLngBounds();
@@ -121,11 +123,10 @@ function initMap() {
     directionsDisplay.setMap(map);
 
     // This marker is to show markthe user location
-        user = new google.maps.Marker({
+    user = new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
-        position: userLocation,
-        icon: 'https://github.com/Ematrix163/Dublin_bikes/blob/master/src/app/static/images/bluedot.png'
+        position: userLocation
     });
 }
 
@@ -134,7 +135,10 @@ function initMap() {
 
 function createMarkerInfoWindow(station, infowindow) {
 
-    let location = {lat: station.lat, lng: station.long};
+    let location = {
+        lat: station.lat,
+        lng: station.long
+    };
     /*new marker object， i'm not sure should we use marker so I just comment it*/
     // let marker = new google.maps.Marker({
     //     map: map,
@@ -163,14 +167,14 @@ function createMarkerInfoWindow(station, infowindow) {
     allCircles.push(stationCircle);
 
 
-//    google.maps.event.addListener(stationCircle, 'click', function(ev){
-//        infowindow.setPosition(ev.latLng);
-//        infowindow.setContent('<div>' + stationCircle.title + '</div>');
-//        infowindow.open(map);
-//    });
+    //    google.maps.event.addListener(stationCircle, 'click', function(ev){
+    //        infowindow.setPosition(ev.latLng);
+    //        infowindow.setContent('<div>' + stationCircle.title + '</div>');
+    //        infowindow.open(map);
+    //    });
 
     // add event listener to the circle object when user click the circle
-    google.maps.event.addListener(stationCircle, 'click', function(ev){
+    google.maps.event.addListener(stationCircle, 'click', function (ev) {
         populateInfoWindow(this, largeInfowindow, ev, station);
     });
 
@@ -178,8 +182,6 @@ function createMarkerInfoWindow(station, infowindow) {
     // stationCircle.addListener('click', function () {
     //     populateInfoWindow(this, largeInfowindow)
     // });
-
-
 }
 
 
@@ -218,28 +220,75 @@ function sweetNote(source) {
 
 function calcRoute() {
 
-  // First, clear out any existing markerArray
-  // from previous calculations.
-  for (i = 0; i < allMarkers.length; i++) {
-    allMarkers[i].setMap(null);
-  }
-
-  // Retrieve the start and end locations and create
-  // a DirectionsRequest using WALKING directions.
-  let start = new google.maps.LatLng(53.353462, -6.265305);
-  let end = new google.maps.LatLng(53.344304,  -6.250427);
-
-  let request = {
-      origin: start,
-      destination: end,
-      travelMode: 'WALKING'
-  };
-
-  // Route the directions and pass the response to a
-  // function to create markers for each step.
-  directionsService.route(request, function(response, status) {
-    if (status == "OK") {
-        directionsDisplay.setDirections(response);
+    // First, clear out any existing markerArray
+    // from previous calculations.
+    for (i = 0; i < allMarkers.length; i++) {
+        allMarkers[i].setMap(null);
     }
-  });
+
+    // Retrieve the start and end locations and create
+    // a DirectionsRequest using WALKING directions.
+    let start = new google.maps.LatLng(53.353462, -6.265305);
+    let end = new google.maps.LatLng(53.344304, -6.250427);
+
+    let request = {
+        origin: start,
+        destination: end,
+        travelMode: 'WALKING'
+    };
+
+    // Route the directions and pass the response to a
+    // function to create markers for each step.
+    directionsService.route(request, function (response, status) {
+        if (status == "OK") {
+            directionsDisplay.setDirections(response);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+/*MVVM binding*/
+/*Knockout library is used here*/
+let place = function (data) {
+    this.name = ko.observable(data.name);
+    this.id = ko.observable(data.number);
+}
+
+
+let viewModel = function() {
+    let self = this;
+    
+    this.keyword = ko.observable('');
+    this.placeList = ko.observableArray([]);
+    
+    this.placeList = ko.computed(function(){
+        let temp = [];
+        allStations.map(station => {
+            let lowerPlace = station.name.toLowerCase();
+            if (lowerPlace.includes(self.keyword().toLowerCase())) {
+                temp.push(new place(station));
+            }
+        });
+         return temp;
+    })
+    
+    
+    
+    this.fliterStands = function(data, event){
+        allCircles.map(circle => {
+            console.log(circle);
+            let lowerCase = circle.title.toLowerCase();
+            if (lowerCase.includes(data.keyword().toLowerCase())) {
+                circle.setMap(map);
+            } else {
+                circle.setMap(null);
+            }
+        })
+    }
 }

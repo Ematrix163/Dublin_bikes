@@ -12,7 +12,7 @@ body {
 /*Side Bar style*/
 #sidebar {
     width: 350px;
-    background: #bfbfbf;
+    background: #ffffff;
     color: #000000;
     transition: all 0.3s;
     height: 100vh;
@@ -30,6 +30,7 @@ body {
 
 .sidebar-header {
     padding: 20px 25px 10px 25px;
+    text-align: center;
 }
 
 #location {

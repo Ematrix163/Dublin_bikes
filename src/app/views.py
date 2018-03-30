@@ -53,14 +53,10 @@ def getGtaphData():
 
 
 
-@app.route('/static', methods=["POST"])
+@app.route('/static', methods=["GET"])
 def getStatic():
-    if request.method == 'POST':
-        
-        dataType = request.args.get('key')
-#        if dataType == 'staticlocations':
+    if request.method == 'GET':
         obj = query.queryStaticLocations()
-
         return json.dumps(obj)
         
 
