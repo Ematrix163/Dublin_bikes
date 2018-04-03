@@ -17,6 +17,7 @@ body {
     transition: all 0.3s;
     height: 100vh;
     flex: none;
+	overflow-y: scroll;
 }
 
 #sidebar.active {
@@ -48,7 +49,7 @@ body {
 }
 
 #result li {
-    padding: 15px 0 0 15px;
+    padding: 0 0 15px 15px;
 }
 
 #result li:hover {
@@ -117,7 +118,7 @@ body {
         width: 100px;
         height: 100px;
     }
-    
+
     #chart {
         width: 100%;
     }

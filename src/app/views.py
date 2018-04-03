@@ -58,7 +58,7 @@ def getStatic():
     if request.method == 'GET':
         obj = query.queryStaticLocations()
         return json.dumps(obj)
-        
+
 
 
 
@@ -80,19 +80,19 @@ def getCurrentData():
     to find data for a bike stand from a begin time to an end time
 
     begin and end default to only times within the last five minutes
-    
+
     '''
     '''
-    I think here we should use 'POST' methond ranther than 'GET', because 'GET' API is not safety in network. 
+    I think here we should use 'POST' methond ranther than 'GET', because 'GET' API is not safety in network.
     Here we try to make it private not public. So I just change your code.
-    
+
     2018-03-27  Chen
     '''
-    
+
     request_type = request.args.type
-    
+
     print(request_type)
-    
+
     if request_type == 'currentstands':
         obj = query.queryCurrentStands()
         print (obj)

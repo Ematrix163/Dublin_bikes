@@ -31,15 +31,18 @@
                 <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
                 <br/>
                 <label for="bike-stands">Bike Stands:</label>
-                <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword,  event:{keyup:fliterStands}">
-            </div>
+                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
 
+				<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
+				list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
 
-            <div class="result-wrapper">
-                <ul id="result" data-bind="foreach: placeList">
-                    <li data-bind="text:name"></li>
-                </ul>
-            </div>
+				<datalist id="stands" data-bind="foreach: placeList">
+				  <option data-bind="text:name, click: $parent.displayInfo"></option>
+
+				</datalist>
+			</div>
+
+			<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
 
         </nav>
 
