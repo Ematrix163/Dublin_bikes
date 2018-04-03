@@ -17,30 +17,30 @@
     <div class="wrapper">
         <!--Sidebar-->
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Dashbord</h3>
-            </div>
+			<div class="sidebar-content">
+	            <div class="sidebar-header">
+	                <h3>Search</h3>
+	            </div>
 
+	            <div class="form-group">
+	                <label for="userLocation">Your Location:</label>
+	                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
+	                <br/>
+	                <label for="bike-stands">Bike Stands:</label>
+	                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
 
+					<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
+					list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
 
-            <div class="form-group">
-                <label for="userLocation">Your Location:</label>
-                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
-                <br/>
-                <label for="bike-stands">Bike Stands:</label>
-                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
+					<datalist id="stands" data-bind="foreach: placeList">
+					  <option data-bind="text:name, click: $parent.displayInfo"></option>
+					</datalist>
 
-				<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
-				list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
+				</div>
 
-				<datalist id="stands" data-bind="foreach: placeList">
-				  <option data-bind="text:name, click: $parent.displayInfo"></option>
-
-				</datalist>
+				<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
+				<button type="button" class="btn btn-outline-primary btn-block" onclick="window.location.href='./dash'">Go To DASHBOARD</button>
 			</div>
-
-			<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
-
         </nav>
 
 

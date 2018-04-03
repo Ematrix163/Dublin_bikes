@@ -7,12 +7,9 @@ function makeTimeLabels() {
             arr.push('0' + i.toString() + ':00')
         } else {
             arr.push(i.toString() + ':00')
-
         }
-
     }
     return arr
-
 }
 
 function getStaticLocations() {
@@ -22,7 +19,6 @@ function getStaticLocations() {
     xmlhttp.onreadystatechange = function () {
 
         if (this.readyState == 4 && this.status == 200) {
-
             var data = JSON.parse(this.responseText);
             //go to next function when data is received
             console.log('received')
@@ -33,14 +29,11 @@ function getStaticLocations() {
     //request data from database
     xmlhttp.open("GET", '/request?type=staticlocations', true);
     xmlhttp.send();
-
-
-
 }
 
 
-function drawStandsButtons(data) {
 
+function drawStandsButtons(data) {
     var html = '<ul>';
     for (var stand in data) {
 
@@ -50,6 +43,10 @@ function drawStandsButtons(data) {
     document.getElementById('standsList').innerHTML = html;
     loadChart(1, 1);
 }
+
+
+
+
 
 function loadChart(stand, day, buttons = true) {
     if (buttons === true) {
@@ -78,12 +75,11 @@ function loadChart(stand, day, buttons = true) {
     //request data from database
     xmlhttp.open("GET", '/graph?stand=' + stand.toString() + '&day=' + day.toString(), true);
     xmlhttp.send();
-
-
-
-
-
 }
+
+
+
+
 
 function makeChart(data) {
     //this part is largely
@@ -120,6 +116,9 @@ function makeChart(data) {
 }
 
 
+
+
+
 function createDayBar() {
     document.getElementById('dayBar').innerHTML
     html = '<div class="col-md-5"></div>'
@@ -129,12 +128,12 @@ function createDayBar() {
 
         html += '<div class="col-md-1" id="dayButton' + i.toString() + '" style="cursor:pointer" onclick="loadChart(currentStand, ' + i.toString() + ')">' + days[i] + '</div>';
 
-
     }
 
     document.getElementById('dayBar').innerHTML = html
-
-
 }
+
+
+
 var currentStand = 1
 var currentDay = 1
