@@ -47,3 +47,11 @@ Debated function to scale circles. Settled on radius = math.sqrt(max(abs(availab
 Chen is changing all requests to 'post'.
 
 Chen is planning to display the distance from user to all stands in the sidebar.
+
+**Tuesday 3rd**
+
+Had some heavy discussions regarding the best way to collaborate on git and not break each other's code.
+
+We agreeed that before we added any more features to the project, we had to fix and tidy up the ones already included.
+
+During the lecturer's presentation, we learned that we would be expected to include some form of predictive analytics in our project. This did not seem like an easy thing to do within the remaining time frame.
