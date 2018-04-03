@@ -7,7 +7,7 @@ global passw
 
 passw = getpass.getpass('Enter db password:')
 
-def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
+def queryStandNumber(x):
     '''gets all historical information about a specific stands occupancy
 
 
@@ -27,8 +27,7 @@ def queryStandNumber(x, t1 = 0, t2 = time.time()+300, key='id'):
 
 #this can be changed to reflect any query we like
 
-    query = ("SELECT time, bike_stands, available_bike_stands, available_bikes FROM dynamic_bikes"
-             "WHERE " +key+" = " + str(x) +" AND time > " +str(t1)+" AND time < " +str(t2))
+    query = ("SELECT time, available_bikes, available_bike_stands, bike_stands, status FROM dynamic_bikes WHERE number = "  + str(x))
 
 
 
@@ -100,7 +99,7 @@ def queryStaticLocations():
     cursor.execute(query)
 
     #should change to return data in json like format
-    
+
     # I've changed the type here because it is easy for me to loop the list in js
     json=[]
     for (arr) in cursor:
@@ -108,16 +107,16 @@ def queryStaticLocations():
 
     cursor.close()
     cnx.close()
-    
+
     return json
-    
-    
+
+
 
 
 
 if __name__=='__main__':
     #test all methods
-#    
-#    print(queryStandNumber(5))
+#
+   print(queryStandNumber(5))
 #    print(queryCurrentStands())
-    print(queryStaticLocations())
+    # print(queryStaticLocations())

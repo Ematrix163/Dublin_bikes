@@ -17,8 +17,7 @@ def index():
 
 @app.route('/dash')
 def dashboard():
-    return '<script>'+open('app/static/js/charts.js').read()+'</script>'+open('app/static/html/dashboard.html').read()
-
+	return render_template('dashboard.html')
 
 
 
@@ -65,7 +64,7 @@ def getStatic():
 
 
 #for requesting
-@app.route('/request', methods=["GET", "POST"])
+@app.route('/request')
 def getCurrentData():
 
     ''' should be able to use /request?type=currentstands
@@ -89,7 +88,9 @@ def getCurrentData():
     2018-03-27  Chen
     '''
 
-    request_type = request.args.type
+    request_type = request.args.get('type')
+
+
 
     print(request_type)
 
