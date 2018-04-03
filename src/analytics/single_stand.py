@@ -94,7 +94,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     stand = int(stand)
     dayOfWeek = int(dayOfWeek)
     import time
-    data = query.queryStandNumber(stand, 0, time.time())
+    data = query.queryStandNumber(stand)
 
 
     #as default, requests all data. I think a further method for finding everyday at once,
@@ -104,8 +104,8 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     json = makeEmptyJsonDayObject()
 
     for t in data:
-
-        dtime = datetime.datetime.fromtimestamp(t)
+        time_c = int(t)/1000
+        dtime = datetime.datetime.fromtimestamp(time_c)
         hour = dtime.hour
 
         print(dtime.weekday())

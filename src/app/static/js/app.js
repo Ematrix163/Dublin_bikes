@@ -1,6 +1,5 @@
 'use strict';
 
-
 let allStations = [];
 let allMarkers = [];
 let allCircles = [];
@@ -8,9 +7,6 @@ let map, user;
 let largeInfowindow;
 let userLocation = {lat: 53.345228,lng: -6.272145};
 let searchBox;
-
-
-
 
 
 function getBadGraidentColor(available_bikes, available_bike_stands) {

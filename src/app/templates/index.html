@@ -6,44 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dublin Bike</title>
     <!-- Bootstrap CSS-->
-    <!--    <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">-->
+       <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!--The main CSS file -->
-    <!--    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">-->
-
-
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+       <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
 </head>
 
 <body>
     <div class="wrapper">
         <!--Sidebar-->
         <nav id="sidebar">
+<<<<<<< HEAD
             <div class="sidebar-header">
                 <h3><a href="/dash">Dashbord</a></h3>
             </div>
+=======
+			<div class="sidebar-content">
+	            <div class="sidebar-header">
+	                <h3>Search</h3>
+	            </div>
+>>>>>>> 0afcb4264e79bdd6f7e52fdafacd406d2a41009b
 
+	            <div class="form-group">
+	                <label for="userLocation">Your Location:</label>
+	                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
+	                <br/>
+	                <label for="bike-stands">Bike Stands:</label>
+	                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
 
+					<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
+					list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
 
-            <div class="form-group">
-                <label for="userLocation">Your Location:</label>
-                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
-                <br/>
-                <label for="bike-stands">Bike Stands:</label>
-                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
+					<datalist id="stands" data-bind="foreach: placeList">
+					  <option data-bind="text:name, click: $parent.displayInfo"></option>
+					</datalist>
 
-				<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
-				list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
+				</div>
 
-				<datalist id="stands" data-bind="foreach: placeList">
-				  <option data-bind="text:name, click: $parent.displayInfo"></option>
-
-				</datalist>
+				<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
+				<button type="button" class="btn btn-outline-primary btn-block" onclick="window.location.href='./dash'">Go To DASHBOARD</button>
 			</div>
-
-			<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
-
         </nav>
 
 

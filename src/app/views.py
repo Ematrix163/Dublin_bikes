@@ -23,10 +23,14 @@ def chartSrcipt():
 
 @app.route('/dash')
 def dashboard():
+<<<<<<< HEAD
 
     #need to change these into a returnable template
     return open('app/static/html/dashboard.html').read()
 
+=======
+	return render_template('dashboard.html')
+>>>>>>> 0afcb4264e79bdd6f7e52fdafacd406d2a41009b
 
 
 
@@ -97,7 +101,9 @@ def getCurrentData():
     2018-03-27  Chen
     '''
 
-    request_type = request.args.type
+    request_type = request.args.get('type')
+
+
 
     print(request_type)
 
