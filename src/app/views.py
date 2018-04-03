@@ -23,14 +23,12 @@ def chartSrcipt():
 
 @app.route('/dash')
 def dashboard():
-<<<<<<< HEAD
+
 
     #need to change these into a returnable template
-    return open('app/static/html/dashboard.html').read()
 
-=======
 	return render_template('dashboard.html')
->>>>>>> 0afcb4264e79bdd6f7e52fdafacd406d2a41009b
+
 
 
 
