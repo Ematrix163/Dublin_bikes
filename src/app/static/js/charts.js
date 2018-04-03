@@ -106,6 +106,7 @@ function makeChart(data) {
     ]
         },
         options: {
+			maintainAspectRatio: false,
             title: {
                 display: true,
                 text: 'Average stand occupancy by hour'

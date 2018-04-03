@@ -50,14 +50,11 @@ def getGtaphData():
 
 
 
-
-
 @app.route('/static', methods=["GET"])
 def getStatic():
     if request.method == 'GET':
         obj = query.queryStaticLocations()
         return json.dumps(obj)
-
 
 
 
@@ -123,7 +120,6 @@ def getCurrentData():
         print(obj1)
         obj2 = query.queryStaticLocations()
         for thing in obj1:
-
             obj2[thing]['bikes']=obj1[thing]['bikes']
             obj2[thing]['spaces']=obj1[thing]['spaces']
 
