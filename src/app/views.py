@@ -14,10 +14,18 @@ def index():
     '''loads index page'''
     return render_template("index.html")
 
+@app.route('/charts.js')
+def chartSrcipt():
+
+    return open('app/static/js/charts.js', 'r').read()
+
+
 
 @app.route('/dash')
 def dashboard():
-    return '<script>'+open('app/static/js/charts.js').read()+'</script>'+open('app/static/html/dashboard.html').read()
+
+    #need to change these into a returnable template
+    return open('app/static/html/dashboard.html').read()
 
 
 
@@ -51,7 +59,7 @@ def getGtaphData():
 
 
 
-
+#### to be deleted
 
 @app.route('/static', methods=["GET"])
 def getStatic():
@@ -65,7 +73,7 @@ def getStatic():
 
 
 #for requesting
-@app.route('/request', methods=["GET", "POST"])
+@app.route('/request')
 def getCurrentData():
 
     ''' should be able to use /request?type=currentstands
@@ -125,6 +133,7 @@ def getCurrentData():
 
             obj2[thing]['bikes']=obj1[thing]['bikes']
             obj2[thing]['spaces']=obj1[thing]['spaces']
+
 
 
         return json.dumps(obj2)

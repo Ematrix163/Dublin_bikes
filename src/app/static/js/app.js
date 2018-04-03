@@ -65,7 +65,17 @@ function initMap() {
         url: './static'
     })
 
+    // change this to
+
+    // let liveData = $.ajax({
+
+//    url: './request?type=LiveData'
+//  })
+
     //If the ajax request success
+
+
+    //chane this to   getLiveData.done(function (data) { etc......
     getBikeStation.done(function (data) {
     	console.log('Get data successfully!');
         data = JSON.parse(data);
@@ -194,8 +204,16 @@ function populateInfoWindow(circle, infowindow, ev, station) {
                 <p>Total Bike stands: ${station.bike_stands}</p>
                 <p>Available Bike stands: ${station.available_bike_stands}</p>
                 <p>Available Bikes: ${station.available_bikes}</p>
+
             </div>
         </div>`
+
+        // I don't think we need to list the number of bike stands here. It is irrelevant to the user
+
+// add this to give a clickable link through to the dashboard
+// <a href = '/dash?stand='+station.number.toString()>View in dashboard</a>
+
+        // add div for the canvas node where the graph will be drawn
     );
 
     infowindow.open(map);
@@ -215,6 +233,11 @@ function sweetNote(source) {
 
 
 function calcRoute(s, e) {
+
+
+  // How are you getting s and e?
+
+// In the back end I defined, the @app.route('/distance') will find the closest bike station that has an acceptable number of bikes. Can we please just use this method.
 
 
 
@@ -241,6 +264,8 @@ function calcRoute(s, e) {
 
     // Route the directions and pass the response to a
     // function to create markers for each step.
+
+
     directionsService.route(request,
 		function (response, status) {
         if (status == "OK") {
