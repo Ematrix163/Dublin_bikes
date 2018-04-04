@@ -157,10 +157,13 @@ function createMarkerInfoWindow(station, infowindow) {
         strokeOpacity: 0.8,
         strokeWeight: 2,
         fillColor: '#FF0000',
+  //'blue' if station.available_bikes > station.available_bike_stands
+  //else: 'red'
         fillOpacity: 0.35,
         map: map,
         center: location,
         radius: 50,
+  //radius: math.sqrt(max(abs(station.available_bikes - available_stands), 1), 2) * 50
         clickable: true,
         title: station.name
     })
