@@ -112,9 +112,6 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
         if dtime.weekday()==dayOfWeek:
             #if day of week is the same
 
-
-
-
             #place this data in the nearest five minute intereval
 
             json[hour]['bikes'].append(int(data[t]['bikes']))
@@ -125,8 +122,6 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     for t in json:
 
         #loop through the arrays, and reduce them to their average value
-
-
 
 
         if len(json[t]['bikes'])==0:

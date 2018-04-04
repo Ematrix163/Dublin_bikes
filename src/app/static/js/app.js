@@ -1,5 +1,6 @@
 'use strict';
 
+
 let allStations = [];
 let allMarkers = [];
 let allCircles = [];
@@ -7,6 +8,7 @@ let map, user;
 let largeInfowindow;
 let userLocation = {lat: 53.345228,lng: -6.272145};
 let searchBox;
+
 
 
 function getBadGraidentColor(available_bikes, available_bike_stands) {
@@ -193,7 +195,7 @@ function createMarkerInfoWindow(station, infowindow) {
 function populateInfoWindow(circle, infowindow, ev, station) {
 
     /*This function is to populate infowindow when user click*/
-
+	console.log(ev);
     infowindow.setPosition(ev.latLng);
     infowindow.setContent(
         `<div class='infowindow'>
@@ -214,8 +216,15 @@ function populateInfoWindow(circle, infowindow, ev, station) {
 
         // add div for the canvas node where the graph will be drawn
     );
-
     infowindow.open(map);
+
+	$('.chart-container').css({'top':'-35vh'});
+
+	let today = new Date();
+	let week = today.getDay();
+
+	loadChart(station.number, week, false);
+
 }
 
 
@@ -233,6 +242,7 @@ function sweetNote(source) {
 
 function calcRoute(s, e) {
 
+<<<<<<< HEAD
 
   // How are you getting s and e?
 
@@ -240,6 +250,8 @@ function calcRoute(s, e) {
 
 
 
+=======
+>>>>>>> 3abedea4f3c851720f1bb79bf2f1490d32fb0f90
 	let directionsDisplay = new google.maps.DirectionsRenderer;
 	let directionsService = new google.maps.DirectionsService;
 	directionsDisplay.setMap(map);
