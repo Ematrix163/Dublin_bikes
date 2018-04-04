@@ -55,3 +55,15 @@ Had some heavy discussions regarding the best way to collaborate on git and not 
 We agreeed that before we added any more features to the project, we had to fix and tidy up the ones already included.
 
 During the lecturer's presentation, we learned that we would be expected to include some form of predictive analytics in our project. This did not seem like an easy thing to do within the remaining time frame.
+
+Possibilities include just displaying 'rainy days' and 'not rainy days' side by side. It is unlikely that the group will have proper data to make accurate predictions. They could, however, build a model that would get progressively better as more weather/bike data is scraped.
+
+**Other considerations included:**
+
+Old bikes table needed to be merged with new bikes table. This issue had now been ongoing for a week and a half and no one had committed the time and effort to write the script that would fix it. A 'live' table need to be created, distinguished from the historical data table. On the other hand, the front end was now basically working. 
+
+The api needed to be formalized and agreed upon. The scraper needed to be programmed to update the static locations once a day. The graphs needed someway of reflecting when not enough data was available to draw the given graph. 
+
+The backend really needed to be reformalized in a way that everyone could understand. It had gotten to the point that Diarmuid struggled to understand the backend code that he had written. 
+
+Otherwise, the project looked pretty good. It even looked better than many of the other projects that Diarmuid and Chen saw, despite, of course, being troubled to the core.
