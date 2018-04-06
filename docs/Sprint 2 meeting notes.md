@@ -67,3 +67,13 @@ The api needed to be formalized and agreed upon. The scraper needed to be progra
 The backend really needed to be reformalized in a way that everyone could understand. It had gotten to the point that Diarmuid struggled to understand the backend code that he had written. 
 
 Otherwise, the project looked pretty good. It even looked better than many of the other projects that Diarmuid and Chen saw, despite, of course, being troubled to the core.
+
+**Thursday 5th**
+Everyone was on time for the meeting. It was a busy lab, and the project manager did not have an opportunity to speak with the team. Chen had been up all night trying to get nginx to serve our app via gunicorn. Diarmuid was depressed, as other than a fancy search bar and tidier code, no progress had been made in days. However, everything was working again, even if the front end still wasn't returning data from the flask app api.
+
+Chen and Diarmuid spent the entirety of the meeting trying to get Nginx to work. They failed. At the end of the meeting, the lecturer told them not to bother, and they realized that they had wasted a combined ten odd hours of their lives. The focuss now is on adding some form of predictive analytics to the project, though both Chen and Diarmuid have severe doubts as to whether this will actually work with their current data.
+
+As a funny aside, it transpired that Chen had been running the project on his ec2 using it's native ubuntu version of python 2.7. It was a miracle that anything had been working at all, and for this the team felt somewhat blessed.
+
+
+
