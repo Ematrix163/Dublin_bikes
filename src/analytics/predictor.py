@@ -17,20 +17,30 @@ class predictor():
     def predict(self, stand, timestamp):
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
+
         d = {'number':stand}
         d['humidity'] = weather['main']['humidity']
         d['hour']=time.hour
+        d['monthday']=time.day
         d['day']=time.weekday()
         d['month']=time.month
         d['pressure']=weather['main']['pressure']
         d['temp']=weather['main']['temp']
         d['temp_max']=weather['main']['temp_max']
         d['temp_min']=weather['main']['temp_min']
-        d['wind_deg']=weather['wind']['deg']
+        d['main']=weather['weather'][0]['main']
+        d['description']=weather['weather'][0]['description']
+        #d['wind_deg']=weather['wind']['deg']
         d['wind_speed']=weather['wind']['speed']
-        print(d)
-        object = pd.DataFrame([d], columns=d.keys())
-        return self.model.predict(object)
+
+
+        #need to add description and main as well
+
+
+
+
+
+        return self.model.predict(d)
 
 
 
@@ -53,4 +63,6 @@ class predictor():
 if __name__ == '__main__':
 
     pre=predictor()
-    print(pre.predict(42, 1523473267))
+    print(pre.predict(42, 1523493546))
+    print(pre.predict(52, 1523493546))
+    print(pre.predict(72, 1523493546))

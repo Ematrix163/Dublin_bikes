@@ -6,6 +6,8 @@ class model():
         self.passw=input('enter password:')
         import pandas as pd
         import datetime
+
+
         if from_data == True:
 
 
@@ -15,7 +17,12 @@ class model():
 
             #build a model with the columns we want
             cols = ['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_speed']
-            print(cols)
+
+            cols = [col for col in df_bikes.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target']]
+
+
+
+            
             from sklearn.ensemble import RandomForestRegressor
             self.clf=RandomForestRegressor(max_depth=50).fit(df_bikes[cols], df_bikes['target'])
 
@@ -121,6 +128,17 @@ class model():
         #make a target variable
         df_bikes['target']=df_bikes['bike_stands']-df_bikes['available_bike_stands']
 
+        #make dummies out of some features
+        features_to_concat = [df_bikes]
+        for feature in ['description','main']:
+
+            features_to_concat.append(pd.get_dummies(df_bikes[feature], prefix=feature))
+
+        df_bikes = pd.concat(features_to_concat, axis=1)
+
+
+
+
         #return the dataframe
         return df_bikes
 
@@ -136,11 +154,28 @@ class model():
         joblib.dump(self.clf, fileLocation)
 
 
-    def predict(self, row):
+    def predict(self, object):
+        import pandas as pd
         #make a prediction
+        f=['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_deg', 'wind_speed', 'description_broken clouds', 'description_few clouds', 'description_fog', 'description_light intensity driz', 'description_light intensity drizzle', 'description_light intensity drizzle rain', 'description_light intensity shower rain', 'description_light rain', 'description_light shower snow', 'description_light snow', 'description_mist', 'description_moderate rain', 'description_overcast clouds', 'description_proximity shower rain', 'description_scattered clouds', 'description_shower snow', 'description_snow', 'main_Clouds', 'main_Drizzle', 'main_Fog', 'main_Mist', 'main_Rain', 'main_Snow']
+        row={}
+        for feature in f:
+            row[feature]=0
+        for feature in object:
+            if feature in f and feature not in ['description', 'main']:
+                row[feature]=object[feature]
+
+            elif feature in ['description','main']:
+                row[feature+'_'+object[feature]]=1
+
+
+
+
+        row = pd.DataFrame([row], columns=row.keys())
+        #convert dummies to dummie
 
         return self.clf.predict(row)[0]
 
 if __name__ == '__main__':
 
-    m = model(from_pikl=True)
+    m = model(from_data=True)
