@@ -42,7 +42,7 @@ class predictor():
 
             time2 = datetime.datetime.fromtimestamp(object['dt'])
 
-            if time2.day == time1.day and (time2.hour >= time1.hour -3 or time2.hour <=  time1.hour) + 3:
+            if time2.day == time1.day and (time2.hour >= time1.hour -3 or time2.hour <=  time1.hour + 3):
 
                 return object
 
@@ -53,4 +53,4 @@ class predictor():
 if __name__ == '__main__':
 
     pre=predictor()
-    print(pre.predict(42, 1523471584))
+    print(pre.predict(42, 1523473267))
