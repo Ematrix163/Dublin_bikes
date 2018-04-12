@@ -44,9 +44,6 @@ function showPosition(position) {
 }
 
 
-
-
-
 function initMap() {
 
     /*This function is to initialising the map*/
@@ -58,32 +55,51 @@ function initMap() {
         zoom: 15,
     });
 
+
+
+	let getWeather = $.ajax({
+		url: './request?type=weather'
+	})
+
+	getWeather.done(function(data){
+		 data = JSON.parse(data);
+		 let w  = data['weather'];
+
+		 $('#temp').text(w['temp']);
+		 $('#max-temp').text(w['temp_max']);
+		 $('#min-temp').text(w['temp_min']);
+		 $('#icon').attr('src', `./static/images/weather/${w['icon']}.png`);
+	})
+
+
+
+	getWeather.fail(function(){
+		sweetNote('Sorry, cannot get weather data!')
+	})
+
+
+
     //Use ajax request to get static data
     let getBikeStation = $.ajax({
-        url: './static'
+        url: './request?type=LiveData'
     })
 
-    // change this to
 
-    // let liveData = $.ajax({
-
-//    url: './request?type=LiveData'
-//  })
-
-    //If the ajax request success
 
 
     //chane this to   getLiveData.done(function (data) { etc......
     getBikeStation.done(function (data) {
     	console.log('Get data successfully!');
         data = JSON.parse(data);
-        data.map(station => {
-            //Display the marker on the map
-            createMarkerInfoWindow(station, largeInfowindow);
+		for (let i in data) {
+			data[i]['number'] = i;
 
-            //push current station to all station
-            allStations.push(station);
-        })
+			//Display the marker on the map
+			createMarkerInfoWindow(data[i], largeInfowindow);
+
+			//push current station to all station
+			allStations.push(data[i]);
+		}
         fitMap();
         ko.applyBindings(new viewModel());
     });
@@ -195,27 +211,23 @@ function createMarkerInfoWindow(station, infowindow) {
 function populateInfoWindow(circle, infowindow, ev, station) {
 
     /*This function is to populate infowindow when user click*/
-	console.log(ev);
     infowindow.setPosition(ev.latLng);
+
+	var date = new Date(station.time * 1000);
+
+
     infowindow.setContent(
         `<div class='infowindow'>
             <div class='circle-title'>${circle.title}</div>
             <div class='bike'>
                 <P>Status: ${station.status}</P>
-                <p>Total Bike stands: ${station.bike_stands}</p>
-                <p>Available Bike stands: ${station.available_bike_stands}</p>
-                <p>Available Bikes: ${station.available_bikes}</p>
-
+                <p>Available Bike stands: ${station.spaces}</p>
+                <p>Available Bikes: ${station.bikes}</p>
+				<p>Last Update Time: ${date}</p>
             </div>
         </div>`
-
-        // I don't think we need to list the number of bike stands here. It is irrelevant to the user
-
-// add this to give a clickable link through to the dashboard
-// <a href = '/dash?stand='+station.number.toString()>View in dashboard</a>
-
-        // add div for the canvas node where the graph will be drawn
     );
+
     infowindow.open(map);
 
 	$('.chart-container').css({'top':'-35vh'});
@@ -224,7 +236,6 @@ function populateInfoWindow(circle, infowindow, ev, station) {
 	let week = today.getDay();
 
 	loadChart(station.number, week, false);
-
 }
 
 
@@ -242,25 +253,20 @@ function sweetNote(source) {
 
 function calcRoute(s, e) {
 
-<<<<<<< HEAD
-
   // How are you getting s and e?
 
 // In the back end I defined, the @app.route('/distance') will find the closest bike station that has an acceptable number of bikes. Can we please just use this method.
 
 
-
-=======
->>>>>>> 3abedea4f3c851720f1bb79bf2f1490d32fb0f90
 	let directionsDisplay = new google.maps.DirectionsRenderer;
 	let directionsService = new google.maps.DirectionsService;
 	directionsDisplay.setMap(map);
 
     // First, clear out any existing markerArray
     // from previous calculations.
-    for (let i = 0; i < allMarkers.length; i++) {
-        allMarkers[i].setMap(null);
-    }
+    // for (let i = 0; i < allMarkers.length; i++) {
+    //     allMarkers[i].setMap(null);
+    // }
 
     // Retrieve the start and end locations and create
     // a DirectionsRequest using WALKING directions.

@@ -52,7 +52,16 @@
                     <span></span>
                 </button>
             </div>
+
+			<div id="weather">
+				<div id="temp"></div>
+				<div id="max-temp"></div>
+				<div id="min-temp"></div>
+				<img src="" id ="icon">
+			</div>
+
             <div id="map"></div>
+
 
 
 			<div class="chart-container">
@@ -73,15 +82,14 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-        <!-- add charts.js local script to index -->
-        <script src="/charts.js"></script>
 
-=======
+
+
 		<!--        <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>-->
 		<script type="text/javascript" src="../static/js/charts.js"></script>
+		        <!-- add charts.js local script to index -->
 		<script type="text/javascript" src="../static/js/app.js"></script>
->>>>>>> 3abedea4f3c851720f1bb79bf2f1490d32fb0f90
+
         <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w&callback=initMap">
         </script>
 
