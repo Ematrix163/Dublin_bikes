@@ -14,6 +14,7 @@ class model():
         self.features = ['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_deg', 'wind_speed', 'description_broken clouds', 'description_few clouds', 'description_fog', 'description_light intensity driz', 'description_light intensity drizzle', 'description_light intensity drizzle rain', 'description_light intensity shower rain', 'description_light rain', 'description_light shower snow', 'description_light snow', 'description_mist', 'description_moderate rain', 'description_overcast clouds', 'description_proximity shower rain', 'description_scattered clouds', 'description_shower snow', 'description_snow', 'main_Clouds', 'main_Drizzle', 'main_Fog', 'main_Mist', 'main_Rain', 'main_Snow']
 
 
+
         if from_data == True:
 
             #create a model from data
@@ -29,6 +30,8 @@ class model():
 
 
 
+
+            print(cols)
             print('building model..')
             from sklearn.ensemble import RandomForestRegressor
             self.clf=RandomForestRegressor(max_depth=50).fit(df_bikes[cols], df_bikes['target'])
@@ -179,7 +182,7 @@ class model():
         #make a prediction
 
         row={}
-
+        print(len(self.features))
         for feature in self.features:
             #add empty columns to the row dictionary
             row[feature]=0
@@ -190,7 +193,7 @@ class model():
 
             elif feature in ['description','main']:
                 try:
-                    row[feature+'_'+object[feature]]=1
+                    row[feature+'_'+object[feature]]+=1
 
                 #if we encounter a new value for categorical features, record it in the error log file
                 except:

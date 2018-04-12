@@ -1,3 +1,4 @@
+
 from flask import render_template
 from app import app
 import time
@@ -7,7 +8,8 @@ from analytics import single_stand as graph
 from analytics import distances as distance
 import json
 from analytics import predictor
-predictiveModel = predictor.predictor()
+#predictiveModel = predictor.predictor()
+
 
 
 
@@ -25,6 +27,7 @@ def chartSrcipt():
 
 @app.route('/dash')
 def dashboard():
+
 
     #need to change these into a returnable template
 
@@ -48,6 +51,10 @@ def findClosestStand():
 
     if request.args.get('mode')==None:
         mode = 'walking'
+
+    if request.args.get('mode')=='bicycling':
+
+        mode = 'bicycling'
     #add other options here
 
     response = distance.getClosestStand(origin, mode)
@@ -61,12 +68,14 @@ def getGtaphData():
     return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
 
 
-#
-# @app.route('/static', methods=["GET"])
-# def getStatic():
-#     if request.method == 'GET':
-#         obj = query.queryStaticLocations()
-#         return json.dumps(obj)
+
+@app.route('/static', methods=["GET"])
+def getStatic():
+    if request.method == 'GET':
+        obj = query.queryStaticLocations()
+        return json.dumps(obj)
+
+
 
 
 
@@ -126,22 +135,23 @@ def getCurrentData():
             return json.dumps(obj)
 
     elif request_type == 'liveData':
+
         stands = query.queryCurrentStands()
         static = query.queryStaticLocations()
-        weather = query.queryWeather()
+        print(stands)
+
 
         merged = {}
 
         for each in static:
-                merged[each] = dict(stands[each], **static[each])
+            merged[each] = dict(stands[each], **static[each])
 
         return json.dumps(merged)
 
     elif request_type == 'weather':
         w = query.queryWeather()
 
-<<<<<<< HEAD
-        return json.dumps(obj2)
+        return json.dumps(w)
     #add method for predictions. So far untested
     elif request_type == 'prediction':
 
@@ -149,13 +159,10 @@ def getCurrentData():
 
             stand = request.args.get('stand')
             time = request.args.get('time')
-            prediction = predictiveModel.predict(stand, time)
+            prediction = flask.g.predictiveModel.predict(stand, time)
             if prediction != None:
 
                 return prediction
 
             else:
                 return 'Error etc'
-=======
-        return json.dumps(w)
->>>>>>> b7f2f87c8ddca489e121d8d954f9c229ee342f35

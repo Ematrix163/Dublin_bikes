@@ -81,7 +81,7 @@ function initMap() {
 
     //Use ajax request to get static data
     let getBikeStation = $.ajax({
-        url: './request?type=LiveData'
+        url: './request?type=liveData'
     })
 
 
