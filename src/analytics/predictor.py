@@ -1,4 +1,4 @@
-from analytics.model import model
+from analytics import model
 import requests
 import datetime
 import json
@@ -8,15 +8,18 @@ class predictor():
 
     def __init__(self):
         #load the most recent saved model
-        self.model = model(from_pikl=True)
+        self.model = model.model(from_pikl=True)
         #get weather forecast
-        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e').text)
+        self.updateWeather()
 
 
 
     def predict(self, stand, timestamp):
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
+        if weather == None:
+            print('Sorry, can\'t obtain weather forecast data for that timestamp. Please keep timestamps within 120 hours of the current time')
+            return None
 
         d = {'number':stand}
         d['humidity'] = weather['main']['humidity']
@@ -47,7 +50,7 @@ class predictor():
 
 
     def findMatchingWeather(self, time1):
-
+        #match weather data from forecast with the time given
         for object in self.weatherData['list']:
 
             time2 = datetime.datetime.fromtimestamp(object['dt'])
@@ -60,9 +63,17 @@ class predictor():
 
         return None
 
+    def updateWeather(self):
+
+        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e').text)
+
+
+
 if __name__ == '__main__':
 
     pre=predictor()
-    print(pre.predict(42, 1523493546))
-    print(pre.predict(52, 1523493546))
-    print(pre.predict(72, 1523493546))
+    while True:
+        a=int(input('please enter a stand number'))
+        b=int(input('please enter a timestamp: '))
+
+        print(pre.predict(a,b))

@@ -6,6 +6,8 @@ from db import query
 from analytics import single_stand as graph
 from analytics import distances as distance
 import json
+from analytics import predictor
+predictiveModel = predictor.predictor()
 
 
 
@@ -142,3 +144,17 @@ def getCurrentData():
 
 
         return json.dumps(obj2)
+    #add method for predictions. So far untested
+    elif request_type == 'prediction':
+
+        if request.args.get('stand') != None and request.args.get('time')!= None:
+
+            stand = request.args.get('stand')
+            time = request.args.get('time')
+            prediction = predictiveModel.predict(stand, time)
+            if prediction != None:
+
+                return prediction
+
+            else:
+                return 'Error etc'
