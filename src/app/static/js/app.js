@@ -225,6 +225,7 @@ function populateInfoWindow(circle, infowindow, ev, station) {
                 <P>Status: ${station.status}</P>
                 <p>Available Bike stands: ${station.spaces}</p>
                 <p>Available Bikes: ${station.bikes}</p>
+                <p><a href="/dash?stand=${station.number}">View on Dash</a></p>
 				<p>Last Update Time: ${date}</p>
             </div>
         </div>`

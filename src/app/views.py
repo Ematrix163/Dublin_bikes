@@ -28,10 +28,16 @@ def chartSrcipt():
 @app.route('/dash')
 def dashboard():
 
+    if request.args.get('stand')==None:
 
+        stand = 1
+        print('erro')
     #need to change these into a returnable template
+    else:
+        stand = str(request.args.get('stand'))
 
-	return render_template('dashboard.html')
+
+    return render_template('dashboard.html', value = stand)
 
 
 

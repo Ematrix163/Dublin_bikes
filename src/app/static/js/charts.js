@@ -12,7 +12,7 @@ function makeTimeLabels() {
     return arr
 }
 
-function getStaticLocations() {
+function getStaticLocations(currentStand, currentDay) {
     console.log('getting static data')
     var xmlhttp = new XMLHttpRequest();
     //get all data for drawing map markers
@@ -23,7 +23,7 @@ function getStaticLocations() {
             //go to next function when data is received
             console.log('received')
 			console.log(data);
-            drawStandsButtons(data);
+            drawStandsButtons(data, currentStand, currentDay);
 
         }
     };
@@ -34,7 +34,7 @@ function getStaticLocations() {
 
 
 
-function drawStandsButtons(data) {
+function drawStandsButtons(data, currentStand, currentDay) {
 
     var html = '<ul>';
     for (var stand in data) {
@@ -43,7 +43,7 @@ function drawStandsButtons(data) {
     }
     html += '</ul>'
     document.getElementById('standsList').innerHTML = html;
-    loadChart(1, 1);
+    loadChart(currentStand, currentDay);
 }
 
 
@@ -51,6 +51,7 @@ function drawStandsButtons(data) {
 
 
 function loadChart(stand, day, buttons = true) {
+  console.log(stand, day)
     if (buttons === true) {
         document.getElementById('button' + currentStand.toString()).style.backgroundColor = 'white';
         document.getElementById('button' + stand.toString()).style.backgroundColor = 'deepskyblue';
@@ -135,8 +136,3 @@ function createDayBar() {
 
     document.getElementById('dayBar').innerHTML = html
 }
-
-
-
-var currentStand = 1
-var currentDay = 1
