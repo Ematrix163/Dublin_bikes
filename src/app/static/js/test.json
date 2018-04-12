@@ -1,0 +1,1002 @@
+{
+    "42": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 28,
+        "spaces": 2,
+        "name": "SMITHFIELD NORTH",
+        "address": "Smithfield North",
+        "lat": 53.349562,
+        "long": -6.278198
+    },
+    "30": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "PARNELL SQUARE NORTH",
+        "address": "Parnell Square North",
+        "lat": 53.353462,
+        "long": -6.265305
+    },
+    "54": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 33,
+        "name": "CLONMEL STREET",
+        "address": "Clonmel Street",
+        "lat": 53.336021,
+        "long": -6.26298
+    },
+    "56": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 8,
+        "spaces": 32,
+        "name": "MOUNT STREET LOWER",
+        "address": "Mount Street Lower",
+        "lat": 53.33796,
+        "long": -6.24153
+    },
+    "6": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 6,
+        "spaces": 14,
+        "name": "CHRISTCHURCH PLACE",
+        "address": "Christchurch Place",
+        "lat": 53.343368,
+        "long": -6.27012
+    },
+    "18": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 21,
+        "name": "GRANTHAM STREET",
+        "address": "Grantham Street",
+        "lat": 53.334123,
+        "long": -6.265436
+    },
+    "32": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 21,
+        "name": "PEARSE STREET",
+        "address": "Pearse Street",
+        "lat": 53.344304,
+        "long": -6.250427
+    },
+    "52": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 32,
+        "name": "YORK STREET EAST",
+        "address": "York Street East",
+        "lat": 53.338755,
+        "long": -6.262003
+    },
+    "48": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 27,
+        "spaces": 13,
+        "name": "EXCISE WALK",
+        "address": "Excise Walk",
+        "lat": 53.347777,
+        "long": -6.244239
+    },
+    "13": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 30,
+        "name": "FITZWILLIAM SQUARE W",
+        "address": "Fitzwilliam Square West",
+        "lat": 53.336074,
+        "long": -6.252825
+    },
+    "43": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 30,
+        "spaces": 0,
+        "name": "PORTOBELLO ROAD",
+        "address": "Portobello Road",
+        "lat": 53.330091,
+        "long": -6.268044
+    },
+    "81": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 21,
+        "spaces": 19,
+        "name": "ST. JAMES HOSPITAL (",
+        "address": "St. James Hospital (Central)",
+        "lat": 53.339983,
+        "long": -6.295594
+    },
+    "31": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "PARNELL STREET",
+        "address": "Parnell Street",
+        "lat": 53.350929,
+        "long": -6.265125
+    },
+    "98": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 30,
+        "name": "FREDERICK STREET SOU",
+        "address": "Frederick Street South",
+        "lat": 53.341515,
+        "long": -6.256853
+    },
+    "14": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 10,
+        "spaces": 20,
+        "name": "FOWNES STREET UPPER",
+        "address": "Fownes Street Upper",
+        "lat": 53.344603,
+        "long": -6.263371
+    },
+    "1": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 13,
+        "spaces": 18,
+        "name": "CLARENDON ROW",
+        "address": "Clarendon Row",
+        "lat": 53.340927,
+        "long": -6.262501
+    },
+    "23": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 26,
+        "spaces": 4,
+        "name": "CUSTOM HOUSE",
+        "address": "Custom House",
+        "lat": 53.348279,
+        "long": -6.254662
+    },
+    "68": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 2,
+        "spaces": 38,
+        "name": "HANOVER QUAY",
+        "address": "Hanover Quay",
+        "lat": 53.344115,
+        "long": -6.237153
+    },
+    "74": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 28,
+        "spaces": 2,
+        "name": "OLIVER BOND STREET",
+        "address": "Oliver Bond Street",
+        "lat": 53.343893,
+        "long": -6.280531
+    },
+    "87": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 15,
+        "spaces": 23,
+        "name": "COLLINS BARRACKS MUS",
+        "address": "Collins Barracks Museum",
+        "lat": 53.347477,
+        "long": -6.28525
+    },
+    "84": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 28,
+        "spaces": 2,
+        "name": "BROOKFIELD ROAD",
+        "address": "Brookfield Road",
+        "lat": 53.339005,
+        "long": -6.300217
+    },
+    "90": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 2,
+        "spaces": 38,
+        "name": "BENSON STREET",
+        "address": "Benson Street",
+        "lat": 53.344153,
+        "long": -6.233451
+    },
+    "11": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 2,
+        "spaces": 28,
+        "name": "EARLSFORT TERRACE",
+        "address": "Earlsfort Terrace",
+        "lat": 53.334019,
+        "long": -6.258371
+    },
+    "17": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "GOLDEN LANE",
+        "address": "Golden Lane",
+        "lat": 53.340803,
+        "long": -6.267732
+    },
+    "45": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 29,
+        "spaces": 0,
+        "name": "DEVERELL PLACE",
+        "address": "Deverell Place",
+        "lat": 53.351464,
+        "long": -6.255265
+    },
+    "72": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 13,
+        "spaces": 18,
+        "name": "JOHN STREET WEST",
+        "address": "John Street West",
+        "lat": 53.343105,
+        "long": -6.277167
+    },
+    "63": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 18,
+        "spaces": 17,
+        "name": "FENIAN STREET",
+        "address": "Fenian Street",
+        "lat": 53.341428,
+        "long": -6.24672
+    },
+    "91": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 27,
+        "spaces": 3,
+        "name": "SOUTH DOCK ROAD",
+        "address": "South Dock Road",
+        "lat": 53.341833,
+        "long": -6.231291
+    },
+    "99": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 20,
+        "spaces": 10,
+        "name": "CITY QUAY",
+        "address": "City Quay",
+        "lat": 53.346637,
+        "long": -6.246154
+    },
+    "9": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 23,
+        "name": "EXCHEQUER STREET",
+        "address": "Exchequer Street",
+        "lat": 53.343034,
+        "long": -6.263578
+    },
+    "67": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 13,
+        "spaces": 27,
+        "name": "THE POINT",
+        "address": "The Point",
+        "lat": 53.346867,
+        "long": -6.230852
+    },
+    "55": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 36,
+        "name": "HATCH STREET",
+        "address": "Hatch Street",
+        "lat": 53.33403,
+        "long": -6.260714
+    },
+    "62": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 39,
+        "name": "LIME STREET",
+        "address": "Lime Street",
+        "lat": 53.346026,
+        "long": -6.243576
+    },
+    "5": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 34,
+        "spaces": 6,
+        "name": "CHARLEMONT PLACE",
+        "address": "Charlemont Street",
+        "lat": 53.330662,
+        "long": -6.260177
+    },
+    "97": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 29,
+        "spaces": 11,
+        "name": "KILMAINHAM GAOL",
+        "address": "Kilmainham Gaol",
+        "lat": 53.342113,
+        "long": -6.310015
+    },
+    "61": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 24,
+        "name": "HARDWICKE PLACE",
+        "address": "Hardwicke Place",
+        "lat": 53.357043,
+        "long": -6.263232
+    },
+    "77": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 29,
+        "name": "WOLFE TONE STREET",
+        "address": "Wolfe Tone Street",
+        "lat": 53.348875,
+        "long": -6.267459
+    },
+    "73": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 20,
+        "spaces": 10,
+        "name": "FRANCIS STREET",
+        "address": "Francis Street",
+        "lat": 53.342081,
+        "long": -6.275233
+    },
+    "4": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "GREEK STREET",
+        "address": "Greek Street",
+        "lat": 53.346874,
+        "long": -6.272976
+    },
+    "49": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 19,
+        "spaces": 21,
+        "name": "GUILD STREET",
+        "address": "Guild Street",
+        "lat": 53.347932,
+        "long": -6.240928
+    },
+    "19": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 7,
+        "spaces": 23,
+        "name": "HERBERT PLACE",
+        "address": "Herbert Place",
+        "lat": 53.334432,
+        "long": -6.245575
+    },
+    "7": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 21,
+        "spaces": 8,
+        "name": "HIGH STREET",
+        "address": "High Street",
+        "lat": 53.343565,
+        "long": -6.275071
+    },
+    "60": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 30,
+        "spaces": 0,
+        "name": "NORTH CIRCULAR ROAD",
+        "address": "North Circular Road",
+        "lat": 53.359624,
+        "long": -6.260348
+    },
+    "102": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 2,
+        "spaces": 38,
+        "name": "WESTERN WAY",
+        "address": "Western Way",
+        "lat": 53.354929,
+        "long": -6.269425
+    },
+    "38": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 37,
+        "spaces": 3,
+        "name": "TALBOT STREET",
+        "address": "Talbot Street",
+        "lat": 53.350974,
+        "long": -6.25294
+    },
+    "53": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 31,
+        "name": "NEWMAN HOUSE",
+        "address": "Newman House",
+        "lat": 53.337132,
+        "long": -6.26059
+    },
+    "58": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 14,
+        "spaces": 26,
+        "name": "SIR PATRICK DUN'S",
+        "address": "Sir Patrick's Dun",
+        "lat": 53.339218,
+        "long": -6.240642
+    },
+    "66": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 39,
+        "name": "NEW CENTRAL BANK",
+        "address": "New Central Bank",
+        "lat": 53.347122,
+        "long": -6.234749
+    },
+    "101": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 12,
+        "spaces": 18,
+        "name": "KING STREET NORTH",
+        "address": "King Street North",
+        "lat": 53.350291,
+        "long": -6.273507
+    },
+    "47": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 39,
+        "name": "HERBERT STREET",
+        "address": "Herbert Street",
+        "lat": 53.335742,
+        "long": -6.24551
+    },
+    "8": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 10,
+        "spaces": 20,
+        "name": "CUSTOM HOUSE QUAY",
+        "address": "Custom House Quay",
+        "lat": 53.347884,
+        "long": -6.248048
+    },
+    "27": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "MOLESWORTH STREET",
+        "address": "Molesworth Street",
+        "lat": 53.341288,
+        "long": -6.258117
+    },
+    "16": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 19,
+        "spaces": 1,
+        "name": "GEORGES QUAY",
+        "address": "Georges Quay",
+        "lat": 53.347508,
+        "long": -6.252192
+    },
+    "96": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 4,
+        "spaces": 26,
+        "name": "KILMAINHAM LANE",
+        "address": "Kilmainham Lane",
+        "lat": 53.341805,
+        "long": -6.305085
+    },
+    "82": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 16,
+        "spaces": 6,
+        "name": "MOUNT BROWN",
+        "address": "Mount Brown",
+        "lat": 53.341645,
+        "long": -6.29719
+    },
+    "76": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 26,
+        "spaces": 12,
+        "name": "MARKET STREET SOUTH",
+        "address": "Market Street South",
+        "lat": 53.342296,
+        "long": -6.287661
+    },
+    "71": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 31,
+        "name": "KEVIN STREET",
+        "address": "Kevin Street",
+        "lat": 53.337757,
+        "long": -6.267699
+    },
+    "79": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 8,
+        "spaces": 19,
+        "name": "ECCLES STREET EAST",
+        "address": "Eccles Street East",
+        "lat": 53.358115,
+        "long": -6.265601
+    },
+    "69": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 11,
+        "spaces": 29,
+        "name": "GRAND CANAL DOCK",
+        "address": "Grand Canal Dock",
+        "lat": 53.342638,
+        "long": -6.238695
+    },
+    "25": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 4,
+        "spaces": 26,
+        "name": "MERRION SQUARE EAST",
+        "address": "Merrion Square East",
+        "lat": 53.339434,
+        "long": -6.246548
+    },
+    "51": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 40,
+        "name": "YORK STREET WEST",
+        "address": "York Street West",
+        "lat": 53.339334,
+        "long": -6.264699
+    },
+    "37": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 4,
+        "spaces": 26,
+        "name": "ST. STEPHEN'S GREEN ",
+        "address": "St. Stephen's Green South",
+        "lat": 53.337494,
+        "long": -6.26199
+    },
+    "59": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "DENMARK STREET GREAT",
+        "address": "Denmark Street Great",
+        "lat": 53.35561,
+        "long": -6.261397
+    },
+    "95": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 12,
+        "spaces": 28,
+        "name": "ROYAL HOSPITAL",
+        "address": "Royal Hospital",
+        "lat": 53.343897,
+        "long": -6.29706
+    },
+    "94": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 19,
+        "spaces": 21,
+        "name": "HEUSTON STATION (CAR",
+        "address": "Heuston Station (Car Park)",
+        "lat": 53.346985,
+        "long": -6.297804
+    },
+    "36": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 7,
+        "spaces": 33,
+        "name": "ST. STEPHEN'S GREEN ",
+        "address": "St. Stephen's Green East",
+        "lat": 53.337824,
+        "long": -6.256035
+    },
+    "93": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 40,
+        "spaces": 0,
+        "name": "HEUSTON STATION (CEN",
+        "address": "Heuston Station (Central)",
+        "lat": 53.346603,
+        "long": -6.296924
+    },
+    "22": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 14,
+        "spaces": 6,
+        "name": "TOWNSEND STREET",
+        "address": "Townsend Street",
+        "lat": 53.345922,
+        "long": -6.254614
+    },
+    "12": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 19,
+        "spaces": 1,
+        "name": "ECCLES STREET",
+        "address": "Eccles Street",
+        "lat": 53.359246,
+        "long": -6.269779
+    },
+    "34": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 22,
+        "spaces": 8,
+        "name": "PORTOBELLO HARBOUR",
+        "address": "Portobello Harbour",
+        "lat": 53.330362,
+        "long": -6.265163
+    },
+    "78": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 12,
+        "spaces": 28,
+        "name": "MATER HOSPITAL",
+        "address": "Mater Hospital",
+        "lat": 53.359967,
+        "long": -6.264828
+    },
+    "2": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 11,
+        "name": "BLESSINGTON STREET",
+        "address": "Blessington Street",
+        "lat": 53.356769,
+        "long": -6.26814
+    },
+    "75": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 31,
+        "spaces": 9,
+        "name": "JAMES STREET",
+        "address": "James Street",
+        "lat": 53.343456,
+        "long": -6.287409
+    },
+    "26": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 5,
+        "spaces": 15,
+        "name": "MERRION SQUARE WEST",
+        "address": "Merrion Square West",
+        "lat": 53.339764,
+        "long": -6.251988
+    },
+    "65": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 40,
+        "name": "CONVENTION CENTRE",
+        "address": "Convention Centre",
+        "lat": 53.34744,
+        "long": -6.238523
+    },
+    "15": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 15,
+        "name": "HARDWICKE STREET",
+        "address": "Hardwicke Street",
+        "lat": 53.355473,
+        "long": -6.264423
+    },
+    "86": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 38,
+        "spaces": 0,
+        "name": "PARKGATE STREET",
+        "address": "Parkgate Street",
+        "lat": 53.347972,
+        "long": -6.291804
+    },
+    "35": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 6,
+        "spaces": 24,
+        "name": "SMITHFIELD",
+        "address": "Smithfield",
+        "lat": 53.347692,
+        "long": -6.278214
+    },
+    "10": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 9,
+        "spaces": 7,
+        "name": "DAME STREET",
+        "address": "Dame Street",
+        "lat": 53.344007,
+        "long": -6.266802
+    },
+    "100": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 15,
+        "spaces": 10,
+        "name": "HEUSTON BRIDGE (SOUT",
+        "address": "Heuston Bridge (South)",
+        "lat": 53.347106,
+        "long": -6.292041
+    },
+    "24": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 12,
+        "spaces": 8,
+        "name": "CATHAL BRUGHA STREET",
+        "address": "Cathal Brugha Street",
+        "lat": 53.352149,
+        "long": -6.260533
+    },
+    "64": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 6,
+        "spaces": 34,
+        "name": "SANDWITH STREET",
+        "address": "Sandwith Street",
+        "lat": 53.345203,
+        "long": -6.247163
+    },
+    "85": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 29,
+        "spaces": 6,
+        "name": "ROTHE ABBEY",
+        "address": "Rothe Abbey",
+        "lat": 53.338776,
+        "long": -6.30395
+    },
+    "33": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 13,
+        "spaces": 10,
+        "name": "PRINCES STREET / O'C",
+        "address": "Princes Street / O'Connell Str",
+        "lat": 53.349013,
+        "long": -6.260311
+    },
+    "44": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 18,
+        "spaces": 12,
+        "name": "UPPER SHERRARD STREE",
+        "address": "Upper Sherrard Street",
+        "lat": 53.358437,
+        "long": -6.260641
+    },
+    "89": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 8,
+        "spaces": 32,
+        "name": "FITZWILLIAM SQUARE E",
+        "address": "Fitzwilliam Square East",
+        "lat": 53.335211,
+        "long": -6.2509
+    },
+    "57": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 23,
+        "name": "GRATTAN STREET",
+        "address": "Grattan Street",
+        "lat": 53.339629,
+        "long": -6.243778
+    },
+    "80": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 27,
+        "spaces": 13,
+        "name": "ST JAMES HOSPITAL (L",
+        "address": "St James Hospital (Luas)",
+        "lat": 53.341359,
+        "long": -6.292951
+    },
+    "41": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 1,
+        "spaces": 19,
+        "name": "HARCOURT TERRACE",
+        "address": "Harcourt Terrace",
+        "lat": 53.332763,
+        "long": -6.257942
+    },
+    "3": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 0,
+        "spaces": 20,
+        "name": "BOLTON STREET",
+        "address": "Bolton Street",
+        "lat": 53.351182,
+        "long": -6.269859
+    },
+    "46": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 8,
+        "spaces": 27,
+        "name": "STRAND STREET GREAT",
+        "address": "Strand Street Great",
+        "lat": 53.347082,
+        "long": -6.264192
+    },
+    "40": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 2,
+        "spaces": 19,
+        "name": "JERVIS STREET",
+        "address": "Jervis Street",
+        "lat": 53.3483,
+        "long": -6.266651
+    },
+    "29": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 3,
+        "spaces": 26,
+        "name": "ORMOND QUAY UPPER",
+        "address": "Ormond Quay Upper",
+        "lat": 53.346057,
+        "long": -6.268001
+    },
+    "70": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 27,
+        "spaces": 13,
+        "name": "BARROW STREET",
+        "address": "Barrow Street",
+        "lat": 53.341655,
+        "long": -6.236198
+    },
+    "28": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 8,
+        "spaces": 22,
+        "name": "MOUNTJOY SQUARE WEST",
+        "address": "Mountjoy Square West",
+        "lat": 53.356299,
+        "long": -6.258586
+    },
+    "39": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 12,
+        "spaces": 8,
+        "name": "WILTON TERRACE",
+        "address": "Wilton Terrace",
+        "lat": 53.332383,
+        "long": -6.252717
+    },
+    "83": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 32,
+        "spaces": 8,
+        "name": "EMMET ROAD",
+        "address": "Emmet Road",
+        "lat": 53.340714,
+        "long": -6.308191
+    },
+    "92": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 40,
+        "spaces": 0,
+        "name": "HEUSTON BRIDGE (NORT",
+        "address": "Heuston Bridge (North)",
+        "lat": 53.347802,
+        "long": -6.292432
+    },
+    "21": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 26,
+        "spaces": 4,
+        "name": "LEINSTER STREET SOUT",
+        "address": "Leinster Street South",
+        "lat": 53.34218,
+        "long": -6.254485
+    },
+    "88": {
+        "time": 1519764287000,
+        "status": "OPEN",
+        "bikes": 11,
+        "spaces": 19,
+        "name": "BLACKHALL PLACE",
+        "address": "Blackhall Place",
+        "lat": 53.3488,
+        "long": -6.281637
+    }
+}

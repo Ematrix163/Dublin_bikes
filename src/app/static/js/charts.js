@@ -22,6 +22,7 @@ function getStaticLocations() {
             var data = JSON.parse(this.responseText);
             //go to next function when data is received
             console.log('received')
+			console.log(data);
             drawStandsButtons(data);
 
         }
@@ -34,6 +35,7 @@ function getStaticLocations() {
 
 
 function drawStandsButtons(data) {
+
     var html = '<ul>';
     for (var stand in data) {
 

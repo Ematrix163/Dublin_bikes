@@ -24,7 +24,6 @@ def chartSrcipt():
 @app.route('/dash')
 def dashboard():
 
-
     #need to change these into a returnable template
 
 	return render_template('dashboard.html')
@@ -60,19 +59,12 @@ def getGtaphData():
     return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
 
 
-
-<<<<<<< HEAD
-#### to be deleted
-
-=======
->>>>>>> 3abedea4f3c851720f1bb79bf2f1490d32fb0f90
-@app.route('/static', methods=["GET"])
-def getStatic():
-    if request.method == 'GET':
-        obj = query.queryStaticLocations()
-        return json.dumps(obj)
-
-
+#
+# @app.route('/static', methods=["GET"])
+# def getStatic():
+#     if request.method == 'GET':
+#         obj = query.queryStaticLocations()
+#         return json.dumps(obj)
 
 
 
@@ -132,13 +124,18 @@ def getCurrentData():
             return json.dumps(obj)
 
     elif request_type == 'liveData':
-        obj1 = query.queryCurrentStands()
-        print(obj1)
-        obj2 = query.queryStaticLocations()
-        for thing in obj1:
-            obj2[thing]['bikes']=obj1[thing]['bikes']
-            obj2[thing]['spaces']=obj1[thing]['spaces']
+        stands = query.queryCurrentStands()
+        static = query.queryStaticLocations()
+        weather = query.queryWeather()
 
+        merged = {}
 
+        for each in static:
+                merged[each] = dict(stands[each], **static[each])
 
-        return json.dumps(obj2)
+        return json.dumps(merged)
+
+    elif request_type == 'weather':
+        w = query.queryWeather()
+
+        return json.dumps(w)
