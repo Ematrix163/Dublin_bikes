@@ -64,8 +64,7 @@ function initMap() {
 	getWeather.done(function(data){
 		 data = JSON.parse(data);
 		 let w  = data['weather'];
-
-		 $('#temp').text(w['temp']);
+		 $('#temp').text('Temp:' + w['temp']);
 		 $('#max-temp').text(w['temp_max']);
 		 $('#min-temp').text(w['temp_min']);
 		 $('#icon').attr('src', `./static/images/weather/${w['icon']}.png`);
@@ -86,21 +85,19 @@ function initMap() {
 
 
 
-
-    //chane this to   getLiveData.done(function (data) { etc......
     getBikeStation.done(function (data) {
     	console.log('Get data successfully!');
+		$('.overlay').hide();
         data = JSON.parse(data);
 		for (let i in data) {
 			data[i]['number'] = i;
-
 			//Display the marker on the map
 			createMarkerInfoWindow(data[i], largeInfowindow);
-
 			//push current station to all station
 			allStations.push(data[i]);
 		}
         fitMap();
+		// knockout library
         ko.applyBindings(new viewModel());
     });
 
@@ -112,7 +109,6 @@ function initMap() {
 
 
     // Make markers fit the map, this is optional.
-
     // function fitMap() {
     //     let bounds = new google.maps.LatLngBounds();
 
@@ -167,18 +163,13 @@ function createMarkerInfoWindow(station, infowindow) {
     //     position: location,
     //     id: station.number
     // });
-    console.log(station)
     if (station.bikes > station.spaces + 5){
-
       var color = 'red';
     }
     else if (station.bikes + 5 < station.spaces){
-
       var color = 'blue';
     }
-
     else{
-
       var color = 'green';
     }
 
@@ -200,8 +191,6 @@ function createMarkerInfoWindow(station, infowindow) {
 
     // allMarkers.push(marker);
     allCircles.push(stationCircle);
-
-
     //    google.maps.event.addListener(stationCircle, 'click', function(ev){
     //        infowindow.setPosition(ev.latLng);
     //        infowindow.setContent('<div>' + stationCircle.title + '</div>');
@@ -226,10 +215,11 @@ function populateInfoWindow(circle, infowindow, ev, station) {
     infowindow.setPosition(ev.latLng);
 
 	var date = new Date(station.time * 1000);
-
-
     infowindow.setContent(
         `<div class='infowindow'>
+			<div class="chart-container">
+				<canvas id="chart"></canvas>
+			</div>
             <div class='circle-title'>${circle.title}</div>
             <div class='bike'>
                 <P>Status: ${station.status}</P>
@@ -239,14 +229,9 @@ function populateInfoWindow(circle, infowindow, ev, station) {
             </div>
         </div>`
     );
-
     infowindow.open(map);
-
-	$('.chart-container').css({'top':'-35vh'});
-
 	let today = new Date();
 	let week = today.getDay();
-
 	loadChart(station.number, week, false);
 }
 
@@ -263,8 +248,7 @@ function sweetNote(source) {
 
 
 
-function calcRoute(s, e) {
-
+function calcRoute(s, e, mode = 'WALKING') {
   // How are you getting s and e?
 
 // In the back end I defined, the @app.route('/distance') will find the closest bike station that has an acceptable number of bikes. Can we please just use this method.
@@ -276,19 +260,19 @@ function calcRoute(s, e) {
 
     // First, clear out any existing markerArray
     // from previous calculations.
-    // for (let i = 0; i < allMarkers.length; i++) {
-    //     allMarkers[i].setMap(null);
-    // }
+    for (let i = 0; i < allCircles.length; i++) {
+        allCircles[i].setMap(null);
+    }
 
     // Retrieve the start and end locations and create
     // a DirectionsRequest using WALKING directions.
-    let start = s;
+    let start = new google.maps.LatLng(s.lat, s.lng);
     let end = new google.maps.LatLng(e.lat, e.lng);
 
     let request = {
         origin: start,
         destination: end,
-        travelMode: 'WALKING'
+        travelMode: mode
     };
 
     // Route the directions and pass the response to a
@@ -367,7 +351,6 @@ let viewModel = function() {
 
 
 	this.show = function(data, event) {
-
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
 		} else if (! self.keyword()) {
@@ -384,7 +367,47 @@ let viewModel = function() {
 					break;
 				}
 			}
-			calcRoute(departure, destinationLoc);
+			calcRoute({'lat':departure.lat(),'lng':departure.lng()}, destinationLoc);
 		}
 	}
+
+
+	this.findBike = function(data, event) {
+		let getBike = $.ajax({
+			url: './distance',
+			type: 'GET',
+			data: {'origin': userLocation}
+		});
+		getBike.done(function(data) {
+			data = JSON.parse(data);
+			data['lng'] = data['long'];
+			calcRoute(userLocation, data);
+		})
+		getBike.fail(function(data){
+			sweetNote('Sorry, the server cannot find a bike for you!')
+		});
+	}
+
+
+	this.findStation = function(data, event) {
+		let getStation = $.ajax({
+			url: './distance',
+			type: 'GET',
+			data: {'origin':userLocation, 'mode':'bicycling'}
+		})
+
+		getStation.done(function(data){
+			data = JSON.parse(data);
+			data['lng'] = data['long'];
+			calcRoute(userLocation, data);
+		})
+
+		getStation.fail(function(data){
+			sweetNote('Sorry, the server cannot find a station for you!')
+		});
+	}
+
+
+
+
 }

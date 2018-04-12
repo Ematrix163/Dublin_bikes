@@ -39,7 +39,14 @@
 				</div>
 
 				<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
-				<button type="button" class="btn btn-outline-primary btn-block" onclick="window.location.href='./dash'">Go To DASHBOARD</button>
+				<button type="button" class="btn btn-primary btn-block" data-bind="click:findBike">Find Me a Bike</button>
+				<button type="button" class="btn btn-primary btn-block" data-bind="click:findStation">Find Me a Station</button>
+
+
+
+				<div class="bottom-button">
+					<button type="button" class="btn btn-outline-primary btn-block" onclick="window.location.href='./dash'">Go To DASHBOARD</button>
+				</div>
 			</div>
         </nav>
 
@@ -51,45 +58,44 @@
                     <span></span>
                     <span></span>
                 </button>
+
+
+				<div id="weather">
+					<span id="temp"></span>
+					<span id="max-temp"></span>
+					<span id="min-temp"></span>
+					<img src="" id ="icon">
+				</div>
+
+
+
             </div>
 
-			<div id="weather">
-				<div id="temp"></div>
-				<div id="max-temp"></div>
-				<div id="min-temp"></div>
-				<img src="" id ="icon">
+			<div class="overlay">
+				<div class="loading-wrapper">
+					<div class="bounceball">
+						<div class="text">Loadding the map</div>
+					</div>
+				</div>
 			</div>
 
             <div id="map"></div>
-
-
-
-			<div class="chart-container">
-				<canvas id="chart"></canvas>
-			</div>
 
         </div>
 
 
         <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
-
-
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" >
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-
-
 		<!--        <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>-->
 		<script type="text/javascript" src="../static/js/charts.js"></script>
 		        <!-- add charts.js local script to index -->
 		<script type="text/javascript" src="../static/js/app.js"></script>
-
         <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w&callback=initMap">
         </script>
 

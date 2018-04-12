@@ -47,7 +47,7 @@ def findClosestStand():
 
     else:
         origin = request.args.get('origin').split(',')
-        origin = {'lat': float(origin[0]), 'long': float(origin[1])}
+        origin = {'lat': float(origin[0]), 'lng': float(origin[1])}
 
     if request.args.get('mode')==None:
         mode = 'walking'
@@ -66,15 +66,6 @@ def getGtaphData():
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
     return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
-
-
-
-@app.route('/static', methods=["GET"])
-def getStatic():
-    if request.method == 'GET':
-        obj = query.queryStaticLocations()
-        return json.dumps(obj)
-
 
 
 
