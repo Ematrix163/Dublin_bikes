@@ -167,21 +167,33 @@ function createMarkerInfoWindow(station, infowindow) {
     //     position: location,
     //     id: station.number
     // });
+    console.log(station)
+    if (station.bikes > station.spaces + 5){
 
+      var color = 'red';
+    }
+    else if (station.bikes + 5 < station.spaces){
+
+      var color = 'blue';
+    }
+
+    else{
+
+      var color = 'green';
+    }
 
     // create a new circle
     let stationCircle = new google.maps.Circle({
-        strokeColor: '#FF0000',
+        strokeColor: color,
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#FF0000',
+        fillColor: color,
   //'blue' if station.available_bikes > station.available_bike_stands
   //else: 'red'
         fillOpacity: 0.35,
         map: map,
         center: location,
-        radius: 50,
-  //radius: math.sqrt(max(abs(station.available_bikes - available_stands), 1), 2) * 50
+        radius: 15* Math.sqrt(Math.max(Math.abs(station.bikes - station.spaces), 1)),   //radius:10 math.sqrt(max(abs(station.available_bikes - available_stands), 1), 2) * 50
         clickable: true,
         title: station.name
     })
