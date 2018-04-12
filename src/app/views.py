@@ -8,7 +8,7 @@ from analytics import single_stand as graph
 from analytics import distances as distance
 import json
 from analytics import predictor
-#predictiveModel = predictor.predictor()
+predictiveModel = predictor.predictor()
 
 
 
@@ -152,14 +152,15 @@ def getCurrentData():
     #add method for predictions. So far untested
     elif request_type == 'prediction':
 
+        global predictiveModel
+
         if request.args.get('stand') != None and request.args.get('time')!= None:
 
             stand = request.args.get('stand')
             time = request.args.get('time')
-            prediction = flask.g.predictiveModel.predict(stand, time)
+            prediction = predictiveModel.predict(int(stand), int(time))
             if prediction != None:
-
-                return prediction
-
+                print(prediction)
+                return str(prediction)
             else:
                 return 'Error etc'
