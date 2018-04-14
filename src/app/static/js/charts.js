@@ -43,6 +43,7 @@ function drawStandsButtons(data, currentStand, currentDay) {
     }
     html += '</ul>'
     document.getElementById('standsList').innerHTML = html;
+    document.getElementById("button"+currentStand.toString()).scrollIntoView();
     loadChart(currentStand, currentDay);
 }
 
@@ -141,4 +142,12 @@ function createDayBar() {
     }
 
     document.getElementById('dayBar').innerHTML = html
+}
+
+//copied from stack overflow
+function scrollIntoView(eleID) {
+   var e = document.getElementById(eleID);
+   if (!!e && e.scrollIntoView) {
+       e.scrollIntoView();
+   }
 }

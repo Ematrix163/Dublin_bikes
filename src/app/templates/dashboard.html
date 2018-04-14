@@ -31,10 +31,16 @@
 </body>
 <script type="text/javascript" src="../static/js/charts.js"></script>
 <script>
+
+
 	var currentStand = {{ value }}
-	var currentDay = new Date.getDay()
+	var d = new Date();
+	var currentDay = d.getDay()
 	createDayBar()
+
 	getStaticLocations(currentStand, currentDay)
+
+
 </script>
 
 </html>
