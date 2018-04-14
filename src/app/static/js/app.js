@@ -373,12 +373,15 @@ let viewModel = function() {
 
 
 	this.findBike = function(data, event) {
+		$('#loading-text').text('Try to find the nearest bike for you...');
+		$('.overlay').show();
 		let getBike = $.ajax({
 			url: './distance',
 			type: 'GET',
 			data: {'origin': userLocation}
 		});
 		getBike.done(function(data) {
+			$('.overlay').hide();
 			data = JSON.parse(data);
 			data['lng'] = data['long'];
 			calcRoute(userLocation, data);
@@ -390,6 +393,10 @@ let viewModel = function() {
 
 
 	this.findStation = function(data, event) {
+
+
+		$('#loading-text').text('Try to find the nearest availabe station for you...');
+		$('.overlay').show();
 		let getStation = $.ajax({
 			url: './distance',
 			type: 'GET',
@@ -397,6 +404,7 @@ let viewModel = function() {
 		})
 
 		getStation.done(function(data){
+			$('.overlay').hide();
 			data = JSON.parse(data);
 			data['lng'] = data['long'];
 			calcRoute(userLocation, data);
