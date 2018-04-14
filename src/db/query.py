@@ -135,7 +135,7 @@ def queryWeather():
 	json={}
 
 	# get the weather data
-	weather = ("SELECT MAX(dt), temp, pressure, humidity, temp_min, temp_max, wind_speed, wind_deg, description, icon, main FROM weather")
+	weather = ("SELECT MAX(dt), temp, pressure, humidity, temp_min, temp_max, wind_speed, wind_deg, description, icon, main FROM dublin_weather")
 	cursor.execute(weather)
 
 	# append the weather data to the database
