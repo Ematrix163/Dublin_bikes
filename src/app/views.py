@@ -79,7 +79,7 @@ def getGtaphData():
 #for requesting
 @app.route('/request')
 def getCurrentData():
-
+    global predictiveModel
     ''' should be able to use /request?type=currentstands
     to get a json object describing current stand occupancy
     (number of bikes, number of spaces)
@@ -152,7 +152,7 @@ def getCurrentData():
     #add method for predictions. So far untested
     elif request_type == 'prediction':
 
-        global predictiveModel
+
 
         if request.args.get('stand') != None and request.args.get('time')!= None:
 
@@ -164,3 +164,20 @@ def getCurrentData():
                 return str(prediction)
             else:
                 return 'Error etc'
+
+        else:
+            return 'Error. Missing parameters.'
+
+    elif request_type == 'predictrange':
+
+
+        stand = request.args.get('stand')
+        begin = request.args.get('begin')
+        end=request.args.get('end')
+
+        if stand!=None and begin!=None and end!= None:
+
+            return json.dumps(predictiveModel.predictRange(int(stand), int(begin), int(end)))
+
+        else:
+            return 'Error. Missing parameters.'

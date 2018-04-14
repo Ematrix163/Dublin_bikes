@@ -38,12 +38,33 @@ class predictor():
 
 
         #need to add description and main as well
-
-
-
-
-
         return self.model.predict(d)
+
+    def predictRange(self, stand, begin, end):
+
+        time = begin
+        arr=[]
+        found = False
+        while time <= end:
+
+            prediction = self.predict(stand, time)
+            #how will we resolve 'none' results?
+            if prediction != None:
+                arr.append({'time':time, 'bikes':prediction})
+                found = True
+
+            elif found == True:
+                #don't keep on seaching after this point
+                break
+
+            #add another hour
+            time += 3600
+
+        return arr
+
+
+
+
 
 
 
