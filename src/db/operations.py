@@ -9,11 +9,20 @@ import requests
 import json
 import time
 import mysql.connector
-
+from analytics import model
 import getpass
 global psd
 
 psd = getpass.getpass('Enter db password:')
+
+
+def buildModel(sleeptime):
+    while True:
+        m= model.model(from_data=True)
+        del(model)
+        time.sleep(sleeptime)
+
+
 
 def scrape(url, sleeptime, f):
     while True:
@@ -103,11 +112,15 @@ def main():
     # get bike stations every 5 minutes
     stands = Process(target=scrape, args=('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey=80b7eeead410f23a165f6d67bc9d33e514e8ee84', 300, insertLiveDB))
 
+    models = Process(target=buildModel, args=(604800))
+
     weather.start()
     stands.start()
+    models.start()
+
     weather.join()
     stands.join()
-
+    models.join()
 
 if __name__ == '__main__':
     main()

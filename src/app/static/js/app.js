@@ -218,13 +218,14 @@ function populateInfoWindow(circle, infowindow, ev, station) {
     infowindow.setContent(
         `<div class='infowindow'>
 			<div class="chart-container">
-				<canvas id="chart"></canvas>
+				<canvas id="chart${station.number}"></canvas>
 			</div>
             <div class='circle-title'>${circle.title}</div>
             <div class='bike'>
                 <P>Status: ${station.status}</P>
                 <p>Available Bike stands: ${station.spaces}</p>
                 <p>Available Bikes: ${station.bikes}</p>
+                <p><a href="/dash?stand=${station.number}">View on Dash</a></p>
 				<p>Last Update Time: ${date}</p>
             </div>
         </div>`
@@ -232,7 +233,7 @@ function populateInfoWindow(circle, infowindow, ev, station) {
     infowindow.open(map);
 	let today = new Date();
 	let week = today.getDay();
-	loadChart(station.number, week, false);
+	loadChart(station.number, week, false, station.number);
 }
 
 

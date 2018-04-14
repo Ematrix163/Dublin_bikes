@@ -12,7 +12,7 @@ function makeTimeLabels() {
     return arr
 }
 
-function getStaticLocations() {
+function getStaticLocations(currentStand, currentDay) {
     console.log('getting static data')
     var xmlhttp = new XMLHttpRequest();
     //get all data for drawing map markers
@@ -23,7 +23,7 @@ function getStaticLocations() {
             //go to next function when data is received
             console.log('received')
 			console.log(data);
-            drawStandsButtons(data);
+            drawStandsButtons(data, currentStand, currentDay);
 
         }
     };
@@ -34,7 +34,7 @@ function getStaticLocations() {
 
 
 
-function drawStandsButtons(data) {
+function drawStandsButtons(data, currentStand, currentDay) {
 
     var html = '<ul>';
     for (var stand in data) {
@@ -43,14 +43,15 @@ function drawStandsButtons(data) {
     }
     html += '</ul>'
     document.getElementById('standsList').innerHTML = html;
-    loadChart(1, 1);
+    loadChart(currentStand, currentDay);
 }
 
 
 
 
 
-function loadChart(stand, day, buttons = true) {
+function loadChart(stand, day, buttons = true, targetId = false) {
+  console.log(stand, day)
     if (buttons === true) {
         document.getElementById('button' + currentStand.toString()).style.backgroundColor = 'white';
         document.getElementById('button' + stand.toString()).style.backgroundColor = 'deepskyblue';
@@ -70,7 +71,7 @@ function loadChart(stand, day, buttons = true) {
             var data = JSON.parse(this.responseText);
             //go to next function when data is received
             console.log('received')
-            makeChart(data);
+            makeChart(data, targetId);
 
         }
     };
@@ -83,14 +84,20 @@ function loadChart(stand, day, buttons = true) {
 
 
 
-function makeChart(data) {
+function makeChart(data, targetId=false) {
     //this part is largely
     //internet chart.js copypasta
+    chart_id = "chart"
+    if (targetId != false){
+
+      chart_id = "chart"+targetId.toString()
+    }
+
     console.log(data.bikes)
     console.log(data.spaces)
     console.log('making chart')
     var labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-    new Chart(document.getElementById("chart"), {
+    new Chart(document.getElementById(chart_id), {
         type: 'line',
         data: {
             labels: makeTimeLabels(),
@@ -135,8 +142,3 @@ function createDayBar() {
 
     document.getElementById('dayBar').innerHTML = html
 }
-
-
-
-var currentStand = 1
-var currentDay = 1

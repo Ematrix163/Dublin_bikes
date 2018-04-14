@@ -45,7 +45,7 @@ class model():
             #load the model from a pikl file
 
 
-            self.clf = joblib.load('model.pikl')
+            self.clf = joblib.load('analytics/model.pikl')
 
 
 
