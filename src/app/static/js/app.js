@@ -214,7 +214,7 @@ function populateInfoWindow(circle, infowindow, ev, station) {
     /*This function is to populate infowindow when user click*/
     infowindow.setPosition(ev.latLng);
 
-	var date = new Date(station.time * 1000);
+	var date = new Date(station.time);
     infowindow.setContent(
         `<div class='infowindow'>
 			<div class="chart-container">
