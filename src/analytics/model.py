@@ -3,6 +3,7 @@ import datetime
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
 import json
+import getpass
 
 class model():
 
@@ -10,13 +11,9 @@ class model():
 
     def __init__(self,from_data=False, from_pikl=False):
 
-        self.passw=input('enter password:')
+        self.passw = getpass.getpass('Enter db password:')
 
-        features = ['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_deg', 'wind_speed', 'description_broken clouds', 'description_few clouds', 'description_fog', 'description_light intensity driz', 'description_light intensity drizzle', 'description_light intensity drizzle rain', 'description_light intensity shower rain', 'description_light rain', 'description_light shower snow', 'description_light snow', 'description_mist', 'description_moderate rain', 'description_overcast clouds', 'description_proximity shower rain', 'description_scattered clouds', 'description_shower snow', 'description_snow', 'main_Clouds', 'main_Drizzle', 'main_Fog', 'main_Mist', 'main_Rain', 'main_Snow']
 
-        self.features = []
-        for feature in features:
-            self.features.append(feature[0:20])
 
 
 
@@ -42,7 +39,8 @@ class model():
             print(cols)
             f=open('modelfeatures','w')
             string='['
-            for col in cols:
+            self.features = cols
+            for col in self.features:
                 string+="'"+col+"', "
             string=string[:-2]+']'
             print(string)
@@ -63,16 +61,6 @@ class model():
 
         f=open('analytics/modelfeatures','r').read()
         return [feature[1:-1] for feature in f[1:-1].split(', ')]
-
-
-
-
-    def getData(self):
-
-
-        pass
-
-
 
 
     def getandpreprocess(self):

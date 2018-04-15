@@ -82,7 +82,7 @@ def queryStandNumber(x):
 
     json={}
     for (arr) in cursor:
-        json[arr[0]] ={'bike_stands': arr[3], 'bikes' : arr[1], 'spaces' : arr[2], 'status':arr[4]}
+        json[arr[0]] ={ 'bike_stands' : arr[1], 'bikes' : arr[2], 'spaces': arr[3], 'status':arr[4]}
 
     cursor.close()
     cnx.close()
