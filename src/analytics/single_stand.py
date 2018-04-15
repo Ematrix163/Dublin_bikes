@@ -94,7 +94,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     stand = int(stand)
     dayOfWeek = int(dayOfWeek)
     import time
-    data = query.queryStandNumber(stand)
+    data = query.queryStandNumberFull(stand)
 
 
     #as default, requests all data. I think a further method for finding everyday at once,

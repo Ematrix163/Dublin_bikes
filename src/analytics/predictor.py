@@ -3,6 +3,7 @@ import requests
 import datetime
 import json
 import pandas as pd
+from db import query
 
 class predictor():
 
@@ -43,14 +44,22 @@ class predictor():
     def predictRange(self, stand, begin, end):
 
         time = begin
-        arr=[]
+
+        s = query.queryStandNumber(stand)
+        print(s)
+        for i in s:
+            obj1 = s[i]
+        print(obj1)
+        d={'times':[], 'bikes':[], 'spaces':[]}
         found = False
         while time <= end:
 
             prediction = self.predict(stand, time)
             #how will we resolve 'none' results?
             if prediction != None:
-                arr.append({'time':time, 'bikes':prediction})
+                d['times'].append(time)
+                d['bikes'].append(int(prediction))
+                d['spaces'].append(int(obj1['bike_stands'])-int(prediction))
                 found = True
 
             elif found == True:
@@ -60,7 +69,7 @@ class predictor():
             #add another hour
             time += 3600
 
-        return arr
+        return d
 
 
 

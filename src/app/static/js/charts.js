@@ -12,6 +12,17 @@ function makeTimeLabels() {
     return arr
 }
 
+function dateTimeLabels(array){
+  var arr = []
+  for (object in array){
+    var d = new Date(object.time*1000)
+    arr.push(d.toString())
+
+  }
+
+  return arr
+}
+
 function getStaticLocations(currentStand, currentDay) {
     console.log('getting static data')
     var xmlhttp = new XMLHttpRequest();
@@ -77,8 +88,10 @@ function loadChart(stand, day, buttons = true, targetId = false) {
         }
     };
     //request data from database
+
     xmlhttp.open("GET", '/graph?stand=' + stand.toString() + '&day=' + day.toString(), true);
     xmlhttp.send();
+
 }
 
 
@@ -97,7 +110,9 @@ function makeChart(data, targetId=false) {
     console.log(data.bikes)
     console.log(data.spaces)
     console.log('making chart')
+
     var labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
     new Chart(document.getElementById(chart_id), {
         type: 'line',
         data: {

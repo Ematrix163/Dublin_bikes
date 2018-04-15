@@ -174,7 +174,7 @@ def getCurrentData():
         stand = request.args.get('stand')
         begin = request.args.get('begin')
         end=request.args.get('end')
-
+        
         if stand!=None and begin!=None and end!= None:
 
             return json.dumps(predictiveModel.predictRange(int(stand), int(begin), int(end)))

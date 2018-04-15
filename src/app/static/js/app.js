@@ -11,20 +11,6 @@ let searchBox;
 
 
 
-function getBadGraidentColor(available_bikes, available_bike_stands) {
-
-    let blue = [0, 0, 255];
-    let red = [255, 0, 0];
-    let color = [0, 0, 0]
-    let total = available_bikes + available_bike_stands;
-
-
-    let bluepart = Math.floor(255 * (available_bikes / total))
-    let redpart = Math.floor(255 * (available_bike_stands / total))
-    let greenpart = Math.floor(255 * (1 - (Math.abs(available_bikes - available_bike_stands) / total)))
-    return '#' + redpart.toString(16) + greenpart.toString(16) + bluepart.toString(16);
-
-}
 
 
 // function start() {
@@ -184,7 +170,7 @@ function createMarkerInfoWindow(station, infowindow) {
         fillOpacity: 0.35,
         map: map,
         center: location,
-        radius: 15* Math.sqrt(Math.max(Math.abs(station.bikes - station.spaces), 1)),   //radius:10 math.sqrt(max(abs(station.available_bikes - available_stands), 1), 2) * 50
+        radius: 15* Math.sqrt(Math.max(Math.abs(station.bikes - station.spaces), 10)),   //radius:10 math.sqrt(max(abs(station.available_bikes - available_stands), 1), 2) * 50
         clickable: true,
         title: station.name
     })

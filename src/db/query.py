@@ -7,10 +7,8 @@ global passw
 
 passw = getpass.getpass('Enter db password:')
 
+def queryStandNumberFull(x):
 
-
-
-def queryStandNumber(x):
     '''gets all historical information about a specific stands occupancy
 
 
@@ -41,6 +39,50 @@ def queryStandNumber(x):
     json={}
     for (arr) in cursor:
         json[arr[0]] ={'bikes': arr[1], 'spaces' : arr[2]}
+
+    cursor.close()
+    cnx.close()
+
+    return json
+
+
+
+
+
+
+def queryStandNumber(x):
+    '''gets all historical information about a specific stands occupancy
+
+
+    by supplying time parameters, it can also get information within a timeframe'''
+
+    #takes a key, and a value for the key
+    #returns all the rows who match that key
+
+    #basically ripped from
+    #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
+
+
+    cnx = mysql.connector.connect(user='BikesMasterUser',\
+    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
+    port = 3306, password = passw )
+    cursor = cnx.cursor()
+
+#this can be changed to reflect any query we like
+
+    query = ("SELECT time, available_bikes, available_bike_stands, bike_stands, status FROM dynamic_bikes WHERE number = "  + str(x))
+
+    query = ("SELECT time, bike_stands, available_bikes, available_bike_stands, status FROM dynamic_bikes d WHERE d.time = (SELECT MAX(time) FROM dynamic_bikes d WHERE d.number = "+str(x)+") AND d.number = " +str(x))
+
+
+
+    cursor.execute(query)
+
+#should change to return data in json like format
+
+    json={}
+    for (arr) in cursor:
+        json[arr[0]] ={'bike_stands': arr[3], 'bikes' : arr[1], 'spaces' : arr[2], 'status':arr[4]}
 
     cursor.close()
     cnx.close()
