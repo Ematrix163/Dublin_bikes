@@ -204,6 +204,10 @@ body {
 	width: 100%;
     height: calc(100vh - 71px);
 }
+.chartoverlay {
+	width: 100%;
+    height: calc(100vh - 71px);
+}
 
 
 .loading-wrapper {

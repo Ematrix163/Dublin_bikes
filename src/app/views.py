@@ -22,6 +22,36 @@ global_cached_graphs = {}
 global_time = datetime.datetime.fromtimestamp(timemodule.time())
 
 #methods for caching and updating certain data
+def cachegraphdata():
+
+    print('begin caching....')
+    global global_static
+    global global_cached_graphs
+    global global_time
+    while True:
+
+        for number in global_static:
+
+            actual_day = int(global_time.day)
+            try:
+                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
+            except:
+                print('Failed to update graph for stand', number, 'day', actual_day)
+
+        for number in global_static:
+
+                for day in range (7):
+                    if day!= actual_day:
+                        try:
+                            global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                        except:
+                            print('Failed to update graph for stand', number, 'day', day)
+
+
+        timemodule.sleep(86400)
+
+
+
 
 def updateLiveData():
     global global_stands
@@ -64,34 +94,6 @@ while global_static == []:
     pass
 predictiveModel = predictor.predictor(global_static)
 
-
-def cachegraphdata():
-
-    print('begin caching....')
-    global global_static
-    global global_cached_graphs
-    global global_time
-    while True:
-
-        for number in global_static:
-
-            actual_day = global_time.day
-            try:
-                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
-            except:
-                print('Failed to update graph for stand', number, 'day', actual_day)
-
-        for number in global_static:
-
-                for day in range (7):
-                    if day!= actual_day:
-                        try:
-                            global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
-                        except:
-                            print('Failed to update graph for stand', number, 'day', day)         
-
-
-        timemodule.sleep(86400)
 
 
 
