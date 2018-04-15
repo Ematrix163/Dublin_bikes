@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
 import json
 import getpass
+from db import query
 
 class model():
 
@@ -18,7 +19,7 @@ class model():
 
 
         if from_data == True:
-            
+
             self.passw = getpass.getpass('Enter db password:')
 
             #create a model from data
@@ -66,12 +67,15 @@ class model():
 
 
     def getandpreprocess(self):
-        df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
+        params = query.getConfig
+        connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']
+
+        df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
         df_bikes = df_bikes.drop(['index'], 1)
         def auto_truncate(val):
             return val[:20]
-        df_weather1=pd.read_sql_table(table_name='weather', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
-        df_weather2=pd.read_sql_table(table_name='dublin_weather', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
+        df_weather1=pd.read_sql_table(table_name='weather', con=connstring)
+        df_weather2=pd.read_sql_table(table_name='dublin_weather', con=connstring)
 
 
         df_old_weather = pd.read_csv('dublin_weather.csv', converters={'weather.description': auto_truncate})

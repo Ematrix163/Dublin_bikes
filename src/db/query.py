@@ -5,7 +5,24 @@ import json as js
 import getpass
 global passw
 
+def getConfig():
 
+    f=open('config.config','r').read().split('\n')
+    d={}
+    d['database']=f[1]
+    d['user']=f[0]
+    d['host']=f[2]
+    d['port']=int(f[3])
+    d['passw']=f[4]
+
+    return d
+
+def makeCnx():
+    params= getConfig()
+    cnx = mysql.connector.connect(user=params['user'],\
+    database=params['database'], host=params['host'],\
+    port = params['port'], password = params['passw'])
+    return cnx
 
 def queryStandNumberFull(x):
 
@@ -44,24 +61,7 @@ def queryStandNumberFull(x):
     return json
 
 
-def getConfig():
 
-    f=open('config.config','r').read().split('\n')
-    d={}
-    d['database']=f[1]
-    d['user']=f[0]
-    d['host']=f[2]
-    d['port']=int(f[3])
-    d['passw']=f[4]
-
-    return d
-
-def makeCnx():
-    params= getConfig()
-    cnx = mysql.connector.connect(user=params['user'],\
-    database=params['database'], host=params['host'],\
-    port = params['port'], password = params['passw'])
-    return cnx
 
 def queryStandNumber(x):
     '''gets all historical information about a specific stands occupancy
