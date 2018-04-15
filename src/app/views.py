@@ -1,15 +1,38 @@
 
 from flask import render_template
 from app import app
-import time
+import time as timemodule
 from flask import request
 from db import query
 from analytics import single_stand as graph
 from analytics import distances as distance
 import json
 from analytics import predictor
-predictiveModel = predictor.predictor()
 from db import keyring
+from threading import Thread
+
+#set up our global variables
+predictiveModel = predictor.predictor()
+global_stands = []
+global_static = []
+global_last_update = 0
+global_weather = []
+def updateLiveData():
+    global global_stands
+    global global_static
+    global global_last_update
+
+    global global_weather
+    while True:
+
+        global_stands = query.queryCurrentStands()
+        global_static = query.queryStaticLocations()
+        global_weather=query.queryWeather()
+        global_last_update=timemodule.time()
+        timemodule.sleep(300)
+
+updater = Thread(target=updateLiveData)
+updater.start()
 
 
 
@@ -76,11 +99,14 @@ def getGtaphData():
 
 
 
-
 #for requesting
 @app.route('/request')
 def getCurrentData():
+    global global_stands
+    global global_static
+    global global_last_update
     global predictiveModel
+    global global_weather
     ''' should be able to use /request?type=currentstands
     to get a json object describing current stand occupancy
     (number of bikes, number of spaces)
@@ -109,12 +135,17 @@ def getCurrentData():
     print(request_type)
 
     if request_type == 'currentstands':
-        obj = query.queryCurrentStands()
+
+
+        obj = global_stands
         print (obj)
         return json.dumps(obj)
 
     elif request_type == 'staticlocations':
-        obj = query.queryStaticLocations()
+
+
+
+        obj = global_static
         print(obj)
         return json.dumps(obj)
 
@@ -134,15 +165,13 @@ def getCurrentData():
 
     elif request_type == 'liveData':
 
-        stands = query.queryCurrentStands()
-        static = query.queryStaticLocations()
-        print(stands)
+
 
 
         merged = {}
 
-        for each in static:
-            merged[each] = dict(stands[each], **static[each])
+        for each in global_static:
+            merged[each] = dict(global_stands[each], **global_static[each])
 
         return json.dumps(merged)
 
