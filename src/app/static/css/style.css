@@ -71,6 +71,7 @@ body {
 }
 
 
+
 #sidebarCollapse {
     width: 40px;
     height: 40px;
@@ -185,7 +186,11 @@ body {
 	z-index: 99;
 }
 
+#icon {
+  height:50px;
+  width:50px;
 
+}
 
 
 
