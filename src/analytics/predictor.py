@@ -3,7 +3,7 @@ import requests
 import datetime
 import json
 import pandas as pd
-from db import query
+from db import query,keyring
 
 class predictor():
 
@@ -11,6 +11,7 @@ class predictor():
         #load the most recent saved model
         self.model = model.model(from_pikl=True)
         #get weather forecast
+        self.weatherKey=keyring.getWeatherKey()
         self.updateWeather()
 
 
@@ -95,7 +96,7 @@ class predictor():
 
     def updateWeather(self):
 
-        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e').text)
+        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID='+self.weatherKey).text)
 
 
 

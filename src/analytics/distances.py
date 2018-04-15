@@ -2,6 +2,7 @@ import requests
 import json
 from db import query
 from math import inf
+from db import keyring
 
 
 
@@ -21,7 +22,7 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
     requestString=requestString[:-1]
 
 
-    requestString+='&mode='+transportMode+'&key=AIzaSyBSrSbeZwb9AeX2X8gh_AVErGaXVfpkriU'
+    requestString+='&mode='+transportMode+'&key='+keyring.getDistanceKey()
 
     response = requests.get(requestString)
     response = json.loads(response.text)

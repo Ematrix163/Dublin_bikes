@@ -13,6 +13,7 @@ __pycache__/*
 */.ipynb_checkpoints/*
 
 src/config.config
+src/keys.config
 
 # Project files
 .ropeproject

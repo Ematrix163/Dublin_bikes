@@ -9,6 +9,7 @@ from analytics import distances as distance
 import json
 from analytics import predictor
 predictiveModel = predictor.predictor()
+from db import keyring
 
 
 
@@ -16,7 +17,7 @@ predictiveModel = predictor.predictor()
 @app.route('/')
 def index():
     '''loads index page'''
-    return render_template("index.html")
+    return render_template("index.html", key = keyring.getMapKey())
 
 @app.route('/charts.js')
 def chartSrcipt():
@@ -174,7 +175,7 @@ def getCurrentData():
         stand = request.args.get('stand')
         begin = request.args.get('begin')
         end=request.args.get('end')
-        
+
         if stand!=None and begin!=None and end!= None:
 
             return json.dumps(predictiveModel.predictRange(int(stand), int(begin), int(end)))
