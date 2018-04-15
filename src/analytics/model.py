@@ -12,15 +12,9 @@ class model():
 
     def __init__(self,from_data=False, from_pikl=False):
 
-
-
-
-
-
-
         if from_data == True:
 
-            self.passw = getpass.getpass('Enter db password:')
+
 
             #create a model from data
 
@@ -38,7 +32,7 @@ class model():
             self.clf=RandomForestRegressor(max_depth=50).fit(df_all[cols], df_all['target'])
             print('Saving model....')
             #save model to a pikl file
-            self.piklData('model.pikl')
+            self.piklData('analytics/model.pikl')
             print(cols)
             f=open('modelfeatures','w')
             string='['
@@ -67,7 +61,7 @@ class model():
 
 
     def getandpreprocess(self):
-        params = query.getConfig
+        params = query.getConfig()
         connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']
 
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)

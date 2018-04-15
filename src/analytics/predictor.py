@@ -3,24 +3,43 @@ import requests
 import datetime
 import json
 import pandas as pd
-from db import query
+from db import query,keyring
+import time as timemodule
+from math import inf
+import datetime
+from analytics import distances
 
 class predictor():
 
-    def __init__(self):
+    def __init__(self, static_locations):
         #load the most recent saved model
+        print('Loading model from pikl')
         self.model = model.model(from_pikl=True)
         #get weather forecast
+        self.weatherKey=keyring.getWeatherKey()
+        print('Grabbing five day weather forecast')
         self.updateWeather()
+        self.static_stands = static_locations
+        self.target_coords = []
+        self.stands_index = []
+
+        for stand_number in self.static_stands:
+
+            self.stands_index.append(stand_number)
+
+            self.target_coords.append({'lat':self.static_stands[stand_number]['lat'], 'long':self.static_stands[stand_number]['long']})
 
 
 
-    def predict(self, stand, timestamp):
+    def predict(self, stand, timestamp, matchingweather = None):
         time=datetime.datetime.fromtimestamp(timestamp)
-        weather = self.findMatchingWeather(time)
-        if weather == None:
-            print('Sorry, can\'t obtain weather forecast data for that timestamp. Please keep timestamps within 120 hours of the current time')
-            return None
+        if matchingweather == None:
+            weather = self.findMatchingWeather(time)
+            if weather == None:
+                print('Sorry, can\'t obtain weather forecast data for that timestamp. Please keep timestamps within 120 hours of the current time')
+                return None
+        else:
+            weather = matchingweather
 
         d = {'number':stand}
         d['humidity'] = weather['main']['humidity']
@@ -46,10 +65,10 @@ class predictor():
         time = begin
 
         s = query.queryStandNumber(stand)
-        print(s)
+
         for i in s:
             obj1 = s[i]
-        print(obj1)
+
         d={'times':[], 'bikes':[], 'spaces':[]}
         found = False
         while time <= end:
@@ -81,6 +100,7 @@ class predictor():
 
     def findMatchingWeather(self, time1):
         #match weather data from forecast with the time given
+
         for object in self.weatherData['list']:
 
             time2 = datetime.datetime.fromtimestamp(object['dt'])
@@ -95,7 +115,54 @@ class predictor():
 
     def updateWeather(self):
 
-        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e').text)
+        self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID='+self.weatherKey).text)
+
+    def getClosestStand(self, origin, transportMode='walking'):
+
+
+        closestDuration = inf
+        lat1 = origin['lat']
+        long1 = origin['long']
+
+
+
+        time=int(timemodule.time())
+        #as we're relying on a forecast, we need to add a little bit to the matching weather time here. This should be fixed by changing the weather method to also grab current weather.
+        dtime=datetime.datetime.fromtimestamp(time+1200)
+        closest_index = 0
+
+        #come on. All the weather should be just about the same. We will save time here by using the same weather data for all queries.
+
+        weather=self.findMatchingWeather(dtime)
+        print(weather)
+
+
+
+
+
+
+
+        data = distances.getAllDistancesInOneApiCall({'lat':lat1, 'long':long1}, self.target_coords, transportMode)
+
+        for index, location in enumerate(data['rows'][0]['elements']):
+            if transportMode == 'walking':
+
+                if location['duration']['value']<closestDuration and self.predict(int(self.stands_index[index]), time+3600+location['duration']['value'], matchingweather=weather) >=5:
+                    closest_index = index
+                    closestDuration = location['duration']['value']
+
+            else:
+
+                if location['duration']['value']<closestDuration and self.predict(int(self.stands_index[index]), time+location['duration']['value'],matchingweather=weather) <=25:
+                    closest_index = index
+                    closestDuration = location['duration']['value']
+
+
+
+
+
+        return self.target_coords[closest_index]
+
 
 
 

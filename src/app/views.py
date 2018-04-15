@@ -1,14 +1,84 @@
 
 from flask import render_template
 from app import app
-import time
+import time as timemodule
 from flask import request
 from db import query
 from analytics import single_stand as graph
 from analytics import distances as distance
 import json
 from analytics import predictor
-predictiveModel = predictor.predictor()
+from db import keyring
+from threading import Thread
+
+#set up our global variables
+
+global_stands = []
+global_static = []
+global_last_update = 0
+global_weather = []
+global_cached_graphs = {}
+
+def updateLiveData():
+    global global_stands
+    global global_static
+    global global_last_update
+    global global_cached_graps
+    global global_weather
+    launched_graph_cache=False
+    while True:
+        print('Querying current stand occupancy')
+        try:
+            global_stands = query.queryCurrentStands()
+        except:
+            print('Failed to update current stands')
+        print('Grabbing static locations')
+        try:
+            global_static = query.queryStaticLocations()
+        except:
+            print('Failed to update static locations')
+        print('Grabbing current weather data')
+        try:
+            global_weather=query.queryWeather()
+        except:
+            print('Failed to update weather')
+        global_last_update=timemodule.time()
+        if launched_graph_cache == False:
+            for number in global_static:
+                global_cached_graphs[int(number)]={}
+            launched_graph_cache=True
+            graphcacher = Thread(target=cachegraphdata)
+            graphcacher.start()
+        timemodule.sleep(300)
+
+print('Gathering live data...')
+updater = Thread(target=updateLiveData)
+updater.start()
+while global_static == []:
+    pass
+predictiveModel = predictor.predictor(global_static)
+
+def cachegraphdata():
+    print('begin caching....')
+    global global_static
+    global global_cached_graphs
+    while True:
+
+        for number in global_static:
+
+            for day in range(7):
+                try:
+                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                except:
+                    print('Failed to update graph for stand', number, 'day', day)
+
+
+        timemodule.sleep(86400)
+
+
+
+
+
 
 
 
@@ -16,7 +86,7 @@ predictiveModel = predictor.predictor()
 @app.route('/')
 def index():
     '''loads index page'''
-    return render_template("index.html")
+    return render_template("index.html", key = keyring.getMapKey())
 
 @app.route('/charts.js')
 def chartSrcipt():
@@ -44,6 +114,7 @@ def dashboard():
 
 @app.route('/distance')
 def findClosestStand():
+    global predictiveModel
 
     '''will return the closest stand to the stated origin
     this will unfortunately take almost a minute
@@ -53,7 +124,7 @@ def findClosestStand():
 
     else:
         origin = request.args.get('origin').split(',')
-        origin = {'lat': float(origin[0]), 'lng': float(origin[1])}
+        origin = {'lat': float(origin[0]), 'long': float(origin[1])}
 
     if request.args.get('mode')==None:
         mode = 'walking'
@@ -62,24 +133,42 @@ def findClosestStand():
 
         mode = 'bicycling'
     #add other options here
+    if request.args.get('predictive')==None:
+        response = distance.getClosestStand(origin, mode)
+    else:
+        response=predictiveModel.getClosestStand(origin, mode)
 
-    response = distance.getClosestStand(origin, mode)
+
     return json.dumps(response)
 
 
 @app.route('/graph')
-def getGtaphData():
+def getGraphData():
+
+    global global_cached_graphs
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
-    return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
 
+    try:
+        return json.dumps(global_cached_graphs[int(stand)][int(day)])
+    except:
+
+        KeyError
+
+        data = graph.prepareDayOfTheWeekData(stand, day)
+        global_cached_graphs[int(stand)][int(day)]=data
+        return json.dumps(data)
 
 
 
 #for requesting
 @app.route('/request')
 def getCurrentData():
+    global global_stands
+    global global_static
+    global global_last_update
     global predictiveModel
+    global global_weather
     ''' should be able to use /request?type=currentstands
     to get a json object describing current stand occupancy
     (number of bikes, number of spaces)
@@ -105,16 +194,21 @@ def getCurrentData():
 
 
 
-    print(request_type)
+
 
     if request_type == 'currentstands':
-        obj = query.queryCurrentStands()
-        print (obj)
+
+
+        obj = global_stands
+
         return json.dumps(obj)
 
     elif request_type == 'staticlocations':
-        obj = query.queryStaticLocations()
-        print(obj)
+
+
+
+        obj = global_static
+
         return json.dumps(obj)
 
     elif request_type == 'standnumber':
@@ -128,20 +222,18 @@ def getCurrentData():
 
         else:
             obj = query.queryStandNumber(str(request.args.get('stand')))
-            print(obj)
+
             return json.dumps(obj)
 
     elif request_type == 'liveData':
 
-        stands = query.queryCurrentStands()
-        static = query.queryStaticLocations()
-        print(stands)
+
 
 
         merged = {}
 
-        for each in static:
-            merged[each] = dict(stands[each], **static[each])
+        for each in global_static:
+            merged[each] = dict(global_stands[each], **global_static[each])
 
         return json.dumps(merged)
 
@@ -160,7 +252,7 @@ def getCurrentData():
             time = request.args.get('time')
             prediction = predictiveModel.predict(int(stand), int(time))
             if prediction != None:
-                print(prediction)
+
                 return str(prediction)
             else:
                 return 'Error etc'
@@ -174,7 +266,7 @@ def getCurrentData():
         stand = request.args.get('stand')
         begin = request.args.get('begin')
         end=request.args.get('end')
-        
+
         if stand!=None and begin!=None and end!= None:
 
             return json.dumps(predictiveModel.predictRange(int(stand), int(begin), int(end)))

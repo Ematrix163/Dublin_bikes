@@ -72,6 +72,7 @@ body {
 }
 
 
+
 #sidebarCollapse {
     width: 40px;
     height: 40px;
@@ -146,7 +147,7 @@ body {
 
 .content-header {
     height: 71px;
-    background-color: #272727;
+    background-color: lightblue;
 }
 
 #map {
@@ -181,7 +182,11 @@ body {
 	z-index: 99;
 }
 
+#icon {
+  height:50px;
+  width:50px;
 
+}
 
 
 
