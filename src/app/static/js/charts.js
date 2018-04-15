@@ -1,5 +1,5 @@
-let lodaingStand = 0;
 let allLocation = {};
+let chosenStand;
 //attempt at graphs using charts.js library
 function makeTimeLabels() {
     arr = []
@@ -47,7 +47,6 @@ function drawStandsButtons(data, currentStand, currentDay) {
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
 	console.log(allLocation);
-
 	$('.stand').click(function(){
 		// Add listen click function
 		loadChart(this.getAttribute('data-id'), currentDay);
@@ -56,8 +55,21 @@ function drawStandsButtons(data, currentStand, currentDay) {
 }
 
 
+function reloadChart(day) {
+
+	$.ajax({
+		url: '/graph',
+		type: 'GET',
+		data: {'stand': chosenStand, 'day':day}
+	}).done(function(response){
+		var data = JSON.parse(response);
+		makeChart(data);
+	})
+}
+
 
 function loadChart(stand, day, buttons = true, targetId = false) {
+	chosenStand = stand;
 	$('.overlay').show();
   	console.log(stand, day)
     if (buttons === true) {
