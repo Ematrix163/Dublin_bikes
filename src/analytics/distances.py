@@ -40,6 +40,10 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
 def getClosestStand(origin, transportMode='walking'):
 
     '''iterates through all stands and finds the closest one to the origin'''
+
+    #how to put a predictive element here?
+
+
     closestDuration = inf
     lat1 = origin['lat']
     long1 = origin['long']

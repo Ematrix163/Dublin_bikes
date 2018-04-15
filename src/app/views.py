@@ -12,7 +12,7 @@ from db import keyring
 from threading import Thread
 
 #set up our global variables
-predictiveModel = predictor.predictor()
+
 global_stands = []
 global_static = []
 global_last_update = 0
@@ -27,10 +27,21 @@ def updateLiveData():
     global global_weather
     launched_graph_cache=False
     while True:
-
-        global_stands = query.queryCurrentStands()
-        global_static = query.queryStaticLocations()
-        global_weather=query.queryWeather()
+        print('Querying current stand occupancy')
+        try:
+            global_stands = query.queryCurrentStands()
+        except:
+            print('Failed to update current stands')
+        print('Grabbing static locations')
+        try:
+            global_static = query.queryStaticLocations()
+        except:
+            print('Failed to update static locations')
+        print('Grabbing current weather data')
+        try:
+            global_weather=query.queryWeather()
+        except:
+            print('Failed to update weather')
         global_last_update=timemodule.time()
         if launched_graph_cache == False:
             for number in global_static:
@@ -43,6 +54,9 @@ def updateLiveData():
 print('Gathering live data...')
 updater = Thread(target=updateLiveData)
 updater.start()
+while global_static == []:
+    pass
+predictiveModel = predictor.predictor(global_static)
 
 def cachegraphdata():
     print('begin caching....')
@@ -53,8 +67,10 @@ def cachegraphdata():
         for number in global_static:
 
             for day in range(7):
-
-                global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                try:
+                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                except:
+                    print('Failed to update graph for stand', number, 'day', day)
 
 
         timemodule.sleep(86400)
@@ -98,6 +114,7 @@ def dashboard():
 
 @app.route('/distance')
 def findClosestStand():
+    global predictiveModel
 
     '''will return the closest stand to the stated origin
     this will unfortunately take almost a minute
@@ -107,7 +124,7 @@ def findClosestStand():
 
     else:
         origin = request.args.get('origin').split(',')
-        origin = {'lat': float(origin[0]), 'lng': float(origin[1])}
+        origin = {'lat': float(origin[0]), 'long': float(origin[1])}
 
     if request.args.get('mode')==None:
         mode = 'walking'
@@ -116,8 +133,12 @@ def findClosestStand():
 
         mode = 'bicycling'
     #add other options here
+    if request.args.get('predictive')==None:
+        response = distance.getClosestStand(origin, mode)
+    else:
+        response=predictiveModel.getClosestStand(origin, mode)
 
-    response = distance.getClosestStand(origin, mode)
+
     return json.dumps(response)
 
 
@@ -127,13 +148,13 @@ def getGraphData():
     global global_cached_graphs
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
-    print(global_cached_graphs[int(stand)])
+
     try:
         return json.dumps(global_cached_graphs[int(stand)][int(day)])
     except:
 
         KeyError
-        print('not found in cache')
+
         data = graph.prepareDayOfTheWeekData(stand, day)
         global_cached_graphs[int(stand)][int(day)]=data
         return json.dumps(data)
@@ -173,13 +194,13 @@ def getCurrentData():
 
 
 
-    print(request_type)
+
 
     if request_type == 'currentstands':
 
 
         obj = global_stands
-        print (obj)
+
         return json.dumps(obj)
 
     elif request_type == 'staticlocations':
@@ -187,7 +208,7 @@ def getCurrentData():
 
 
         obj = global_static
-        print(obj)
+
         return json.dumps(obj)
 
     elif request_type == 'standnumber':
@@ -201,7 +222,7 @@ def getCurrentData():
 
         else:
             obj = query.queryStandNumber(str(request.args.get('stand')))
-            print(obj)
+
             return json.dumps(obj)
 
     elif request_type == 'liveData':
@@ -231,7 +252,7 @@ def getCurrentData():
             time = request.args.get('time')
             prediction = predictiveModel.predict(int(stand), int(time))
             if prediction != None:
-                print(prediction)
+
                 return str(prediction)
             else:
                 return 'Error etc'
