@@ -5,7 +5,7 @@ import json as js
 import getpass
 global passw
 
-passw = getpass.getpass('Enter db password:')
+
 
 def queryStandNumberFull(x):
 
@@ -21,9 +21,7 @@ def queryStandNumberFull(x):
     #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
 
-    cnx = mysql.connector.connect(user='BikesMasterUser',\
-    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = passw )
+    cnx = makeCnx()
     cursor = cnx.cursor()
 
 #this can be changed to reflect any query we like
@@ -46,9 +44,24 @@ def queryStandNumberFull(x):
     return json
 
 
+def getConfig():
 
+    f=open('config.config','r').read().split('\n')
+    d={}
+    d['database']=f[1]
+    d['user']=f[0]
+    d['host']=f[2]
+    d['port']=int(f[3])
+    d['passw']=f[4]
 
+    return d
 
+def makeCnx():
+    params= getConfig()
+    cnx = mysql.connector.connect(user=params['user'],\
+    database=params['database'], host=params['host'],\
+    port = params['port'], password = params['passw'])
+    return cnx
 
 def queryStandNumber(x):
     '''gets all historical information about a specific stands occupancy
@@ -63,9 +76,7 @@ def queryStandNumber(x):
     #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
 
-    cnx = mysql.connector.connect(user='BikesMasterUser',\
-    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = passw )
+    cnx = makeCnx()
     cursor = cnx.cursor()
 
 #this can be changed to reflect any query we like
@@ -101,9 +112,7 @@ def queryCurrentStands():
     '''returns current stand occupancy data for all stands'''
 
 
-    cnx = mysql.connector.connect(user='BikesMasterUser',\
-    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = passw )
+    cnx=makeCnx()
     cursor = cnx.cursor()
 
     #choose the closest time's data of all stations
@@ -135,9 +144,7 @@ def queryStaticLocations():
 
 	''' gets name, address and coordinates for all stands '''
 
-	cnx = mysql.connector.connect(user='BikesMasterUser',\
-	database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-	port = 3306, password = passw)
+	cnx = makeCnx()
 	cursor = cnx.cursor()
 
 	#this can be changed to reflect any query we like
@@ -168,9 +175,7 @@ def queryWeather():
 	The function is to get the weather information
 	'''
 
-	cnx = mysql.connector.connect(user='BikesMasterUser',\
-	database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-	port = 3306, password = passw)
+	cnx = makeCnx()
 	cursor = cnx.cursor()
 
 

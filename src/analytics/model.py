@@ -11,13 +11,15 @@ class model():
 
     def __init__(self,from_data=False, from_pikl=False):
 
-        self.passw = getpass.getpass('Enter db password:')
+
 
 
 
 
 
         if from_data == True:
+            
+            self.passw = getpass.getpass('Enter db password:')
 
             #create a model from data
 
