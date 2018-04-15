@@ -51,9 +51,9 @@ def cachegraphdata():
         for number in global_static:
 
             for day in range(7):
-                print(number,day)
+
                 global_cached_graphs[number][day]=graph.prepareDayOfTheWeekData(int(number), day)
-                print('cached', number, day)
+
 
         timemodule.sleep(86400)
 
@@ -126,12 +126,14 @@ def getGraphData():
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
     try:
-        return global_cached_graphs[stand][day]
+        return json.dumps(global_cached_graphs[int(stand)][int(data)])
     except:
-        print('error was:', stand, day)
+        
         KeyError
         print('not found in cache')
-        return json.dumps(graph.prepareDayOfTheWeekData(stand, day))
+        data = graph.prepareDayOfTheWeekData(stand, day)
+        global_cached_graphs[int(stand)][int(day)]=data
+        return json.dumps(data)
 
 
 
