@@ -18,11 +18,12 @@ global_static = []
 global_last_update = 0
 global_weather = []
 global_cached_graphs = {}
+
 def updateLiveData():
     global global_stands
     global global_static
     global global_last_update
-
+    global global_cached_graps
     global global_weather
     launched_graph_cache=False
     while True:
@@ -33,12 +34,13 @@ def updateLiveData():
         global_last_update=timemodule.time()
         if launched_graph_cache == False:
             for number in global_static:
-                global_cached_graphs[number]={}
+                global_cached_graphs[int(number)]={}
             launched_graph_cache=True
             graphcacher = Thread(target=cachegraphdata)
             graphcacher.start()
         timemodule.sleep(300)
 
+print('Gathering live data...')
 updater = Thread(target=updateLiveData)
 updater.start()
 
@@ -52,7 +54,7 @@ def cachegraphdata():
 
             for day in range(7):
 
-                global_cached_graphs[number][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
 
 
         timemodule.sleep(86400)
@@ -125,10 +127,11 @@ def getGraphData():
     global global_cached_graphs
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
+    print(global_cached_graphs[int(stand)])
     try:
-        return json.dumps(global_cached_graphs[int(stand)][int(data)])
+        return json.dumps(global_cached_graphs[int(stand)][int(day)])
     except:
-        
+
         KeyError
         print('not found in cache')
         data = graph.prepareDayOfTheWeekData(stand, day)
