@@ -2,6 +2,7 @@ import pandas as pd
 import datetime
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
+import json
 
 class model():
 
@@ -11,7 +12,11 @@ class model():
 
         self.passw=input('enter password:')
 
-        self.features = ['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_deg', 'wind_speed', 'description_broken clouds', 'description_few clouds', 'description_fog', 'description_light intensity driz', 'description_light intensity drizzle', 'description_light intensity drizzle rain', 'description_light intensity shower rain', 'description_light rain', 'description_light shower snow', 'description_light snow', 'description_mist', 'description_moderate rain', 'description_overcast clouds', 'description_proximity shower rain', 'description_scattered clouds', 'description_shower snow', 'description_snow', 'main_Clouds', 'main_Drizzle', 'main_Fog', 'main_Mist', 'main_Rain', 'main_Snow']
+        features = ['number', 'hour', 'day', 'month', 'monthday', 'humidity', 'pressure', 'temp', 'temp_max', 'temp_min', 'wind_deg', 'wind_speed', 'description_broken clouds', 'description_few clouds', 'description_fog', 'description_light intensity driz', 'description_light intensity drizzle', 'description_light intensity drizzle rain', 'description_light intensity shower rain', 'description_light rain', 'description_light shower snow', 'description_light snow', 'description_mist', 'description_moderate rain', 'description_overcast clouds', 'description_proximity shower rain', 'description_scattered clouds', 'description_shower snow', 'description_snow', 'main_Clouds', 'main_Drizzle', 'main_Fog', 'main_Mist', 'main_Rain', 'main_Snow']
+
+        self.features = []
+        for feature in features:
+            self.features.append(feature[0:20])
 
 
 
@@ -22,24 +27,30 @@ class model():
 
             #get all of the bike data
             print('Collecting data: ')
-            df_bikes = self.getandpreprocess()
+            df_all = self.getandpreprocess()
 
 
             #we don't want these features in our X dataframe
-            cols = [col for col in df_bikes.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target']]
+            cols = [col for col in df_all.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target']]
 
-
-
-
-            print(cols)
             print('building model..')
             from sklearn.ensemble import RandomForestRegressor
-            self.clf=RandomForestRegressor(max_depth=50).fit(df_bikes[cols], df_bikes['target'])
+            self.clf=RandomForestRegressor(max_depth=50).fit(df_all[cols], df_all['target'])
             print('Saving model....')
             #save model to a pikl file
             self.piklData('model.pikl')
+            print(cols)
+            f=open('modelfeatures','w')
+            string='['
+            for col in cols:
+                string+="'"+col+"', "
+            string=string[:-2]+']'
+            print(string)
+            f.write(string)
+            f.close()
 
         if from_pikl==True:
+            self.features = self.loadFeatures()
 
 
             #load the model from a pikl file
@@ -47,6 +58,11 @@ class model():
 
             self.clf = joblib.load('analytics/model.pikl')
 
+
+    def loadFeatures(self):
+
+        f=open('analytics/modelfeatures','r').read()
+        return [feature[1:-1] for feature in f[1:-1].split(', ')]
 
 
 
@@ -57,29 +73,18 @@ class model():
         pass
 
 
+
+
     def getandpreprocess(self):
-
-        #literally awful method for merging the tables etc
-
-
-        #get bike data
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
-        #get weather data
-        df_weather=pd.read_sql_table(table_name='weather', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
+        df_bikes = df_bikes.drop(['index'], 1)
+        def auto_truncate(val):
+            return val[:20]
+        df_weather1=pd.read_sql_table(table_name='weather', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
+        df_weather2=pd.read_sql_table(table_name='dublin_weather', con='mysql://BikesMasterUser:'+self.passw+'@dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com/dublinbikes')
 
-        #add time data to bikes
-        df_bikes['time']=df_bikes['time']//1000
-        df_bikes['dt']=pd.to_datetime(df_bikes['time'], unit='s')
-        df_bikes['hour']=df_bikes['dt'].dt.hour
-        df_bikes['day']=df_bikes['dt'].dt.dayofweek
-        df_bikes['month']=df_bikes['dt'].dt.month
-        df_bikes['monthday']=df_bikes['dt'].dt.day
 
-        #read in archival weather data
-        df_old_weather = pd.read_csv('dublin_weather.csv')
-
-        #merge weather tables
-        print('Merging weather data...')
+        df_old_weather = pd.read_csv('dublin_weather.csv', converters={'weather.description': auto_truncate})
         df_old_weather['temp']=df_old_weather['main.temp']
         df_old_weather['temp_min']=df_old_weather['main.temp_min']
         df_old_weather['humidity']=df_old_weather['main.humidity']
@@ -90,82 +95,31 @@ class model():
         df_old_weather['description']=df_old_weather['weather.description']
         df_old_weather['icon']=df_old_weather['weather.icon']
         df_old_weather['main']=df_old_weather['weather.main']
+        df_old_weather = df_old_weather[['dt', 'temp', 'humidity', 'temp_min', 'temp_max', 'pressure', 'wind_speed', 'wind_deg', 'description', 'icon', 'main']]
+        df_weather = df_weather1.append([df_weather2, df_old_weather])
+        df_bikes['time']=df_bikes['time']//1000
+        df_bikes['dt']=pd.to_datetime(df_bikes['time'], unit='s')
+        df_bikes['hour']=df_bikes['dt'].dt.hour
+        df_bikes['day']=df_bikes['dt'].dt.dayofweek
+        df_bikes['month']=df_bikes['dt'].dt.month
+        df_bikes['monthday']=df_bikes['dt'].dt.day
+        df_bikes=df_bikes.drop(['dt','time'], 1)
+        df_weather['dt']=pd.to_datetime(df_weather['dt'], unit='s')
+        df_weather['hour']=df_weather['dt'].dt.hour
+        df_weather['day']=df_weather['dt'].dt.dayofweek
+        df_weather['month']=df_weather['dt'].dt.month
+        df_weather['monthday']=df_weather['dt'].dt.day
+        df_all = pd.merge(df_bikes, df_weather, on=['month', 'monthday', 'hour', 'day'], how='inner')
+        df_all['target']=df_all['bike_stands']-df_all['available_bike_stands']
+        features_to_concat = [df_all]
 
-        df_wzz = df_old_weather[['dt', 'temp', 'humidity', 'temp_min', 'temp_max', 'pressure', 'wind_speed', 'wind_deg', 'description', 'icon', 'main']]
-
-        #append
-        weather = df_weather.append(df_wzz)
-
-        #get time data for weather
-        weather['time']=pd.to_datetime(weather['dt'], unit='s')
-        weather['hour']=weather['time'].dt.hour
-        weather['day']=weather['time'].dt.dayofweek
-        weather['month']=weather['time'].dt.month
-        weather['monthday']=weather['time'].dt.day
-
-        #the columns to append to bike data
-        cols=['description', 'dt','humidity', 'icon', 'main', 'pressure', 'temp', 'temp_max', 'temp_min','wind_deg', 'wind_speed']
-
-        #set these as empty for bike data
-        for col in cols:
-           df_bikes[col]=0
-           df_bikes[col].astype('category')
-        print('Merging bike and weather data...')
-        #merge tables (key is every three hours)
-        for index, row in weather.iterrows():
-
-            month = row['month']
-            day = row['monthday']
-            hour = row['hour']
-
-
-
-            if df_bikes.loc[(df_bikes['month']==month) & (df_bikes['monthday'] == day) & ((df_bikes['hour'] < hour+3) & (df_bikes['hour'] > hour -3)) , cols].shape[0] != 0:
-
-                for col in cols:
-
-                    df_bikes.loc[(df_bikes['month']==month) & (df_bikes['monthday'] == day) & ((df_bikes['hour'] < hour+3) & (df_bikes['hour'] > hour -3)) , col] = row[col]
-
-        #merge again (key is every 1 hour this time)
-        #we have to do this twice due to how our time series data has been organized...
-
-        for index, row in weather.iterrows():
-
-            month = row['month']
-            day = row['monthday']
-            hour = row['hour']
-
-
-
-            if df_bikes.loc[(df_bikes['month']==month) & (df_bikes['monthday'] == day) & (df_bikes['hour'] == hour), cols].shape[0] != 0:
-
-                for col in cols:
-
-                    df_bikes.loc[(df_bikes['month']==month) & (df_bikes['monthday'] == day) & (df_bikes['hour'] == hour), col] = row[col]
-
-        #drop bike data with no appropriate weather info
-        df_bikes = df_bikes[df_bikes.description!=0]
-
-        #make a target variable
-        df_bikes['target']=df_bikes['bike_stands']-df_bikes['available_bike_stands']
-        print('Making dummies for categorical features')
-        #make dummies out of some features
-        features_to_concat = [df_bikes]
         for feature in ['description','main']:
 
-            features_to_concat.append(pd.get_dummies(df_bikes[feature], prefix=feature))
+            features_to_concat.append(pd.get_dummies(df_all[feature], prefix=feature))
 
-        df_bikes = pd.concat(features_to_concat, axis=1)
+        df_all = pd.concat(features_to_concat, axis=1)
+        return df_all
 
-
-
-
-        #return the dataframe
-        return df_bikes
-
-        #this is just going to be nasty
-
-        pass
 
 
     def piklData(self, fileLocation):
@@ -195,7 +149,7 @@ class model():
                 try:
                     row[feature+'_'+object[feature]]+=1
 
-                #if we encounter a new value for categorical features, record it in the error log file
+                #if we encounter a new value for categorical features, record it in the error log file. This is a pretty rubbish fix, but will work for now. We can check this error log to see if new weather descriptions have been encountered. The next time we build the model, it will include these new descriptions as dummies anyway, so all is not lost.
                 except:
                     IndexError
                     f=open('modelerrorlog.log','a')
