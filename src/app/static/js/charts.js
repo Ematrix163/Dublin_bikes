@@ -69,11 +69,7 @@ function reloadChart(day) {
 
 
 function loadChart(stand, day, buttons = true, targetId = false) {
-<<<<<<< HEAD
   if (targetId == false){
-=======
-	chosenStand = stand;
->>>>>>> 4bb154ff29d34637563143e77e05d2c18133869d
 	$('.overlay').show();
 }
 else {
