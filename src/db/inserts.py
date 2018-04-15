@@ -5,8 +5,9 @@ import json as js
 
 import getpass
 global passw
+from db import query
 
-passw = getpass.getpass('Enter db password:')
+
 
 
 def insertLiveDB(data, timestamp):
@@ -15,9 +16,7 @@ def insertLiveDB(data, timestamp):
     Largely composed of copypasta from mysql.com/stack overflow'''
     global passw
 
-    cnx = mysql.connector.connect(user='BikesMasterUser',\
-    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = passw )
+    cnx = query.makeCnx()
     cursor = cnx.cursor()
 
     for thing in data:

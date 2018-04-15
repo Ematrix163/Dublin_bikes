@@ -12,8 +12,9 @@ import mysql.connector
 from analytics import model
 import getpass
 global psd
+from db import query
 
-psd = getpass.getpass('Enter db password:')
+
 
 
 def buildModel(sleeptime):
@@ -41,13 +42,11 @@ def scrape(url, sleeptime, f):
 
 def insertWeather(rawData):
 
-    global psd
+    
     if rawData['cod'] == '200':
         dt = rawData['list'][0]['dt']
         # connect to the database
-        cnx = mysql.connector.connect(user='BikesMasterUser',\
-              database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-              port = 3306, password = psd)
+        cnx = query.makeCnx()
         cursor = cnx.cursor()
         cursor.execute('SELECT dt FROM weather where dt = %s', (dt,))
         # The id is dt
@@ -75,9 +74,7 @@ def insertLiveDB(data):
 
     global psd
 
-    cnx = mysql.connector.connect(user='BikesMasterUser',\
-    database='dublinbikes', host='dublinbikes-chen-diarmuid-louis.cxt07zwifclj.us-west-2.rds.amazonaws.com',\
-    port = 3306, password = psd )
+    cnx = query.makeCnx()
     cursor = cnx.cursor()
 
     for thing in data:
