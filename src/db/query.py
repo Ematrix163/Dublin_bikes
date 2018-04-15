@@ -195,10 +195,3 @@ def queryWeather():
 	cnx.close()
 
 	return json
-
-if __name__=='__main__':
-    #test all methods
-#
-   print(queryStandNumber(5))
-#    print(queryCurrentStands())
-    # print(queryStaticLocations())

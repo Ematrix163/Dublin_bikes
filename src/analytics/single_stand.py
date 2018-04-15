@@ -78,8 +78,7 @@ def prepareData(stand, begin, end):
 
 
 
-    print(arr)
-    print(len(arr))
+
     return arr
 
 
@@ -108,7 +107,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
         dtime = datetime.datetime.fromtimestamp(time_c)
         hour = dtime.hour
 
-        print(dtime.weekday())
+
         if dtime.weekday()==dayOfWeek:
             #if day of week is the same
 
@@ -117,7 +116,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
             json[hour]['bikes'].append(int(data[t]['bikes']))
             json[hour]['spaces'].append(int(data[t]['spaces']))
 
-    print(json)
+
     response = {'spaces':[], 'bikes':[]}
     for t in json:
 
@@ -155,21 +154,6 @@ def makeEmptyJsonDayObject():
 
 
 
-
-
-if __name__ == '__main__':
-    # test to see if this is working
-
-    #print(prepareDayOfTheWeekData(), 6)
-    #expet to see a json list grouped by g minute intervals with averages
-    #e.g {'00':averageTime, '06':averageTime, '12':averageTime
-
-    print(prepareDayOfTheWeekData(78, 5))
-
-    print('\n\n\n\n\n')
-
-
-    ##print(prepareData(68, 0, time.time()))
 
 
 
