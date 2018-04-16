@@ -15,6 +15,20 @@ function makeTimeLabels() {
     return arr
 }
 
+function makeTimeDictionary(){
+d={}
+for (var i = 0; i< 24; i++){
+
+
+if (i < 10){var s='0'+i.toString()+':00'}
+else{s=i.toString()+':00'}
+
+d[i]=s
+
+}
+return d
+}
+var timeDictionary = makeTimeDictionary()
 
 
 function dateTimeLabels(array){
@@ -306,16 +320,24 @@ function makePredictiveChart(day){
     console.log(bikes)
     spaces = predictive_data['spaces'].slice(begin, end)
     times = predictive_data['times'].slice(begin, end)
+    var beginDate = new Date(times[0]*1000);
+    var endDate = new Date(times[times.length-1]*1000)
+    var description='Predicted stand occupancy from '+beginDate.toString()+' to '+endDate.toString()
     for (var i=0; i < times.length; i++){
 
       var t=new Date(times[i]*1000)
-      times[i]=t.getHours().toString()
+      times[i]=t.getHours()
     }
-    console.log(times)
+    labs = []
+    for (var i = 0; i<times.length;i++){
+      console.log(timeDictionary[times[i]])
+      labs.push(timeDictionary[times[i]])
+    }
+    console.log(labs)
 		new Chart(document.getElementById('predict-chart'), {
 			type: 'line',
 			data: {
-				labels: times,
+				labels: labs,
 				datasets: [{
 						data: bikes,
 						label: "Bikes",
@@ -335,7 +357,7 @@ function makePredictiveChart(day){
 				maintainAspectRatio: false,
 				title: {
 					display: true,
-					text: 'Five day bike forecast'
+					text: description
 				}
 			}
 		}) }
