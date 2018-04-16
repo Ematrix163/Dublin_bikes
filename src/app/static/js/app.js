@@ -412,7 +412,7 @@ function initMap() {
 
 
 	let getWeather = $.ajax({
-		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&APPID=def5ec12072a2e8060e27a30bdbebb2e'
+		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&APPID='+ apikey
 	})
 
 	getWeather.done(function(data){

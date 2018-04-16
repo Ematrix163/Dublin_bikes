@@ -106,7 +106,8 @@ predictiveModel = predictor.predictor(global_static)
 @app.route('/')
 def index():
     '''loads index page'''
-    return render_template("index.html", key = keyring.getMapKey())
+    print(keyring.getWeatherKey())
+    return render_template("index.html", key = keyring.getMapKey(), a = keyring.getWeatherKey() )
 
 @app.route('/charts.js')
 def chartSrcipt():
