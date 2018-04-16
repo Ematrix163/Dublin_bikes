@@ -48,6 +48,7 @@ function drawStandsButtons(data, currentStand, currentDay) {
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
 	$('.stand').click(function(){
+		showAverage();
 		drawAverage(this.getAttribute('data-id').toString(),currentDay);
 	})
 	chosenStand = 1;
@@ -245,12 +246,35 @@ function showForecast() {
 }
 
 
+
 function showStreetView() {
 	$('#average').hide();
 	$('#predict').hide();
 	$('#streetView').show();
+	displayStreetView();
 }
 
+
+function displayStreetView() {
+	let loc = {'lat': allLocation[chosenStand].lat, 'lng': allLocation[chosenStand].long};
+	let streetViewService = new google.maps.StreetViewService();
+	streetViewService.getPanoramaByLocation(loc, 50, getStreetView);
+
+	function getStreetView(data, status) {
+		if (status == google.maps.StreetViewStatus.OK) {
+			console.log('Get StreetView successfully!');
+			let nearStreetViewLocation = data.location.latLng;
+			panoramaOptions = {
+			   position: nearStreetViewLocation,
+			   pov: {
+				   heading: 35,
+				   pitch: 30
+			   }
+			};
+		}
+		let panorama = new google.maps.StreetViewPanorama(document.getElementById('streetView'), panoramaOptions);
+	}
+}
 
 
 function getPredicts(stand){
