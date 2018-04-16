@@ -32,6 +32,9 @@ class predictor():
 
 
     def predict(self, stand, timestamp, matchingweather = None):
+
+        '''Takes a stand and a timestamp, and tries to predict stand occupancy at the given time. Matchingweather should be supplied as a parameter when a group of stands are being queried for the same timestamp. It will reduce the required computation '''
+
         time=datetime.datetime.fromtimestamp(timestamp)
         if matchingweather == None:
             weather = self.findMatchingWeather(time)
@@ -61,6 +64,8 @@ class predictor():
         return self.model.predict(d)
 
     def predictRange(self, stand, begin, end):
+
+        '''Will return a dictionary of data points giving the estimated number of bikes and stands across a specified range'''
 
         time = begin
 
@@ -99,6 +104,9 @@ class predictor():
 
 
     def findMatchingWeather(self, time1):
+
+        '''Matches weather data with the given timestamp'''
+
         #match weather data from forecast with the time given
 
         for object in self.weatherData['list']:
@@ -114,11 +122,12 @@ class predictor():
         return None
 
     def updateWeather(self):
-
+        '''Updates the predictors weather forecast'''
         self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID='+self.weatherKey).text)
 
     def getClosestStand(self, origin, transportMode='walking'):
 
+        '''Will try to use the predictive model to find the best stand for a user, given their transport mode and origin.'''
 
         closestDuration = inf
         lat1 = origin['lat']

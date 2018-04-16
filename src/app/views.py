@@ -23,6 +23,7 @@ global_time = datetime.datetime.fromtimestamp(timemodule.time())
 
 #methods for caching and updating certain data
 def cachegraphdata():
+    '''This functions is meant to be threaded. It will download information about daily stand occupancy and cache it, in order to speed up request times.'''
 
     print('begin caching graph data....')
     global global_static
@@ -41,17 +42,16 @@ def cachegraphdata():
 
 
 
-            for day in range (7):
+        for day in range (7):
 
-                if day != actual_day:
+            if day != actual_day:
 
+                for number in global_static:
 
-                    for number in global_static:
-
-                        try:
-                            global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
-                        except:
-                            print('Failed to update graph for stand', number, 'day', day)
+                    try:
+                        global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                    except:
+                        print('Failed to update graph for stand', number, 'day', day)
 
         #sleep for a whole day once this is done
         timemodule.sleep(86400)
@@ -60,6 +60,7 @@ def cachegraphdata():
 
 
 def updateLiveData():
+    '''This function is meant to be threaded. It will update the current weather and stand occupancy data every five minutes.'''
     global global_stands
     global global_static
     global global_last_update
@@ -115,23 +116,21 @@ print('Ready to begin accepting request..')
 
 @app.route('/')
 def index():
-    '''loads index page'''
-    return render_template("index.html", key = keyring.getMapKey())
+    '''Loads the index page.'''
+    return render_template("index.html", key = keyring.getMapKey(), apikey=key)
 
-@app.route('/charts.js')
-def chartSrcipt():
 
-    return open('app/static/js/charts.js', 'r').read()
 
 
 
 @app.route('/dash')
 def dashboard():
+    '''Returns the dash.html page, with the given stand number preloaded'''
 
     if request.args.get('stand')==None:
 
         stand = 1
-        print('erro')
+
     #need to change these into a returnable template
     else:
         stand = str(request.args.get('stand'))
@@ -146,8 +145,10 @@ def dashboard():
 def findClosestStand():
     global predictiveModel
 
-    '''will return the closest stand to the stated origin
-    this will unfortunately take almost a minute
+    '''Will return the closest stand (with at least five bikes or five spaces) to the stated origin. Transport mode is used as a proxy for whether the user is seeking a bike or location. 'Cycling' will return a stand with spaces, 'walking' will return a stand with bikes.
+
+    If 'predictive' is used as a parameter, it will attempt to use our model to find the best stand for the user, given the time it will take for them to walk there.
+
     '''
     if request.args.get('origin')==None:
         origin = {'lat':53.3053, 'long': 6.2207}
@@ -175,6 +176,8 @@ def findClosestStand():
 @app.route('/graph')
 def getGraphData():
 
+    '''Returns a set of data points representing the average occupancy of a stand on a given day'''
+
     global global_cached_graphs
     stand = request.args.get('stand')
     day = str(request.args.get('day'))
@@ -194,31 +197,15 @@ def getGraphData():
 #for requesting
 @app.route('/request')
 def getCurrentData():
+
+    '''Multiple request methods packed into this one link. Sorted by type.'''
+
     global global_stands
     global global_static
     global global_last_update
     global predictiveModel
     global global_weather
-    ''' should be able to use /request?type=currentstands
-    to get a json object describing current stand occupancy
-    (number of bikes, number of spaces)
 
-    should be able to use /request?type=staticlocations
-    to get a json object describing the locations
-    (address, name, latitude, longitude etc)
-
-    should be able to use /request?type=standnumber&stand=52&begin=123718&end=11471847
-    to find data for a bike stand from a begin time to an end time
-
-    begin and end default to only times within the last five minutes
-
-    '''
-    '''
-    I think here we should use 'POST' methond ranther than 'GET', because 'GET' API is not safety in network.
-    Here we try to make it private not public. So I just change your code.
-
-    2018-03-27  Chen
-    '''
 
     request_type = request.args.get('type')
 

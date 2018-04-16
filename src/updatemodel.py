@@ -1,4 +1,4 @@
 from analytics import model
-print('Updating model')
+print('Begin updating model')
 m=model.model(from_data=True)
 print('Finished')

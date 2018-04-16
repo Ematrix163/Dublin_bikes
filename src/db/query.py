@@ -6,7 +6,7 @@ import getpass
 global passw
 
 def getConfig():
-
+    '''Gets all database parameters from file and returns them in dictionary form'''
     f=open('config.config','r').read().split('\n')
     d={}
     d['database']=f[1]
@@ -18,6 +18,9 @@ def getConfig():
     return d
 
 def makeCnx():
+
+    '''Creates a cnx object that can be used to access our database'''
+
     params= getConfig()
     cnx = mysql.connector.connect(user=params['user'],\
     database=params['database'], host=params['host'],\
@@ -26,10 +29,10 @@ def makeCnx():
 
 def queryStandNumberFull(x):
 
-    '''gets all historical information about a specific stands occupancy
+    '''Gets all historical information about a specific stands occupancy
 
 
-    by supplying time parameters, it can also get information within a timeframe'''
+    '''
 
     #takes a key, and a value for the key
     #returns all the rows who match that key
@@ -64,10 +67,10 @@ def queryStandNumberFull(x):
 
 
 def queryStandNumber(x):
-    '''gets all historical information about a specific stands occupancy
+    '''Gets the most up to date information for a single bike stand
 
 
-    by supplying time parameters, it can also get information within a timeframe'''
+     '''
 
     #takes a key, and a value for the key
     #returns all the rows who match that key
@@ -109,7 +112,7 @@ def queryCurrentStands():
 
     global passw
 
-    '''returns current stand occupancy data for all stands'''
+    '''Returns current stand occupancy data for all stands'''
 
 
     cnx=makeCnx()
@@ -142,7 +145,7 @@ def queryCurrentStands():
 def queryStaticLocations():
 	global passw
 
-	''' gets name, address and coordinates for all stands '''
+	''' Gets the name, address and coordinates of all bike stands '''
 
 	cnx = makeCnx()
 	cursor = cnx.cursor()
@@ -169,10 +172,10 @@ def queryStaticLocations():
 
 def queryWeather():
 
-	global passw
+
 
 	'''
-	The function is to get the weather information
+	Queries weather data from our database
 	'''
 
 	cnx = makeCnx()

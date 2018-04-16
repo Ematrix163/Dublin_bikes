@@ -1,2 +1,2 @@
-from bd import operations
+from db import operations
 operations.main()
