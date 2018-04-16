@@ -1,5 +1,7 @@
 let allLocation = {};
+predictive_data={}
 let chosenStand;
+$('#predictiveDays').hide();
 //attempt at graphs using charts.js library
 function makeTimeLabels() {
     arr = []
@@ -51,7 +53,12 @@ function drawStandsButtons(data, currentStand, currentDay) {
 	chosenStand = 1;
 	drawAverage(1,currentDay);
 }
+function switchPredDay(day){
 
+  makePredictiveChart(day)
+
+
+}
 function switchDay(day) {
 	$('.overlay').show();
 	$.ajax({
@@ -225,12 +232,16 @@ function showAverage() {
 	$('#average').show();
 	$('#predict').hide();
 	$('#streetView').hide();
+  $('#predictiveDays').hide()
 }
 
 function showForecast() {
 	$('#average').hide();
 	$('#predict').show();
+  $('#averageDays').hide()
+  $('#predictiveDays').show()
 	$('#streetView').hide();
+  getPredicts(currentStand)
 }
 
 
@@ -242,36 +253,52 @@ function showStreetView() {
 
 
 
-function predict(stand){
+function getPredicts(stand){
 	let begin = Math.round((new Date()).getTime() / 1000);
-	let end = begin + 432000;
+	let end = begin + 4320000;
 
 	$.ajax({
 		url: '/request',
 		type: 'GET',
 		data: {'type':'predictrange', 'stand':stand, 'begin':begin, 'end':end}
 	}).done(function(response){
-		let data = JSON.parse(response);
+		predictive_data = JSON.parse(response);
 		console.log('Get predicted data successfully!');
-		let time = [];
-		data.times.map(each => {
-			let a = new Date(each*1000);
-			let date = a.getDate()
-			let hours = a.getHours();
-			time.push(hours);
-		});
 
+
+      makePredictiveChart(0);
+		 });
+
+  }
+
+
+function makePredictiveChart(day){
+    length = predictive_data['times'].length
+    begin = parseInt(length * (day/5))
+    end = parseInt(length * (day+1)/5)
+    console.log(begin,end)
+    console.log(predictive_data)
+    bikes = predictive_data['bikes'].slice(begin, end)
+    console.log(bikes)
+    spaces = predictive_data['spaces'].slice(begin, end)
+    times = predictive_data['times'].slice(begin, end)
+    for (var i=0; i < times.length; i++){
+
+      var t=new Date(times[i]*1000)
+      times[i]=t.getHours().toString()
+    }
+    console.log(times)
 		new Chart(document.getElementById('predict-chart'), {
 			type: 'line',
 			data: {
-				labels: time,
+				labels: times,
 				datasets: [{
-						data: data.bikes,
+						data: bikes,
 						label: "Bikes",
 						borderColor: "red",
 						fill: true
 		  }, {
-						data: data.spaces,
+						data: spaces,
 						label: 'Spaces',
 						borderColor: "blue",
 						fill: true
@@ -287,9 +314,7 @@ function predict(stand){
 					text: 'Five day bike forecast'
 				}
 			}
-		});
-	})
-}
+		}) }
 
 
 

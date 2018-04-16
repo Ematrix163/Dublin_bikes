@@ -468,7 +468,7 @@ function initMap() {
     console.log(data)
 
 		 let w  = data['main'];
-		 $('#temp').text('Temp:' + w['temp']);
+		 $('#temp').text(w['temp']);
 		 $('#max-temp').text(w['temp_max']);
 		 $('#min-temp').text(w['temp_min']);
      //this method for getting a weather icon, and the icons it displays, were sourced from https://gist.github.com/tbranyen/62d974681dea8ee0caa1
