@@ -677,9 +677,7 @@ function calcRoute(s, e, mode = 'WALKING') {
 
     // First, clear out any existing markerArray
     // from previous calculations.
-    for (let i = 0; i < allCircles.length; i++) {
-        allCircles[i].setMap(null);
-    }
+
 
     // Retrieve the start and end locations and create
     // a DirectionsRequest using WALKING directions.
@@ -804,7 +802,7 @@ let viewModel = function() {
 			let getBike = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {'origin': userLocation.lat.toString()+','+userLocation.lng.toString()}
+				data: {'origin': userLocation.lat.toString()+','+userLocation.lng.toString(), 'predictive':'True'}
 			});
 			getBike.done(function(data) {
 				$('.overlay').hide();
@@ -835,7 +833,7 @@ let viewModel = function() {
 			let getStation = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {'origin':userLocation, 'mode':'bicycling'}
+				data: {'origin':userLocation, 'mode':'bicycling', 'predictive':'True'}
 			})
 
 			getStation.done(function(data){

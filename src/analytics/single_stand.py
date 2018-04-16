@@ -90,6 +90,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek):
     returns json like object that can easily be graphed
 
     however, statistically speaking, this might just be junk'''
+    print(stand)
     stand = int(stand)
     dayOfWeek = int(dayOfWeek)
     import time
