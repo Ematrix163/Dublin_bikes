@@ -117,7 +117,7 @@ print('Ready to begin accepting request..')
 @app.route('/')
 def index():
     '''Loads the index page.'''
-    return render_template("index.html", key = keyring.getMapKey(), apikey=key)
+    return render_template("index.html", key = keyring.getMapKey())
 
 
 
