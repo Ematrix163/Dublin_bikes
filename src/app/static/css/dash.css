@@ -155,7 +155,7 @@ body {
 
 .graph {
 	width: 800px;
-	height: calc(100vh - 71px);
+	height: calc(100vh - 300px);
 }
 
 
@@ -173,30 +173,16 @@ body {
 	background-color:rgb(173,216,210);
 }
 
+#streetView {
+	width: 800px;
+	height: 600px;
+}
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Loading Animation*/
 /*Loading Animation*/
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
