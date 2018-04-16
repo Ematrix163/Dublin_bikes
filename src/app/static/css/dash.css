@@ -136,8 +136,8 @@ body {
 .graph {
 	display: inline-block;
 	width: 900px;
-	height: 500px;
-	margin-top: 50px;
+	height: 400px;
+	margin-top: 40px;
 }
 
 
@@ -168,13 +168,16 @@ body {
 	height: calc(100vh - 71px);
 }
 
-
+#currentData {
+	width: 900px;
+	height: 400px;
+	color: rgb(0,123,255);
+}
 
 
 /*Loading Animation*/
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
-
 
 .overlay {
 	width: 100%;

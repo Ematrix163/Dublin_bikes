@@ -1,5 +1,6 @@
 let allLocation = {};
 predictive_data={}
+
 let chosenStand;
 $('#predictiveDays').hide();
 //attempt at graphs using charts.js library
@@ -33,7 +34,7 @@ function getStaticLocations(currentStand, currentDay) {
 	$.ajax({
 		url: './request',
 		type: 'GET',
-		data: {'type':'staticlocations'}
+		data: {'type':'liveData'}
 	}).done(function(response){
 		console.log('getting static data successfully!');
 		data = JSON.parse(response);
@@ -48,18 +49,37 @@ function drawStandsButtons(data, currentStand, currentDay) {
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
 	$('.stand').click(function(){
+		drawCurrent(this.getAttribute('data-id').toString());
 		showAverage();
 		drawAverage(this.getAttribute('data-id').toString(),currentDay);
 	})
 	chosenStand = 1;
+	$('#predict').hide();
+	drawCurrent(chosenStand);
 	drawAverage(1,currentDay);
 }
-function switchPredDay(day){
-
-  makePredictiveChart(day)
 
 
+
+function drawCurrent(stand) {
+	console.log(111);
+	let bikes = allLocation[stand].bikes;
+	let spaces = allLocation[stand].spaces;
+	let status = allLocation[stand].status;
+	$('#bikes').text('Current availabe bikes: ' + bikes);
+	$('#stands').text('Current availabe spaces:' +spaces);
+	$('#status').text('Current status:' + status);
 }
+
+
+
+function switchPredDay(day){
+  makePredictiveChart(day)
+}
+
+
+
+
 function switchDay(day) {
 	$('.overlay').show();
 	$.ajax({
@@ -99,6 +119,9 @@ function switchDay(day) {
 		});
 	})
 }
+
+
+
 
 
 function drawAverage(stand, day) {
@@ -233,16 +256,18 @@ function showAverage() {
 	$('#average').show();
 	$('#predict').hide();
 	$('#streetView').hide();
-  $('#predictiveDays').hide()
+  	$('#predictiveDays').hide();
+	$('#currentData').show();
 }
 
 function showForecast() {
 	$('#average').hide();
 	$('#predict').show();
-  $('#averageDays').hide()
-  $('#predictiveDays').show()
+  	$('#averageDays').hide()
+  	$('#predictiveDays').show()
 	$('#streetView').hide();
-  getPredicts(currentStand)
+	$('#currentData').show();
+  	getPredicts(currentStand);
 }
 
 
@@ -251,6 +276,7 @@ function showStreetView() {
 	$('#average').hide();
 	$('#predict').hide();
 	$('#streetView').show();
+	$('#currentData').hide();
 	displayStreetView();
 }
 
