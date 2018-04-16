@@ -737,46 +737,61 @@ let viewModel = function() {
 
 
 	this.findBike = function(data, event) {
-		$('#loading-text').text('Try to find the nearest bike for you...');
-		$('.overlay').show();
-		let getBike = $.ajax({
-			url: './distance',
-			type: 'GET',
-			data: {'origin': userLocation}
-		});
-		getBike.done(function(data) {
-			$('.overlay').hide();
-			data = JSON.parse(data);
-			data['lng'] = data['long'];
-			calcRoute(userLocation, data);
-		})
-		getBike.fail(function(data){
-			sweetNote('Sorry, the server cannot find a bike for you!')
-		});
+		if (!searchBox.getPlaces()) {
+			sweetNote('Please input your location!');
+		} else {
+			let temp =  searchBox.getPlaces()["0"].geometry.location;
+
+			userLocation = {lat: temp.lat(),lng: temp.lng()};
+			$('#loading-text').text('Try to find the nearest bike for you...');
+			$('.overlay').show();
+			let getBike = $.ajax({
+				url: './distance',
+				type: 'GET',
+				data: {'origin': userLocation}
+			});
+			getBike.done(function(data) {
+				$('.overlay').hide();
+				data = JSON.parse(data);
+				data['lng'] = data['long'];
+				calcRoute(userLocation, data);
+			})
+			getBike.fail(function(data){
+				sweetNote('Sorry, the server cannot find a bike for you!')
+			});
+		}
+
+
+
 	}
 
 
 	this.findStation = function(data, event) {
 
+		if (!searchBox.getPlaces()) {
+			sweetNote('Please input your location!');
+		} else {
+			let temp =  searchBox.getPlaces()["0"].geometry.location;
+			userLocation = {lat: temp.lat(),lng: temp.lng()};
+			$('#loading-text').text('Try to find the nearest availabe station for you...');
+			$('.overlay').show();
+			let getStation = $.ajax({
+				url: './distance',
+				type: 'GET',
+				data: {'origin':userLocation, 'mode':'bicycling'}
+			})
 
-		$('#loading-text').text('Try to find the nearest availabe station for you...');
-		$('.overlay').show();
-		let getStation = $.ajax({
-			url: './distance',
-			type: 'GET',
-			data: {'origin':userLocation, 'mode':'bicycling'}
-		})
+			getStation.done(function(data){
+				$('.overlay').hide();
+				data = JSON.parse(data);
+				data['lng'] = data['long'];
+				calcRoute(userLocation, data);
+			})
 
-		getStation.done(function(data){
-			$('.overlay').hide();
-			data = JSON.parse(data);
-			data['lng'] = data['long'];
-			calcRoute(userLocation, data);
-		})
-
-		getStation.fail(function(data){
-			sweetNote('Sorry, the server cannot find a station for you!')
-		});
+			getStation.fail(function(data){
+				sweetNote('Sorry, the server cannot find a station for you!')
+			});
+		}
 	}
 
 

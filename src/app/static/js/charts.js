@@ -133,6 +133,58 @@ function makeChart(data, targetId=false) {
 
 }
 
+
+function predict(stand){
+	let begin = Math.round((new Date()).getTime() / 1000);
+	let end = begin + 432000;
+
+	$.ajax({
+		url: '/request',
+		type: 'GET',
+		data: {'type':'predictrange', 'stand':stand, 'begin':begin, 'end':end}
+	}).done(function(response){
+		let data = JSON.parse(response);
+		console.log('Get predicted data successfully!');
+		let time = [];
+		data.times.map(each => {
+			let a = new Date(each*1000);
+			let date = a.getDate()
+			let hours = a.getHours();
+			time.push(hours);
+		});
+
+		new Chart(document.getElementById('predict-chart'), {
+			type: 'line',
+			data: {
+				labels: time,
+				datasets: [{
+						data: data.bikes,
+						label: "Bikes",
+						borderColor: "red",
+						fill: true
+		  }, {
+						data: data.spaces,
+						label: 'Spaces',
+						borderColor: "blue",
+						fill: true
+		  }
+		]
+			},
+			options: {
+				responsive: true,
+				responsiveAnimationDuration: 30,
+				maintainAspectRatio: false,
+				title: {
+					display: true,
+					text: 'The following 5 days prediction'
+				}
+			}
+		});
+	})
+}
+
+
+
 //copied from stack overflow
 function scrollIntoView(eleID) {
    var e = document.getElementById(eleID);

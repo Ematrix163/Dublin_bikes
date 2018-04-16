@@ -45,8 +45,12 @@
 				</div>
 
 
-				<div id='graph'>
+				<div class='graph'>
 					<canvas id='chart'></canvas>
+				</div>
+
+				<div class='graph'>
+					<canvas id='predict-chart'></canvas>
 				</div>
 
 				<div class="overlay">
@@ -91,6 +95,7 @@
 			var d = new Date();
 			var currentDay = d.getDay()
 			getStaticLocations(currentStand, currentDay, predictie=false)
+			predict(1)
 		</script>
 
 </body>
