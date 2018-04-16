@@ -84,6 +84,7 @@ body {
 /*Content*/
 #content {
     flex: 1;
+	background-image: url('../images/bg.png');
 }
 
 
@@ -119,27 +120,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*DASHBOARD PAGE*/
 .date {
 	display: inline;
@@ -154,14 +134,16 @@ body {
 }
 
 .graph {
-	width: 800px;
-	height: calc(100vh - 300px);
+	display: inline-block;
+	width: 900px;
+	height: 500px;
+	margin-top: 50px;
 }
 
 
 .stand {
 	cursor: pointer;
-
+	padding: 6px;
 }
 
 #canvas {
@@ -171,14 +153,20 @@ body {
 
 .stand:hover {
 	background-color:rgb(173,216,210);
+	color: white;
 }
 
 #streetView {
-	width: 800px;
-	height: 600px;
+	display: inline-block;
+	width: 100%;
+	height: calc(100vh - 71px);
 }
 
-
+.view {
+	text-align: center;
+	width: 100%;
+	height: calc(100vh - 71px);
+}
 
 
 
