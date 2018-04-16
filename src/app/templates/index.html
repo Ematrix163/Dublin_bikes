@@ -23,22 +23,16 @@
 	            </div>
 
 	            <div class="form-group">
-	                <label for="userLocation">Your Location:</label>
-	                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
+
+	                <label id="locationWarning" for="userLocation">Couldn't locate you. Please enter your location below:</label>
+
+	                <input type="text" class="form-cohttp://0.0.0.0:5000/ntrol" id="userLocation" placeholder="Enter your location">
 	                <br/>
-	                <label for="bike-stands">Bike Stands:</label>
-	                <!-- <input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands" data-bind="textInput: keyword, event:{keyup:fliterStands}"> -->
 
-					<input type="text" class="form-control" id="bike-stands" placeholder="Please enter your bike stands"
-					list="stands" data-bind="textInput: keyword, event:{keyup:fliterStands}" />
-
-					<datalist id="stands" data-bind="foreach: placeList">
-					  <option data-bind="text:name, click: $parent.displayInfo"></option>
-					</datalist>
 
 				</div>
 
-				<button type="button" class="btn btn-primary btn-block" data-bind="click: show">Search Route</button>
+          <button type="button" id ='showSearchButton' class="btn btn-primary btn-block" data-bind="click:showSearch">Let me enter a location</button>
 				<button type="button" class="btn btn-primary btn-block" data-bind="click:findBike">Find Me a Bike</button>
 				<button type="button" class="btn btn-primary btn-block" data-bind="click:findStation">Find Me a Station</button>
 
@@ -101,6 +95,7 @@
 
 
         <script type="text/javascript">
+
             $(document).ready(function() {
                 $('#sidebarCollapse').on('click', function() {
                     $('#sidebar').toggleClass('active');
