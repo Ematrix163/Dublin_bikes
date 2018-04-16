@@ -174,10 +174,10 @@ body {
 
 
 #weather {
-	position: absolute;
-
+	position:relative;
+  display:inline;
 	top: 20px;
-	right: 50%;
+	right: -77%;
 	color: white;
 	z-index: 99;
 }
