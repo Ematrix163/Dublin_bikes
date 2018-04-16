@@ -81,6 +81,20 @@ body {
     margin: 5px auto;
 }
 
+/*Content*/
+#content {
+    flex: 1;
+}
+
+
+.content-header {
+    height: 71px;
+    background-color: lightblue;
+}
+
+
+
+
 
 /*Responsive Design*/
 @media (max-width: 768px) {
@@ -132,9 +146,9 @@ body {
 
 /*DASHBOARD PAGE*/
 .date {
-	position: relative;
-	left: 50%;
-	border: black 1px solid;
+	position: absolute;
+	right: 1%;
+	top: 2%;
 }
 
 
@@ -148,10 +162,17 @@ body {
 .date li {
 	display: inline;
 	cursor: pointer;
+	padding: 10px;
+	background-color: rgb(113, 123, 177);
+	color: white;
+	border-radius: 6px;
 }
 
 
 
+.date li:hover {
+	background-color:rgb(122, 131, 222);
+}
 
 .graph {
 	width: 100%;
@@ -171,7 +192,7 @@ body {
 }
 
 .stand:hover {
-	background-color:
+	background-color:rgb(173,216,210);
 }
 
 

@@ -78,6 +78,9 @@
         </div>
 
 
+		<script type="text/javascript">
+			var apikey = "{{ a }}"
+		</script>
         <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" >
@@ -94,15 +97,18 @@
         </script>
 
 
-        <script type="text/javascript">
+		<script type="text/javascript">
 
-            $(document).ready(function() {
-                $('#sidebarCollapse').on('click', function() {
-                    $('#sidebar').toggleClass('active');
-                    $(this).toggleClass('active');
-                });
-            });
-        </script>
+
+			$(document).ready(function() {
+				$('#sidebarCollapse').on('click', function() {
+					$('#sidebar').toggleClass('active');
+					$(this).toggleClass('active');
+				});
+			});
+		</script>
+
+
 </body>
 
 </html>

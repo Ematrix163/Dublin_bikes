@@ -3,7 +3,7 @@
 
 <head>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dash.css') }}">
 </head>
 
@@ -13,7 +13,7 @@
 		<nav id="sidebar">
 			<div class="sidebar-content">
 				<div class="sidebar-header">
-					<h3>Station List:</h3>
+					<h3>Station List</h3>
 				</div>
 			</div>
 			<div class="stand-list-container">
@@ -29,9 +29,13 @@
 					<span></span>
 					<span></span>
 				</button>
-			</div>
 
-			<div class="view">
+				<div class="chosen-button">
+					<button type="button" class="btn btn-outline-primary" onClick='showAverage()'>Average</button>
+					<button type="button" class="btn btn-outline-secondary" onClick="showForecast()">Forecast</button>
+					<button type="button" class="btn btn-outline-success" onClick="showStreetView()">StreetView</button>
+				</div>
+
 				<div class="date">
 					<ul>
 						<li onclick="reloadChart(0)">Monday</li>
@@ -43,16 +47,23 @@
 						<li onclick="reloadChart(6)">Sunday</li>
 					</ul>
 				</div>
+			</div>
+
+			<div class="view">
 
 
-				<div class='graph'>
-					<canvas id='chart'></canvas>
+
+				<div class="graph" id='average'>
+					<canvas id='average-chart'></canvas>
 				</div>
 
-				<div class='graph'>
+				<div class="graph" id='predict'>
 					<canvas id='predict-chart'></canvas>
 				</div>
 
+
+
+				<div id='streetView'></div>
 				<div class="overlay">
 					<div class="loading-wrapper">
 						<div class="bounceball">
@@ -70,8 +81,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 		<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-		<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" >
-		</script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" ></script>
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

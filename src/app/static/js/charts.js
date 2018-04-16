@@ -70,12 +70,12 @@ function reloadChart(day) {
 
 
 function loadChart(stand, day, buttons = true, targetId = false) {
-  if (targetId == false){
-	$('.overlay').show();
-}
-else {
-  $('.chartoverlay').show()
-}
+	if (targetId == false){
+		$('.overlay').show();
+	}
+	else {
+		$('.chartoverlay').show()
+	}
   	console.log(stand, day)
     if (buttons === true) {
         currentDay = day;
@@ -143,6 +143,17 @@ else{
     });
 
 }
+
+
+
+function showAverage() {
+	$('#average').show();
+	$('#predict').hide();
+	$('#streetView').hide();
+}
+
+
+
 
 
 function predict(stand){
