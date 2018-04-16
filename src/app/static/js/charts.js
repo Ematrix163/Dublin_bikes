@@ -193,12 +193,7 @@ function makeChart(data, targetId=false) {
       chart_id = "chart"+targetId.toString()
     }
 
-	if (chartType == 'average') {
-
-	}
-	else if (chartType = 'predict') {
-
-	}
+	
 
     console.log(data.bikes)
     console.log(data.spaces)
