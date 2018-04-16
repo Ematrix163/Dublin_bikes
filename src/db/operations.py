@@ -10,14 +10,13 @@ import json
 import time
 import mysql.connector
 from analytics import model
-import getpass
-global psd
-from db import query
+from db import query, keyring
 
 
 
 
 def buildModel(sleeptime):
+    '''Rebuilds the RandomForestRegressor model with the most up to date data'''
     while True:
         m= model.model(from_data=True)
         del(model)
@@ -26,6 +25,9 @@ def buildModel(sleeptime):
 
 
 def scrape(url, sleeptime, f):
+
+    '''Scrapes data from a url and applies a named function f to it.'''
+
     while True:
         #run this forever
         try:
@@ -41,8 +43,8 @@ def scrape(url, sleeptime, f):
 
 
 def insertWeather(rawData):
+    '''Inserts weather data from the open weather api into our database'''
 
-    
     if rawData['cod'] == '200':
         dt = rawData['list'][0]['dt']
         # connect to the database
@@ -69,8 +71,8 @@ def insertWeather(rawData):
 
 def insertLiveDB(data):
 
-    '''inserts new stand data (from the bikes api) into the database. Used by webscraper.
-    Largely composed of copypasta from mysql.com/stack overflow'''
+    '''Inserts new stand data (from the bikes api) into the database. Used by webscraper.
+    Much of this code was copy pasted from mysql.com'''
 
     global psd
 
@@ -104,10 +106,10 @@ def main():
     # I use multiprocess here because we don't need to get whether data every 5 minutes
 
     # get the whether data every 3 hour
-    weather = Process(target=scrape, args=('http://api.openweathermap.org/data/2.5/find?q=Dublin&units=imperial&type=accurate&mode=json&APPID=def5ec12072a2e8060e27a30bdbebb2e', 3600, insertWeather))
+    weather = Process(target=scrape, args=('http://api.openweathermap.org/data/2.5/find?q=Dublin&units=imperial&type=accurate&mode=json&APPID='+keyring.getWeatherKey(), 3600, insertWeather))
 
     # get bike stations every 5 minutes
-    stands = Process(target=scrape, args=('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey=80b7eeead410f23a165f6d67bc9d33e514e8ee84', 300, insertLiveDB))
+    stands = Process(target=scrape, args=('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey='+keyring.getBikeKey(), 300, insertLiveDB))
 
     models = Process(target=buildModel, args=(604800))
 

@@ -48,8 +48,9 @@ function drawStandsButtons(data, currentStand, currentDay) {
 	}
 	console.log(allLocation);
 	$('.stand').click(function(){
-		// Add listen click function
-		loadChart(this.getAttribute('data-id'), currentDay);
+		// Add listen click functio
+    console.log(this.getAttribute('data-id'))
+		loadChart(this.getAttribute('data-id').toString(), currentDay);
 	})
     loadChart(currentStand, currentDay);
 }
@@ -197,7 +198,7 @@ function predict(stand){
 				maintainAspectRatio: false,
 				title: {
 					display: true,
-					text: 'The following 5 days prediction'
+					text: 'Five day bike forecast'
 				}
 			}
 		});

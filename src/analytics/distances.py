@@ -10,6 +10,7 @@ from db import keyring
 
 def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'):
 
+    '''Uses the google distance matrix api to request distance and duration for all staticloactions from the origin'''
     requestString = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='
     requestString+=str(origin['lat'])+','+str(origin['long'])
     requestString+='&destinations='
@@ -39,7 +40,7 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
 
 def getClosestStand(origin, transportMode='walking'):
 
-    '''iterates through all stands and finds the closest one to the origin'''
+    '''Iterates through all stands and finds the closest one, (with more than five bikes/spaces) to the origin'''
 
     #how to put a predictive element here?
 

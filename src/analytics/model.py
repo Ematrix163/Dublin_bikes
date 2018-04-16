@@ -6,6 +6,7 @@ import json
 import getpass
 from db import query
 
+
 class model():
 
 
@@ -27,13 +28,14 @@ class model():
             #we don't want these features in our X dataframe
             cols = [col for col in df_all.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target']]
 
-            print('building model..')
+            print('Training model..')
             from sklearn.ensemble import RandomForestRegressor
             self.clf=RandomForestRegressor(max_depth=50).fit(df_all[cols], df_all['target'])
-            print('Saving model....')
+            print('Saving model to pikl....')
             #save model to a pikl file
             self.piklData('analytics/model.pikl')
-            print(cols)
+
+            print('Writing model feature names to file')
             f=open('modelfeatures','w')
             string='['
             self.features = cols
@@ -45,33 +47,40 @@ class model():
             f.close()
 
         if from_pikl==True:
-            self.features = self.loadFeatures()
+
+            try:
+                self.features = self.loadFeatures()
 
 
-            #load the model from a pikl file
+                #load the model from a pikl file
 
 
-            self.clf = joblib.load('analytics/model.pikl')
+                self.clf = joblib.load('analytics/model.pikl')
+            except:
+                print('Missing .pikl file. Building model from data instead.')
+                return model(from_data=True)
 
 
     def loadFeatures(self):
-
+        '''Load saved model features from disk'''
         f=open('analytics/modelfeatures','r').read()
         return [feature[1:-1] for feature in f[1:-1].split(', ')]
 
 
     def getandpreprocess(self):
+        '''Download data, clean and merge it into one table that can be used to train the model'''
         params = query.getConfig()
         connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']
 
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
         df_bikes = df_bikes.drop(['index'], 1)
-        def auto_truncate(val):
-            return val[:20]
+
         df_weather1=pd.read_sql_table(table_name='weather', con=connstring)
         df_weather2=pd.read_sql_table(table_name='dublin_weather', con=connstring)
 
-
+        def auto_truncate(val):
+            return val[:20]
+        print('Cleaning weather tables')
         df_old_weather = pd.read_csv('dublin_weather.csv', converters={'weather.description': auto_truncate})
         df_old_weather['temp']=df_old_weather['main.temp']
         df_old_weather['temp_min']=df_old_weather['main.temp_min']
@@ -84,7 +93,9 @@ class model():
         df_old_weather['icon']=df_old_weather['weather.icon']
         df_old_weather['main']=df_old_weather['weather.main']
         df_old_weather = df_old_weather[['dt', 'temp', 'humidity', 'temp_min', 'temp_max', 'pressure', 'wind_speed', 'wind_deg', 'description', 'icon', 'main']]
+        print('Concacatenating weather tables')
         df_weather = df_weather1.append([df_weather2, df_old_weather])
+        print('Cleaning bike data')
         df_bikes['time']=df_bikes['time']//1000
         df_bikes['dt']=pd.to_datetime(df_bikes['time'], unit='s')
         df_bikes['hour']=df_bikes['dt'].dt.hour
@@ -97,7 +108,9 @@ class model():
         df_weather['day']=df_weather['dt'].dt.dayofweek
         df_weather['month']=df_weather['dt'].dt.month
         df_weather['monthday']=df_weather['dt'].dt.day
+        print('Merging tables')
         df_all = pd.merge(df_bikes, df_weather, on=['month', 'monthday', 'hour', 'day'], how='inner')
+        print('Creating dummy features')
         df_all['target']=df_all['bike_stands']-df_all['available_bike_stands']
         features_to_concat = [df_all]
 
@@ -111,6 +124,7 @@ class model():
 
 
     def piklData(self, fileLocation):
+        '''Save the model to a pikl file that can be reloaded'''
         #save data to a pikl
         from sklearn.externals import joblib
 
@@ -118,6 +132,8 @@ class model():
 
 
     def predict(self, object):
+
+        '''Make a prediction, given a dictionary of data points.'''
 
         #preprocess the object so we can predict from it
 
