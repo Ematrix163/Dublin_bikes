@@ -4,7 +4,7 @@ import time
 
 def prepareDayOfTheWeekData(stand, dayOfWeek):
     '''Returns average occupancy of a given stand, for every hour of a specified week day'''
-    print(stand)
+    
     stand = int(stand)
     dayOfWeek = int(dayOfWeek)
     import time

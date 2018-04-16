@@ -106,7 +106,7 @@ def main():
     # I use multiprocess here because we don't need to get whether data every 5 minutes
 
     # get the whether data every 3 hour
-    weather = Process(target=scrape, args=('http://api.openweathermap.org/data/2.5/find?q=Dublin&units=imperial&type=accurate&mode=json&APPID='+keyring.getWeatherKey(), 3600, insertWeather))
+    weather = Process(target=scrape, args=('http://api.openweathermap.org/data/2.5/find?q=Dublin&units=kelvins&type=accurate&mode=json&APPID='+keyring.getWeatherKey(), 3600, insertWeather))
 
     # get bike stations every 5 minutes
     stands = Process(target=scrape, args=('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey='+keyring.getBikeKey(), 300, insertLiveDB))

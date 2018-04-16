@@ -9,13 +9,15 @@ let largeInfowindow;
 let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
+let useAddress = true;
 $('#userLocation').hide()
- $('#locationWarning').hide()
+$('#locationWarning').hide()
 getLocation()
 
 function showSearch(){
  $('#userLocation').show()
  $('#showSearchButton').hide()
+ useAddress = true;
 
 
 }
@@ -36,7 +38,7 @@ $('#userLocation').show()
             break;
         case error.TIMEOUT:
             x.innerHTML = "The request to get user location timed out."
-            break;
+            break
         case error.UNKNOWN_ERROR:
             x.innerHTML = "An unknown error occurred."
             break;
@@ -440,6 +442,7 @@ function showPosition(position) {
     userLocation.lng = position.coords.longitude;
     foundUserLocation = true;
     console.log('found user location')
+    useAddress=false;
 
 }
 
@@ -458,7 +461,7 @@ function initMap() {
 
 
 	let getWeather = $.ajax({
-		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&APPID='+ apikey
+		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&units=metric&APPID='+ apikey
 	})
 
 	getWeather.done(function(data){
@@ -788,7 +791,7 @@ let viewModel = function() {
 
 
 	this.findBike = function(data, event) {
-    if (foundUserLocation == false){
+    if (foundUserLocation == false || useAddress == true){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
       return false;
@@ -821,7 +824,7 @@ let viewModel = function() {
 
 
 	this.findStation = function(data, event) {
-    if (foundUserLocation==false){
+    if (foundUserLocation==false || useAddress==true){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
       return false;
@@ -833,7 +836,7 @@ let viewModel = function() {
 			let getStation = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {'origin':userLocation, 'mode':'bicycling', 'predictive':'True'}
+				data: {origin:userLocation.lat.toString()+','+userLocation.lng.toString(), 'mode':'bicycling', 'predictive':'True'}
 			})
 
 			getStation.done(function(data){

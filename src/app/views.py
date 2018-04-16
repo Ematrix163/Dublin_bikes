@@ -116,10 +116,10 @@ print('Ready to begin accepting request..')
 
 @app.route('/')
 def index():
+
     '''loads index page'''
     print(keyring.getWeatherKey())
     return render_template("index.html", key = keyring.getMapKey(), a = keyring.getWeatherKey() )
-
 
 
 
