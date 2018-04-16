@@ -6,8 +6,41 @@ let allMarkers = [];
 let allCircles = [];
 let map, user;
 let largeInfowindow;
-let userLocation = {lat: 53.345228,lng: -6.272145};
+let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
+let foundUserLocation = false;
+$('#userLocation').hide()
+getLocation()
+
+// html geolocate copied from stack overflow
+function showError(error) {
+let userLocation = {lat: 53.3083,lng: -6.2236};
+$('#userLocation').show()
+
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
 
 let weatherIcons = {
   "200": {
@@ -392,9 +425,12 @@ let weatherIcons = {
 
 
 function showPosition(position) {
+
     userLocation.lat = position.coords.latitude;
     userLocation.lng = position.coords.longitude;
-    initMap();
+    foundUserLocation = true;
+    console.log('found user location')
+
 }
 
 
@@ -744,12 +780,15 @@ let viewModel = function() {
 
 
 	this.findBike = function(data, event) {
+    if (foundUserLocation == false){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
+      return false;
 		} else {
 			let temp =  searchBox.getPlaces()["0"].geometry.location;
 
-			userLocation = {lat: temp.lat(),lng: temp.lng()};
+			userLocation = {lat: temp.lat(),lng: temp.lng()};}}
+
 			$('#loading-text').text('Try to find the nearest bike for you...');
 			$('.overlay').show();
 			let getBike = $.ajax({
@@ -770,16 +809,17 @@ let viewModel = function() {
 
 
 
-	}
+
 
 
 	this.findStation = function(data, event) {
-
+    if (foundUserLocation==false){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
+      return false;
 		} else {
 			let temp =  searchBox.getPlaces()["0"].geometry.location;
-			userLocation = {lat: temp.lat(),lng: temp.lng()};
+			userLocation = {lat: temp.lat(),lng: temp.lng()};}}
 			$('#loading-text').text('Try to find the nearest availabe station for you...');
 			$('.overlay').show();
 			let getStation = $.ajax({
@@ -798,7 +838,7 @@ let viewModel = function() {
 			getStation.fail(function(data){
 				sweetNote('Sorry, the server cannot find a station for you!')
 			});
-		}
+		
 	}
 
 
