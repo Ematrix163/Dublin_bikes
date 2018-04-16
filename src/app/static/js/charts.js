@@ -33,6 +33,7 @@ function getStaticLocations(currentStand, currentDay) {
 		type: 'GET',
 		data: {'type':'staticlocations'}
 	}).done(function(response){
+		console.log('getting static data successfully!');
 		data = JSON.parse(response);
 		drawStandsButtons(data, currentStand, currentDay);
 	});
@@ -40,36 +41,104 @@ function getStaticLocations(currentStand, currentDay) {
 
 
 function drawStandsButtons(data, currentStand, currentDay) {
-	console.log(data);
-
 	for (let stand in data) {
 		allLocation[stand] = data[stand];
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
-	console.log(allLocation);
 	$('.stand').click(function(){
-		// Add listen click functio
-    console.log(this.getAttribute('data-id'))
-		loadChart(this.getAttribute('data-id').toString(), currentDay);
+		drawAverage(this.getAttribute('data-id').toString(),currentDay);
 	})
-    loadChart(currentStand, currentDay);
+	chosenStand = 1;
+	drawAverage(1,currentDay);
 }
 
-
-function reloadChart(day) {
-
+function switchDay(day) {
+	$('.overlay').show();
 	$.ajax({
 		url: '/graph',
 		type: 'GET',
 		data: {'stand': chosenStand, 'day':day}
 	}).done(function(response){
 		var data = JSON.parse(response);
-		makeChart(data);
+		//Hide the overlay
+		$('.overlay').hide();
+		new Chart(document.getElementById('average-chart'), {
+			type: 'line',
+			data: {
+				labels: makeTimeLabels(),
+				datasets: [{
+						data: data.bikes,
+						label: "Bikes",
+						borderColor: "red",
+						fill: true
+		  }, {
+						data: data.spaces,
+						label: 'Spaces',
+						borderColor: "blue",
+						fill: true
+		  }
+		]
+			},
+			options: {
+				responsive: true,
+				responsiveAnimationDuration: 30,
+				maintainAspectRatio: false,
+				title: {
+					display: true,
+					text: 'Average stand occupancy by hour'
+				}
+			}
+		});
 	})
 }
 
 
-function loadChart(stand, day, buttons = true, targetId = false) {
+function drawAverage(stand, day) {
+	chosenStand = stand;
+	$('.overlay').show();
+	$.ajax({
+		url: '/graph',
+		type: 'GET',
+		data: {'stand': stand, 'day':day}
+	}).done(function(response){
+		var data = JSON.parse(response);
+		//Hide the overlay
+		$('.overlay').hide();
+		new Chart(document.getElementById('average-chart'), {
+	        type: 'line',
+	        data: {
+	            labels: makeTimeLabels(),
+	            datasets: [{
+	                    data: data.bikes,
+	                    label: "Bikes",
+	                    borderColor: "red",
+	                    fill: true
+	      }, {
+	                    data: data.spaces,
+	                    label: 'Spaces',
+	                    borderColor: "blue",
+	                    fill: true
+	      }
+	    ]
+	        },
+	        options: {
+				responsive: true,
+				responsiveAnimationDuration: 30,
+				maintainAspectRatio: false,
+	            title: {
+	                display: true,
+	                text: 'Average stand occupancy by hour'
+	            }
+	        }
+	    });
+	})
+}
+
+
+
+
+
+function loadChart(stand, day, buttons = true, targetId = false, predictive=false) {
 	if (targetId == false){
 		$('.overlay').show();
 	}
@@ -102,18 +171,25 @@ function makeChart(data, targetId=false) {
       chart_id = "chart"+targetId.toString()
     }
 
+	if (chartType == 'average') {
+
+	}
+	else if (chartType = 'predict') {
+
+	}
+
     console.log(data.bikes)
     console.log(data.spaces)
     console.log('making chart')
 
     var labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
     if (targetId==false){
-	$('.overlay').hide();
-}
-else{
-  $('.chartoverlay').hide();
+		$('.overlay').hide();
+	}
+	else{
+	  $('.chartoverlay').hide();
+	}
 
-}
     new Chart(document.getElementById(chart_id), {
         type: 'line',
         data: {
@@ -145,14 +221,24 @@ else{
 }
 
 
-
 function showAverage() {
 	$('#average').show();
 	$('#predict').hide();
 	$('#streetView').hide();
 }
 
+function showForecast() {
+	$('#average').hide();
+	$('#predict').show();
+	$('#streetView').hide();
+}
 
+
+function showStreetView() {
+	$('#average').hide();
+	$('#predict').hide();
+	$('#streetView').show();
+}
 
 
 
