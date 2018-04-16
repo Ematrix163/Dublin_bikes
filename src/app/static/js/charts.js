@@ -1,6 +1,6 @@
 let allLocation = {};
-predictive_data={}
-
+let predictive_data={};
+let previous = null;
 let chosenStand;
 $('#predictiveDays').hide();
 //attempt at graphs using charts.js library
@@ -63,9 +63,15 @@ function drawStandsButtons(data, currentStand, currentDay) {
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
 	$('.stand').click(function(){
+		$(this).css({'background-color':'rgb(173,216,210)','color':'white'});
+		if (previous) {
+			$(previous).css({'background-color':'','color':'black'});
+		}
+		previous = this;
 		drawCurrent(this.getAttribute('data-id').toString());
 		showAverage();
 		drawAverage(this.getAttribute('data-id').toString(),currentDay);
+
 	})
 	chosenStand = 1;
 	$('#predict').hide();
@@ -216,7 +222,7 @@ function makeChart(data, targetId=false) {
       chart_id = "chart"+targetId.toString()
     }
 
-	
+
 
     console.log(data.bikes)
     console.log(data.spaces)
@@ -267,6 +273,7 @@ function showAverage() {
 	$('#streetView').hide();
   	$('#predictiveDays').hide();
 	$('#currentData').show();
+	$('#averageDays').show();
 }
 
 function showForecast() {
@@ -286,6 +293,7 @@ function showStreetView() {
 	$('#predict').hide();
 	$('#streetView').show();
 	$('#currentData').hide();
+	$('#predictiveDays').hide()
 	displayStreetView();
 }
 

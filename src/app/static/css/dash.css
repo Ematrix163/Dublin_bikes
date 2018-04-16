@@ -128,7 +128,6 @@ body {
 }
 
 .chosen-button {
-	display: inline;
 	position: relative;
 	right: -10%;
 }
@@ -169,11 +168,33 @@ body {
 }
 
 #currentData {
-	width: 900px;
-	height: 400px;
-	color: rgb(0,123,255);
+	display: block;
+	position: relative;
+	left: 28%;
+	width: 500px;
+	height: 155px;
+	color: white;
 }
 
+#currentData img {
+	width: 200px;
+	height: 155px;
+	float: left;
+}
+
+.inf {
+	float: left;
+	display: block;
+	margin-left: 30px;
+}
+
+.data-text {
+	padding-top: 50px;
+	width: 300px;
+	height: 155px;
+	float: left;
+	background-color: #55cae8;
+}
 
 /*Loading Animation*/
 
