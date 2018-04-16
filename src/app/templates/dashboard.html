@@ -37,56 +37,49 @@
 				</div>
 
 				<div class="date">
-					<ul>
-						<li onclick="reloadChart(0)">Monday</li>
-						<li onclick="reloadChart(1)">Tuesday</li>
-						<li onclick="reloadChart(2)">Wednesday</li>
-						<li onclick="reloadChart(3)">Thursday</li>
-						<li onclick="reloadChart(4)">Friday</li>
-						<li onclick="reloadChart(5)">Saturday</li>
-						<li onclick="reloadChart(6)">Sunday</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="view">
-
-
-
-				<div class="graph" id='average'>
-					<canvas id='average-chart'></canvas>
-				</div>
-
-				<div class="graph" id='predict'>
-					<canvas id='predict-chart'></canvas>
-				</div>
-
-
-
-				<div id='streetView'></div>
-				<div class="overlay">
-					<div class="loading-wrapper">
-						<div class="bounceball">
-							<div class="text" id="loading-text">Loadding the chart...</div>
-						</div>
+					<div class="btn-group" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-primary" onClick='switchDay(1)' >Monday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(2)'>Tuesday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(3)'>Wednesday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(4)'>Thursday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(5)'>Friday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(6)'>Saturday</button>
+						<button type="button" class="btn btn-primary" onClick='switchDay(0)'>Sunday</button>
 					</div>
 				</div>
 
 
+			</div>
+
+			<div class="view">
+				<div class="overlay">
+					<div class="loading-wrapper">
+						<div class="bounceball">
+							<div class="text" id="loading-text">Loadding...</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="graph" id='average'>
+					<canvas class="canvas" id='average-chart'></canvas>
+				</div>
+				<div class="graph" id='predict'>
+					<canvas class="canvas" id='predict-chart'></canvas>
+				</div>
 				<div id='streetView'></div>
 			</div>
 
 		</div>
 
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 		<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" ></script>
-		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<!--        <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>-->
+
 		<script type="text/javascript" src="../static/js/charts.js"></script>
 
 		</script>
@@ -105,8 +98,7 @@
 			var currentStand = {{ value }}
 			var d = new Date();
 			var currentDay = d.getDay()
-			getStaticLocations(currentStand, currentDay, predictie=false)
-			predict(1)
+			getStaticLocations(currentStand, currentDay, predictie=false);
 		</script>
 
 </body>
