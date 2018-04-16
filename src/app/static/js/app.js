@@ -755,7 +755,7 @@ let viewModel = function() {
 			let getBike = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {'origin': userLocation}
+				data: {'origin': userLocation.lat.toString()+','+userLocation.lng.toString()}
 			});
 			getBike.done(function(data) {
 				$('.overlay').hide();

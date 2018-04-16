@@ -24,30 +24,36 @@ global_time = datetime.datetime.fromtimestamp(timemodule.time())
 #methods for caching and updating certain data
 def cachegraphdata():
 
-    print('begin caching....')
+    print('begin caching graph data....')
     global global_static
     global global_cached_graphs
     global global_time
     while True:
+        actual_day = int(global_time.day)
 
         for number in global_static:
 
-            actual_day = int(global_time.day)
+            #update the actual day graphs first, as these are what the user sees on the index page
             try:
                 global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
             except:
                 print('Failed to update graph for stand', number, 'day', actual_day)
 
-        for number in global_static:
 
-                for day in range (7):
-                    if day!= actual_day:
+
+            for day in range (7):
+
+                if day != actual_day:
+
+
+                    for number in global_static:
+
                         try:
                             global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
                         except:
                             print('Failed to update graph for stand', number, 'day', day)
 
-
+        #sleep for a whole day once this is done
         timemodule.sleep(86400)
 
 
@@ -62,16 +68,17 @@ def updateLiveData():
     global global_time
     launched_graph_cache=False
     while True:
+        try:
+            global_static = query.queryStaticLocations()
+        except:
+            print('Failed to update static locations')
         print('Querying current stand occupancy')
         try:
             global_stands = query.queryCurrentStands()
         except:
             print('Failed to update current stands')
         print('Grabbing static locations')
-        try:
-            global_static = query.queryStaticLocations()
-        except:
-            print('Failed to update static locations')
+
         print('Grabbing current weather data')
         try:
             global_weather=query.queryWeather()
@@ -90,10 +97,13 @@ def updateLiveData():
 print('Gathering live data...')
 updater = Thread(target=updateLiveData)
 updater.start()
+
+#block until static locations have been retrieved
 while global_static == []:
     pass
-predictiveModel = predictor.predictor(global_static)
 
+predictiveModel = predictor.predictor(global_static)
+print('Ready to begin accepting request..')
 
 
 
