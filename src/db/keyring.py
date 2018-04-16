@@ -5,7 +5,7 @@ def getMapKey():
     return f[0].split(' ')[1]
 
 def getDistanceKey():
-    '''Returns the google distance matrix api keu'''
+    '''Returns the google distance matrix api key'''
     f=open('keys.config').read().split('\n')
     return f[2].split(' ')[1]
 
@@ -19,3 +19,7 @@ def getBikeKey():
     '''Returns the JCDecaux dublin bikes api key'''
     f=open('keys.config').read().split('\n')
     return f[3].split(' ')[1]
+
+def getDistanceKey2():
+    f=open('keys.config').read().split('\n')
+    return f[4].split(' ')[1]
