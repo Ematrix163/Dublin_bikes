@@ -165,7 +165,7 @@ def findClosestStand():
 
         mode = 'bicycling'
     #add other options here
-    if request.args.get('predictive')==None:
+    if request.args.get('predictive')==None or request.args.get('predictive')==False:
         response = distance.getClosestStand(origin, mode)
     else:
         response=predictiveModel.getClosestStand(origin, mode)

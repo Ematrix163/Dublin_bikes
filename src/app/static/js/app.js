@@ -1,6 +1,16 @@
 'use strict';
 
-
+let predictive_directions = false
+function changeDirectionMethod(){
+  console.log('doing something')
+  if (predictive_directions == false){
+    predictive_directions=true;
+  }
+  else{
+    predictive_directions=false;
+  }
+  return true
+}
 let allStations = [];
 let allMarkers = [];
 let allCircles = [];
@@ -791,6 +801,12 @@ let viewModel = function() {
 
 
 	this.findBike = function(data, event) {
+    if(document.getElementById("predictiveCheckBox").checked == true){
+      predictive_directions = true;
+    }
+    else{
+      predictive_directions = false
+    }
     if (foundUserLocation == false || useAddress == true){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
@@ -805,7 +821,7 @@ let viewModel = function() {
 			let getBike = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {'origin': userLocation.lat.toString()+','+userLocation.lng.toString(), 'predictive':'True'}
+				data: {'origin': userLocation.lat.toString()+','+userLocation.lng.toString(), 'predictive':predictive_directions}
 			});
 			getBike.done(function(data) {
 				$('.overlay').hide();
@@ -824,6 +840,13 @@ let viewModel = function() {
 
 
 	this.findStation = function(data, event) {
+    if(document.getElementById("predictiveCheckBox").checked == true){
+      console.log('using predictive directions')
+      predictive_directions = true;
+    }
+    else{
+      predictive_directions = false
+    }
     if (foundUserLocation==false || useAddress==true){
 		if (!searchBox.getPlaces()) {
 			sweetNote('Please input your location!');
@@ -836,7 +859,7 @@ let viewModel = function() {
 			let getStation = $.ajax({
 				url: './distance',
 				type: 'GET',
-				data: {origin:userLocation.lat.toString()+','+userLocation.lng.toString(), 'mode':'bicycling', 'predictive':'True'}
+				data: {origin:userLocation.lat.toString()+','+userLocation.lng.toString(), 'mode':'bicycling', 'predictive':predictive_directions}
 			})
 
 			getStation.done(function(data){
