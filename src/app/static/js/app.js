@@ -461,7 +461,7 @@ function initMap() {
 
 
 	let getWeather = $.ajax({
-		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&APPID='+ apikey
+		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&units=metric&APPID='+ apikey
 	})
 
 	getWeather.done(function(data){
