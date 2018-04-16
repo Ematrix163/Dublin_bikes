@@ -69,8 +69,12 @@ function reloadChart(day) {
 
 
 function loadChart(stand, day, buttons = true, targetId = false) {
-	chosenStand = stand;
+  if (targetId == false){
 	$('.overlay').show();
+}
+else {
+  $('.chartoverlay').show()
+}
   	console.log(stand, day)
     if (buttons === true) {
         currentDay = day;
@@ -102,7 +106,13 @@ function makeChart(data, targetId=false) {
     console.log('making chart')
 
     var labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+    if (targetId==false){
 	$('.overlay').hide();
+}
+else{
+  $('.chartoverlay').hide();
+
+}
     new Chart(document.getElementById(chart_id), {
         type: 'line',
         data: {

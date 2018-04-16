@@ -10,6 +10,7 @@ import json
 from analytics import predictor
 from db import keyring
 from threading import Thread
+import datetime
 
 #set up our global variables
 
@@ -18,6 +19,39 @@ global_static = []
 global_last_update = 0
 global_weather = []
 global_cached_graphs = {}
+global_time = datetime.datetime.fromtimestamp(timemodule.time())
+
+#methods for caching and updating certain data
+def cachegraphdata():
+
+    print('begin caching....')
+    global global_static
+    global global_cached_graphs
+    global global_time
+    while True:
+
+        for number in global_static:
+
+            actual_day = int(global_time.day)
+            try:
+                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
+            except:
+                print('Failed to update graph for stand', number, 'day', actual_day)
+
+        for number in global_static:
+
+                for day in range (7):
+                    if day!= actual_day:
+                        try:
+                            global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                        except:
+                            print('Failed to update graph for stand', number, 'day', day)
+
+
+        timemodule.sleep(86400)
+
+
+
 
 def updateLiveData():
     global global_stands
@@ -25,6 +59,7 @@ def updateLiveData():
     global global_last_update
     global global_cached_graps
     global global_weather
+    global global_time
     launched_graph_cache=False
     while True:
         print('Querying current stand occupancy')
@@ -43,6 +78,7 @@ def updateLiveData():
         except:
             print('Failed to update weather')
         global_last_update=timemodule.time()
+        global_time = datetime.datetime.fromtimestamp(timemodule.time())
         if launched_graph_cache == False:
             for number in global_static:
                 global_cached_graphs[int(number)]={}
@@ -58,28 +94,12 @@ while global_static == []:
     pass
 predictiveModel = predictor.predictor(global_static)
 
-def cachegraphdata():
-    print('begin caching....')
-    global global_static
-    global global_cached_graphs
-    while True:
-
-        for number in global_static:
-
-            for day in range(7):
-                try:
-                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
-                except:
-                    print('Failed to update graph for stand', number, 'day', day)
-
-
-        timemodule.sleep(86400)
 
 
 
 
 
-
+#the routing functions for the app
 
 
 
