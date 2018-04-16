@@ -10,12 +10,22 @@ let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
 $('#userLocation').hide()
+ $('#locationWarning').hide()
 getLocation()
+
+function showSearch(){
+ $('#userLocation').show()
+ $('#showSearchButton').hide()
+
+
+}
 
 // html geolocate copied from stack overflow
 function showError(error) {
 let userLocation = {lat: 53.3083,lng: -6.2236};
 $('#userLocation').show()
+ $('#showSearchButton').hide()
+  $('#locationWarning').show()
 
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -838,7 +848,7 @@ let viewModel = function() {
 			getStation.fail(function(data){
 				sweetNote('Sorry, the server cannot find a station for you!')
 			});
-		
+
 	}
 
 
