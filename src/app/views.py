@@ -11,14 +11,16 @@ from analytics import predictor
 from db import keyring
 from threading import Thread
 import datetime
+import copy
 
-#set up our global variables
+# This is our load routine, basically
 
 global_stands = []
 global_static = []
 global_last_update = 0
 global_weather = []
 global_cached_graphs = {}
+global_merged = {}
 global_time = datetime.datetime.fromtimestamp(timemodule.time())
 
 #methods for caching and updating certain data
@@ -29,12 +31,14 @@ def cachegraphdata():
     global global_static
     global global_cached_graphs
     global global_time
+
     while True:
+
         actual_day = int(global_time.day)
 
         for number in global_static:
 
-            #update the actual day graphs first, as these are what the user sees on the index page
+            #update the actual_day graphs first, as these are what the user sees on the index page
             try:
                 global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
             except:
@@ -42,16 +46,16 @@ def cachegraphdata():
 
 
 
-        for day in range (7):
+        for day in [d for d in range (7) if d != actual_day]:
 
-            if day != actual_day:
+            for number in global_static:
 
-                for number in global_static:
+                try:
+                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
 
-                    try:
-                        global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
-                    except:
-                        print('Failed to update graph for stand', number, 'day', day)
+                except:
+
+                    print('Failed to update graph for stand', number, 'day', day)
 
         #sleep for a whole day once this is done
         timemodule.sleep(86400)
@@ -61,38 +65,72 @@ def cachegraphdata():
 
 def updateLiveData():
     '''This function is meant to be threaded. It will update the current weather and stand occupancy data every five minutes.'''
+
     global global_stands
     global global_static
     global global_last_update
     global global_cached_graps
     global global_weather
     global global_time
+    global global_merged
     launched_graph_cache=False
+
     while True:
+
         try:
+
             global_static = query.queryStaticLocations()
+
         except:
+
             print('Failed to update static locations')
+
         print('Querying current stand occupancy')
+
         try:
+
             global_stands = query.queryCurrentStands()
+
         except:
+
             print('Failed to update current stands')
+
         print('Grabbing static locations')
 
         print('Grabbing current weather data')
+
         try:
+
             global_weather=query.queryWeather()
+
         except:
+
             print('Failed to update weather')
+
         global_last_update=timemodule.time()
         global_time = datetime.datetime.fromtimestamp(timemodule.time())
+        merged={}
+
+        for each in global_static:
+
+            merged[each] = dict(global_stands[each], **global_static[each])
+
+        #make absolutely sure we aren't just referring to a dictionary reference.
+
+        global_merged = copy.deepcopy(merged)
+
         if launched_graph_cache == False:
+
             for number in global_static:
+
                 global_cached_graphs[int(number)]={}
+
+            #launch the graph cacher
             launched_graph_cache=True
             graphcacher = Thread(target=cachegraphdata)
             graphcacher.start()
+
+        #sleep for five minutes
         timemodule.sleep(300)
 
 print('Gathering live data...')
@@ -110,14 +148,16 @@ print('Ready to begin accepting request..')
 
 
 
-#the routing functions for the app
+
+# These are the actual routing functions for the app
 
 
 
 @app.route('/')
 def index():
 
-    '''loads index page'''
+    '''Loads index page'''
+
     print(keyring.getWeatherKey())
     return render_template("index.html", key = keyring.getMapKey(), a = keyring.getWeatherKey() )
 
@@ -126,6 +166,7 @@ def index():
 
 @app.route('/dash')
 def dashboard():
+
     '''Returns the dash.html page, with the given stand number preloaded'''
 
     if request.args.get('stand')==None:
@@ -148,25 +189,30 @@ def findClosestStand():
 
     '''Will return the closest stand (with at least five bikes or five spaces) to the stated origin. Transport mode is used as a proxy for whether the user is seeking a bike or location. 'Cycling' will return a stand with spaces, 'walking' will return a stand with bikes.
 
-    If 'predictive' is used as a parameter, it will attempt to use our model to find the best stand for the user, given the time it will take for them to walk there.
+    If 'predictive' is used as a parameter, it will attempt to use our model to find the best stand for the user, given the time it will take for them to walk there. The results are middling to say the least.
 
     '''
     if request.args.get('origin')==None:
-        origin = {'lat':53.3053, 'long': 6.2207}
+        #default origin
+        origin = {'lat':53.3053, 'long': -6.2207}
 
     else:
         origin = request.args.get('origin').split(',')
         origin = {'lat': float(origin[0]), 'long': float(origin[1])}
 
     if request.args.get('mode')==None:
+
         mode = 'walking'
 
     if request.args.get('mode')=='bicycling':
 
         mode = 'bicycling'
+
     #add other options here
     if request.args.get('predictive')==None or request.args.get('predictive')==False:
+
         response = distance.getClosestStand(origin, mode)
+
     else:
         response=predictiveModel.getClosestStand(origin, mode)
 
@@ -180,17 +226,17 @@ def getGraphData():
     '''Returns a set of data points representing the average occupancy of a stand on a given day'''
 
     global global_cached_graphs
-    stand = request.args.get('stand')
-    day = str(request.args.get('day'))
+    stand = int(request.args.get('stand'))
+    day = int(str(request.args.get('day')))
 
-    try:
-        return json.dumps(global_cached_graphs[int(stand)][int(day)])
-    except:
+    if day in global_cached_graphs[stand]:
+        #first check to see if we've cached the graph data
+        return json.dumps(global_cached_graphs[stand][day])
 
-        KeyError
-
+    else:
+        #if it's not there, grab it instead, add it to the cache, and then return it
         data = graph.prepareDayOfTheWeekData(stand, day)
-        global_cached_graphs[int(stand)][int(day)]=data
+        global_cached_graphs[stand][day]=data
         return json.dumps(data)
 
 
@@ -206,24 +252,18 @@ def getCurrentData():
     global global_last_update
     global predictiveModel
     global global_weather
+    global global_merged
 
 
     request_type = request.args.get('type')
 
-
-
-
-
     if request_type == 'currentstands':
-
 
         obj = global_stands
 
         return json.dumps(obj)
 
     elif request_type == 'staticlocations':
-
-
 
         obj = global_static
 
@@ -241,19 +281,11 @@ def getCurrentData():
         else:
             obj = query.queryStandNumber(str(request.args.get('stand')))
 
-            return json.dumps(obj)
+        return json.dumps(obj)
 
     elif request_type == 'liveData':
 
-
-
-
-        merged = {}
-
-        for each in global_static:
-            merged[each] = dict(global_stands[each], **global_static[each])
-
-        return json.dumps(merged)
+        return json.dumps(global_merged)
 
     elif request_type == 'weather':
         w = query.queryWeather()
@@ -261,8 +293,6 @@ def getCurrentData():
         return json.dumps(w)
     #add method for predictions. So far untested
     elif request_type == 'prediction':
-
-
 
         if request.args.get('stand') != None and request.args.get('time')!= None:
 
@@ -276,6 +306,7 @@ def getCurrentData():
                 return 'Error etc'
 
         else:
+            
             return 'Error. Missing parameters.'
 
     elif request_type == 'predictrange':

@@ -1,16 +1,9 @@
 'use strict';
 
+
+
 let predictive_directions = false
-function changeDirectionMethod(){
-  console.log('doing something')
-  if (predictive_directions == false){
-    predictive_directions=true;
-  }
-  else{
-    predictive_directions=false;
-  }
-  return true
-}
+
 let allStations = [];
 let allMarkers = [];
 let allCircles = [];
@@ -63,8 +56,8 @@ function getLocation() {
     }
 }
 
+//this is from github. The full method is below. Sourced from https://gist.github.com/tbranyen/62d974681dea8ee0caa1
 
-let weatherIcons = {"200":{"label":"thunderstormwithlightrain","icon":"storm-showers"},"201":{"label":"thunderstormwithrain","icon":"storm-showers"},"202":{"label":"thunderstormwithheavyrain","icon":"storm-showers"},"210":{"label":"lightthunderstorm","icon":"storm-showers"},"211":{"label":"thunderstorm","icon":"thunderstorm"},"212":{"label":"heavythunderstorm","icon":"thunderstorm"},"221":{"label":"raggedthunderstorm","icon":"thunderstorm"},"230":{"label":"thunderstormwithlightdrizzle","icon":"storm-showers"},"231":{"label":"thunderstormwithdrizzle","icon":"storm-showers"},"232":{"label":"thunderstormwithheavydrizzle","icon":"storm-showers"},"300":{"label":"lightintensitydrizzle","icon":"sprinkle"},"301":{"label":"drizzle","icon":"sprinkle"},"302":{"label":"heavyintensitydrizzle","icon":"sprinkle"},"310":{"label":"lightintensitydrizzlerain","icon":"sprinkle"},"311":{"label":"drizzlerain","icon":"sprinkle"},"312":{"label":"heavyintensitydrizzlerain","icon":"sprinkle"},"313":{"label":"showerrainanddrizzle","icon":"sprinkle"},"314":{"label":"heavyshowerrainanddrizzle","icon":"sprinkle"},"321":{"label":"showerdrizzle","icon":"sprinkle"},"500":{"label":"lightrain","icon":"rain"},"501":{"label":"moderaterain","icon":"rain"},"502":{"label":"heavyintensityrain","icon":"rain"},"503":{"label":"veryheavyrain","icon":"rain"},"504":{"label":"extremerain","icon":"rain"},"511":{"label":"freezingrain","icon":"rain-mix"},"520":{"label":"lightintensityshowerrain","icon":"showers"},"521":{"label":"showerrain","icon":"showers"},"522":{"label":"heavyintensityshowerrain","icon":"showers"},"531":{"label":"raggedshowerrain","icon":"showers"},"600":{"label":"lightsnow","icon":"snow"},"601":{"label":"snow","icon":"snow"},"602":{"label":"heavysnow","icon":"snow"},"611":{"label":"sleet","icon":"sleet"},"612":{"label":"showersleet","icon":"sleet"},"615":{"label":"lightrainandsnow","icon":"rain-mix"},"616":{"label":"rainandsnow","icon":"rain-mix"},"620":{"label":"lightshowersnow","icon":"rain-mix"},"621":{"label":"showersnow","icon":"rain-mix"},"622":{"label":"heavyshowersnow","icon":"rain-mix"},"701":{"label":"mist","icon":"sprinkle"},"711":{"label":"smoke","icon":"smoke"},"721":{"label":"haze","icon":"day-haze"},"731":{"label":"sand,dustwhirls","icon":"cloudy-gusts"},"741":{"label":"fog","icon":"fog"},"751":{"label":"sand","icon":"cloudy-gusts"},"761":{"label":"dust","icon":"dust"},"762":{"label":"volcanicash","icon":"smog"},"771":{"label":"squalls","icon":"day-windy"},"781":{"label":"tornado","icon":"tornado"},"800":{"label":"clearsky","icon":"sunny"},"801":{"label":"fewclouds","icon":"cloudy"},"802":{"label":"scatteredclouds","icon":"cloudy"},"803":{"label":"brokenclouds","icon":"cloudy"},"804":{"label":"overcastclouds","icon":"cloudy"},"900":{"label":"tornado","icon":"tornado"},"901":{"label":"tropicalstorm","icon":"hurricane"},"902":{"label":"hurricane","icon":"hurricane"},"903":{"label":"cold","icon":"snowflake-cold"},"904":{"label":"hot","icon":"hot"},"905":{"label":"windy","icon":"windy"},"906":{"label":"hail","icon":"hail"},"951":{"label":"calm","icon":"sunny"},"952":{"label":"lightbreeze","icon":"cloudy-gusts"},"953":{"label":"gentlebreeze","icon":"cloudy-gusts"},"954":{"label":"moderatebreeze","icon":"cloudy-gusts"},"955":{"label":"freshbreeze","icon":"cloudy-gusts"},"956":{"label":"strongbreeze","icon":"cloudy-gusts"},"957":{"label":"highwind,neargale","icon":"cloudy-gusts"},"958":{"label":"gale","icon":"cloudy-gusts"},"959":{"label":"severegale","icon":"cloudy-gusts"},"960":{"label":"storm","icon":"thunderstorm"},"961":{"label":"violentstorm","icon":"thunderstorm"},"962":{"label":"hurricane","icon":"cloudy-gusts"}}
 
 
 
@@ -268,7 +261,7 @@ function createMarkerInfoWindow(station, infowindow) {
 
 function populateInfoWindow(circle, infowindow, ev, station) {
 
-    /*This function is to populate infowindow when user click*/
+    /*This function is to populate infowindow when the user clicks on a marker*/
     infowindow.setPosition(ev.latLng);
 
 	var date = new Date(station.time);
@@ -314,10 +307,6 @@ function sweetNote(source) {
 
 
 function calcRoute(s, e, mode = 'WALKING') {
-  // How are you getting s and e?
-
-// In the back end I defined, the @app.route('/distance') will find the closest bike station that has an acceptable number of bikes. Can we please just use this method.
-
 
 	let directionsDisplay = new google.maps.DirectionsRenderer;
 	let directionsService = new google.maps.DirectionsService;
@@ -368,6 +357,8 @@ let place = function (data) {
 
 
 let viewModel = function() {
+
+  //attribute somebody for this!
     let self = this;
 
     this.keyword = ko.observable('');

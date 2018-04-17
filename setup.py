@@ -14,9 +14,8 @@ from setuptools import setup
 # Add here console scripts and other entry points in ini-style format
 entry_points = """
 [console_scripts]
-# script_name = dublin_bikes.module:function
-# For example:
-# fibonacci = dublin_bikes.skeleton:run
+run_dublinbikes = dublin_bikes.dublin_bikes.run:run
+
 """
 
 
@@ -30,3 +29,7 @@ def setup_package():
 
 if __name__ == "__main__":
     setup_package()
+
+# script_name = dublin_bikes.module:function
+# For example:
+# fibonacci = dublin_bikes.skeleton:run
