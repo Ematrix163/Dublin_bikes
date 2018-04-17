@@ -37,62 +37,46 @@ body {
 .sidebar-header {
     padding: 20px 25px 10px 25px;
     text-align: center;
+
 }
 
-#sidebarCollapse {
-    width: 40px;
-    height: 40px;
-    background: #ffffff;
-    position: relative;
-    left: 15px;
-    top: 15px;
-    cursor: pointer;
-}
-
-#sidebarCollapse span {
-    width: 80%;
-    height: 2px;
-    margin: 0 auto;
-    display: block;
-    background: #555;
-    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
-}
-
-#sidebarCollapse span:first-of-type {
-    /* rotate first one */
-    transform: rotate(45deg) translate(2px, 2px);
-}
-
-#sidebarCollapse span:nth-of-type(2) {
-    /* second one is not visible */
-    opacity: 0;
-}
-
-#sidebarCollapse span:last-of-type {
-    /* rotate third one */
-    transform: rotate(-45deg) translate(1px, -1px);
-}
-
-#sidebarCollapse.active span {
-    /* no rotation */
-    transform: none;
-    /* all bars are visible */
-    opacity: 1;
-    margin: 5px auto;
-}
 
 /*Content*/
 #content {
-    flex: 1;
+    width: calc(100vw - 350px);
 	background-image: url('../images/bg.png');
 }
 
 
-.content-header {
-    height: 71px;
-    background-color: lightblue;
+.dash-header {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
 }
 
+.title {
+    float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.title:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+a {
+	cursor: pointer;
+}
 
 
 
@@ -118,6 +102,13 @@ body {
 }
 
 
+a :hover {
+	cursor: pointer;
+}
+
+
+
+
 
 
 /*DASHBOARD PAGE*/
@@ -129,7 +120,8 @@ body {
 
 .chosen-button {
 	position: relative;
-	right: -3%;
+	top: -30px;
+	left: 90px;
 }
 
 .graph {
@@ -158,13 +150,13 @@ body {
 #streetView {
 	display: inline-block;
 	width: 100%;
-	height: calc(100vh - 71px);
+	height: calc(100vh - 52px);
 }
 
 .view {
 	text-align: center;
 	width: 100%;
-	height: calc(100vh - 71px);
+	height: calc(100vh - 52px);
 }
 
 #currentData {
@@ -201,9 +193,11 @@ body {
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 .overlay {
-	width: 100%;
-    height: calc(100vh - 71px);
+	position: absolute;
+	width: calc(100vw - 350px);
+    height: calc(100vh - 52px);
 	background-color: white;
+	top: 50px;
 	z-index: 9999;
 }
 
@@ -217,13 +211,10 @@ body {
 }
 
 
-
-
 .text {
   color: #fbae17;
   display: inline-block;
-  margin-left: 20px;
-  width: 350px;
+  width: 120px;
 }
 
 .bounceball {

@@ -3,6 +3,14 @@ let predictive_data={};
 let previous = null;
 let chosenStand;
 $('#predictiveDays').hide();
+
+
+
+
+$('.title').click(function(){
+	$('.title').removeClass('active');
+	$(this).toggleClass('active');
+});
 //attempt at graphs using charts.js library
 function makeTimeLabels() {
     arr = []
@@ -82,7 +90,6 @@ function drawStandsButtons(data, currentStand, currentDay) {
 
 
 function drawCurrent(stand) {
-	console.log(111);
 	let bikes = allLocation[stand].bikes;
 	let spaces = allLocation[stand].spaces;
 	let status = allLocation[stand].status;
@@ -293,7 +300,8 @@ function showStreetView() {
 	$('#predict').hide();
 	$('#streetView').show();
 	$('#currentData').hide();
-	$('#predictiveDays').hide()
+	$('#predictiveDays').hide();
+	$('#averageDays').hide();
 	displayStreetView();
 }
 
@@ -323,7 +331,7 @@ function displayStreetView() {
 function getPredicts(stand){
 	let begin = Math.round((new Date()).getTime() / 1000);
 	let end = begin + 4320000;
-
+	$('.overlay').show();
 	$.ajax({
 		url: '/request',
 		type: 'GET',
@@ -331,9 +339,9 @@ function getPredicts(stand){
 	}).done(function(response){
 		predictive_data = JSON.parse(response);
 		console.log('Get predicted data successfully!');
+		$('.overlay').hide();
 
-
-      makePredictiveChart(0);
+      	makePredictiveChart(0);
 		 });
 
   }
