@@ -94,7 +94,28 @@ class predictor():
             time += 3600
 
         return d
+    def predictEnMasse(self, stands, timestamps):
 
+        time=datetime.datetime.fromtimestamp(timestamp)
+        weather = self.findMatchingWeather(time)
+        d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
+        for stand in stands:
+            d = {'number':stand}
+            d['humidity'].append(weather['main']['humidity'])
+            d['hour'].append(time.hour)
+            d['monthday'].append(time.day)
+            d['day'].append(time.weekday())
+            d['month'].append(time.month)
+            d['pressure'].append(weather['main']['pressure'])
+            d['temp'].append(weather['main']['temp'])
+            d['temp_max'].append(weather['main']['temp_max'])
+            d['temp_min'].append(weather['main']['temp_min'])
+            d['main'].append(weather['weather'][0]['main'])
+            d['description'].append(weather['weather'][0]['description'])
+            #d['wind_deg']=weather['wind']['deg']
+            d['wind_speed'].append(weather['wind']['speed'])
+
+        return self.model.predictMass(d)
 
 
 

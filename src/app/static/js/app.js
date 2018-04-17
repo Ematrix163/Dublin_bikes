@@ -3,7 +3,7 @@
 
 
 let predictive_directions = false
-
+var bikeLayer
 let allStations = [];
 let allMarkers = [];
 let allCircles = [];
@@ -12,6 +12,8 @@ let largeInfowindow;
 let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
+let hide_bike_layer=false;
+
 let useAddress = true;
 $('#userLocation').hide()
 $('#locationWarning').hide()
@@ -22,6 +24,19 @@ function showSearch(){
  $('#showSearchButton').hide()
  useAddress = true;
 
+
+}
+
+function showHideBikeLayer(){
+  console.log('something happened')
+  if (hide_bike_layer==true){
+  bikeLayer.setMap(map)
+  hide_bike_layer=false}
+  else{
+  bikeLayer.setMap(null)
+  hide_bike_layer=true;
+
+  }
 
 }
 
@@ -95,6 +110,8 @@ function initMap() {
         center: userLocation,
         zoom: 15,
     });
+
+    bikeLayer = new google.maps.BicyclingLayer();
 
 
 

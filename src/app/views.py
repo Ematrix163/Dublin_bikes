@@ -74,7 +74,7 @@ def updateLiveData():
     global global_time
     global global_merged
     launched_graph_cache=False
-
+    print('launched updater')
     while True:
 
         try:
@@ -110,7 +110,7 @@ def updateLiveData():
         global_last_update=timemodule.time()
         global_time = datetime.datetime.fromtimestamp(timemodule.time())
         merged={}
-
+        print('merging stands and current data')
         for each in global_static:
 
             merged[each] = dict(global_stands[each], **global_static[each])
@@ -124,7 +124,7 @@ def updateLiveData():
             for number in global_static:
 
                 global_cached_graphs[int(number)]={}
-
+            print('launching graph cacher')
             #launch the graph cacher
             launched_graph_cache=True
             graphcacher = Thread(target=cachegraphdata)
@@ -306,7 +306,7 @@ def getCurrentData():
                 return 'Error etc'
 
         else:
-            
+
             return 'Error. Missing parameters.'
 
     elif request_type == 'predictrange':

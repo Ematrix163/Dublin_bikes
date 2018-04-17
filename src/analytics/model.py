@@ -167,6 +167,30 @@ class model():
 
         return self.clf.predict(row)[0]
 
+    def predictMass(self, d):
+
+        new_dict = {}
+        for feature in self.features:
+            new_dict[feature]=[0 for i in range(len(d['day']))]
+
+        for feature in d:
+            if feature in self.features and feature not in ['description', 'main']:
+                new_dict[feature]=object[feature]
+
+            else:
+                for index, f in enumerate(feature):
+                    try:
+                        new_dict[feature + '_' + f][index]=1
+
+                    except:
+                        IndexError
+                        f=open('modelerrorlog.log','a')
+                        f.write('encountered new valu for '+str(feature)+' : '+object[feature])
+
+        df = pd.DataFrame(new_dict, columns=new_dict.keys())
+
+        return self.clf.predict(df)
+
 if __name__ == '__main__':
 
     m = model(from_data=True)
