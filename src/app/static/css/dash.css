@@ -122,20 +122,20 @@ body {
 
 /*DASHBOARD PAGE*/
 .date {
-	display: inline;
 	position: relative;
-	right: -20%;
+	right: -40%;
+	top: -53%;
 }
 
 .chosen-button {
 	position: relative;
-	right: -10%;
+	right: -3%;
 }
 
 .graph {
 	display: inline-block;
-	width: 900px;
-	height: 400px;
+	width: 800px;
+	height: 50%;
 	margin-top: 40px;
 }
 
@@ -185,7 +185,7 @@ body {
 .inf {
 	float: left;
 	display: block;
-	margin-left: 30px;
+	margin-left: 10%;
 }
 
 .data-text {
