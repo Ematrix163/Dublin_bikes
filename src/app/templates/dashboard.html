@@ -32,10 +32,23 @@
 					<span></span>
 				</button>
 
-				<div class="chosen-button">
+				<!-- <div class="chosen-button">
 					<button type="button" class="btn btn-outline-primary" onClick='showAverage()'>Average</button>
 					<button type="button" class="btn btn-outline-secondary" onClick="showForecast()">Forecast</button>
 					<button type="button" class="btn btn-outline-success" onClick="showStreetView()">StreetView</button>
+				</div> -->
+
+
+				<div class="btn-group btn-group-toggle chosen-button" data-toggle="buttons">
+					<label class="btn btn-dark active" onClick='showAverage()'>
+						<input type="radio" name="options" id="option1" autocomplete="off" checked>Average
+					</label>
+					<label class="btn btn-dark" onClick="showForecast()">
+						<input type="radio" name="options" id="option2" autocomplete="off">Forecast
+					</label>
+					<label class="btn btn-dark" onClick="showStreetView()">
+						<input type="radio" name="options" id="option3" autocomplete="off">StreetView
+					</label>
 				</div>
 
 				<div id='averageDays' class="date">
@@ -76,6 +89,20 @@
 
 					<canvas class="canvas" id='predict-chart'></canvas>
 				</div>
+
+				<div id="currentData">
+					<div class="data-img">
+						<img src="../static/images/show.jpg">
+					</div>
+					<div class="data-text">
+						<div class="inf" id="bikes"></div>
+						<br/>
+						<div class="inf" id="stands"></div>
+						<br/>
+						<div class="inf" id="status"></div>
+					</div>
+				</div>
+
 				<div id='streetView'></div>
 			</div>
 

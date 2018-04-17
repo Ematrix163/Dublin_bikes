@@ -1,5 +1,6 @@
 let allLocation = {};
-predictive_data={}
+let predictive_data={};
+let previous = null;
 let chosenStand;
 $('#predictiveDays').hide();
 //attempt at graphs using charts.js library
@@ -47,7 +48,7 @@ function getStaticLocations(currentStand, currentDay) {
 	$.ajax({
 		url: './request',
 		type: 'GET',
-		data: {'type':'staticlocations'}
+		data: {'type':'liveData'}
 	}).done(function(response){
 		console.log('getting static data successfully!');
 		data = JSON.parse(response);
@@ -62,18 +63,43 @@ function drawStandsButtons(data, currentStand, currentDay) {
 		$('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
 	}
 	$('.stand').click(function(){
+		$(this).css({'background-color':'rgb(173,216,210)','color':'white'});
+		if (previous) {
+			$(previous).css({'background-color':'','color':'black'});
+		}
+		previous = this;
+		drawCurrent(this.getAttribute('data-id').toString());
 		showAverage();
 		drawAverage(this.getAttribute('data-id').toString(),currentDay);
+
 	})
 	chosenStand = 1;
+	$('#predict').hide();
+	drawCurrent(chosenStand);
 	drawAverage(1,currentDay);
 }
-function switchPredDay(day){
-
-  makePredictiveChart(day)
 
 
+
+function drawCurrent(stand) {
+	console.log(111);
+	let bikes = allLocation[stand].bikes;
+	let spaces = allLocation[stand].spaces;
+	let status = allLocation[stand].status;
+	$('#bikes').text('Current availabe bikes: ' + bikes);
+	$('#stands').text('Current availabe spaces:' +spaces);
+	$('#status').text('Current status:' + status);
 }
+
+
+
+function switchPredDay(day){
+  makePredictiveChart(day)
+}
+
+
+
+
 function switchDay(day) {
 	$('.overlay').show();
 	$.ajax({
@@ -113,6 +139,9 @@ function switchDay(day) {
 		});
 	})
 }
+
+
+
 
 
 function drawAverage(stand, day) {
@@ -193,7 +222,7 @@ function makeChart(data, targetId=false) {
       chart_id = "chart"+targetId.toString()
     }
 
-	
+
 
     console.log(data.bikes)
     console.log(data.spaces)
@@ -242,16 +271,19 @@ function showAverage() {
 	$('#average').show();
 	$('#predict').hide();
 	$('#streetView').hide();
-  $('#predictiveDays').hide()
+  	$('#predictiveDays').hide();
+	$('#currentData').show();
+	$('#averageDays').show();
 }
 
 function showForecast() {
 	$('#average').hide();
 	$('#predict').show();
-  $('#averageDays').hide()
-  $('#predictiveDays').show()
+  	$('#averageDays').hide()
+  	$('#predictiveDays').show()
 	$('#streetView').hide();
-  getPredicts(currentStand)
+	$('#currentData').show();
+  	getPredicts(currentStand);
 }
 
 
@@ -260,6 +292,8 @@ function showStreetView() {
 	$('#average').hide();
 	$('#predict').hide();
 	$('#streetView').show();
+	$('#currentData').hide();
+	$('#predictiveDays').hide()
 	displayStreetView();
 }
 
