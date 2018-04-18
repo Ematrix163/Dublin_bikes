@@ -6,11 +6,6 @@ import datetime
 import time
 import pandas as pd
 from sqlalchemy import create_engine
-<<<<<<< HEAD
-
-=======
->>>>>>> 96feb257004cf1f86c146d0e780345c77eeadf15
-
 def getGraphData():
     '''Downloads all of the data necessary to create daily average graphs, in one go'''
     params = query.getConfig()
