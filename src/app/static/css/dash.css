@@ -41,6 +41,14 @@ body {
 }
 
 
+.search-box {
+	margin: 10px 0 10px 0;
+}
+
+#showSearchButton {
+	margin-top: 20px;
+}
+
 /*Content*/
 #content {
     width: calc(100vw - 350px);
@@ -162,32 +170,13 @@ a :hover {
 }
 
 #currentData {
+	margin-top: 50px;
 	display: block;
 	position: relative;
 	left: 28%;
 	width: 500px;
 	height: 155px;
-	color: white;
-}
-
-#currentData img {
-	width: 200px;
-	height: 155px;
-	float: left;
-}
-
-.inf {
-	float: left;
-	display: block;
-	margin-left: 10%;
-}
-
-.data-text {
-	padding-top: 50px;
-	width: 300px;
-	height: 155px;
-	float: left;
-	background-color: #55cae8;
+	color: black;
 }
 
 /*Loading Animation*/
@@ -278,4 +267,48 @@ a :hover {
   100% {
     top: 0;
   }
+}
+
+
+
+
+
+
+
+/*Predictive map view*/
+.bikes {
+	display: inline;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 20px;
+}
+
+.spaces {
+	display: inline;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 20px;
+}
+
+.infowindow {
+	width: 280px;
+	height: 80px;
+	overflow-y: hidden;
+}
+
+
+.infowindow-text {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.line {
+	display: inline;
+    border-left: 2px solid lightblue;
+    height: 55px;
+	margin: 0 15px 0 15px;
+}
+
+.circle-title {
+	display: inline-block;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 25px;
 }

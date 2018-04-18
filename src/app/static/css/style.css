@@ -58,21 +58,6 @@ body {
     height: 35px;
 }
 
-#result {
-    list-style-type: none;
-    padding: 0;
-}
-
-#result li {
-    padding: 0 0 15px 15px;
-}
-
-#result li:hover {
-    background-color: #434343;
-    cursor: pointer;
-}
-
-
 
 #sidebarCollapse {
     width: 40px;

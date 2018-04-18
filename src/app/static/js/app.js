@@ -118,19 +118,19 @@ function initMap() {
 	getWeather.done(function(data){
     console.log(data)
 
-		 let w  = data['main'];
-		 $('#temp').text(w['temp']);
-		 $('#max-temp').text(w['temp_max']);
-		 $('#min-temp').text(w['temp_min']);
+	 let w  = data['main'];
+	 $('#temp').text(w['temp']);
+	 $('#max-temp').text(w['temp_max']);
+	 $('#min-temp').text(w['temp_min']);
      //this method for getting a weather icon, and the icons it displays, were sourced from https://gist.github.com/tbranyen/62d974681dea8ee0caa1
      var prefix = 'wi-';
      var code = data.weather[0]['id'];
      var icon = weatherIcons[code].icon;
      if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-    icon = 'day-' + icon;
-  }
-    icon = prefix + icon;
-		 $('#icon').attr('src', `./static/images/svg/${icon}.svg`);
+    	icon = 'day-' + icon;
+  	 }
+    	icon = prefix + icon;
+		$('#icon').attr('src', `./static/images/svg/${icon}.svg`);
 	})
 
 
@@ -182,8 +182,6 @@ function initMap() {
 
     let input = document.getElementById('userLocation');
     searchBox = new google.maps.places.SearchBox(input);
-
-
 
 
     // This function is to make all circles fit the map
@@ -458,9 +456,7 @@ let viewModel = function() {
       return false;
 		} else {
 			let temp =  searchBox.getPlaces()["0"].geometry.location;
-
 			userLocation = {lat: temp.lat(),lng: temp.lng()};}}
-
 			$('#loading-text').text('Try to find the nearest bike for you...');
 			$('.overlay').show();
 			let getBike = $.ajax({
