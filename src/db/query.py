@@ -6,7 +6,9 @@ import getpass
 global passw
 
 def getConfig():
+
     '''Gets all database parameters from file and returns them in dictionary form'''
+
     f=open('config.config','r').read().split('\n')
     d={}
     d['database']=f[1]
@@ -25,37 +27,28 @@ def makeCnx():
     cnx = mysql.connector.connect(user=params['user'],\
     database=params['database'], host=params['host'],\
     port = params['port'], password = params['passw'])
+
     return cnx
 
 def queryStandNumberFull(x):
 
-    '''Gets all historical information about a specific stands occupancy
+    '''Gets all historical information about a specific stand's occupancy
 
 
     '''
-
-    #takes a key, and a value for the key
-    #returns all the rows who match that key
-
-    #basically ripped from
-    #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
 
 
     cnx = makeCnx()
     cursor = cnx.cursor()
 
-#this can be changed to reflect any query we like
-
     query = ("SELECT time, available_bikes, available_bike_stands, bike_stands, status FROM dynamic_bikes WHERE number = "  + str(x))
-
-
 
     cursor.execute(query)
 
-#should change to return data in json like format
-
     json={}
+
     for (arr) in cursor:
+
         json[arr[0]] ={'bikes': arr[1], 'spaces' : arr[2]}
 
     cursor.close()
@@ -72,12 +65,8 @@ def queryStandNumber(x):
 
      '''
 
-    #takes a key, and a value for the key
-    #returns all the rows who match that key
-
     #basically ripped from
     #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-select.html
-
 
     cnx = makeCnx()
     cursor = cnx.cursor()
@@ -87,8 +76,6 @@ def queryStandNumber(x):
     query = ("SELECT time, available_bikes, available_bike_stands, bike_stands, status FROM dynamic_bikes WHERE number = "  + str(x))
 
     query = ("SELECT time, bike_stands, available_bikes, available_bike_stands, status FROM dynamic_bikes d WHERE d.time = (SELECT MAX(time) FROM dynamic_bikes d WHERE d.number = "+str(x)+") AND d.number = " +str(x))
-
-
 
     cursor.execute(query)
 
@@ -105,21 +92,16 @@ def queryStandNumber(x):
 
 
 
-
-
-
 def queryCurrentStands():
 
-    global passw
-
     '''Returns current stand occupancy data for all stands'''
-
 
     cnx=makeCnx()
     cursor = cnx.cursor()
 
     #choose the closest time's data of all stations
-    query = ("SELECT time, status, number, available_bikes, available_bike_stands, bike_stands FROM dynamic_bikes GROUP BY (number) HAVING MAX(time)")
+    query = ("SELECT a.time, a.status, a.number, a.available_bikes, a.available_bike_stands, a.bike_stands FROM dynamic_bikes a INNER JOIN( SELECT MAX(time) t, number FROM dynamic_bikes b GROUP BY number )b ON a.number = b.number AND a.time = b.t")
+
 
 
     cursor.execute(query)
@@ -134,6 +116,7 @@ def queryCurrentStands():
 
     cursor.close()
     cnx.close()
+
     return json
 
 
@@ -150,13 +133,11 @@ def queryStaticLocations():
 	cnx = makeCnx()
 	cursor = cnx.cursor()
 
-	#this can be changed to reflect any query we like
 
 	query = ("SELECT standid, name, address, lat, longitude  FROM bikestands ")
 
 	cursor.execute(query)
 
-	# I've changed the type here because it is easy for me to loop the list in js
 	json = {}
 	for (arr) in cursor:
 	    json[arr[0]] = {'name' : arr[1], 'address' : arr[2], 'lat': arr[3], 'long':arr[4]}
@@ -173,10 +154,12 @@ def queryStaticLocations():
 def queryWeather():
 
 
-
 	'''
 	Queries weather data from our database
 	'''
+
+    #I don't think we're actively using this query anymore as the front end now relies on directly calling the openweathermap api
+
 
 	cnx = makeCnx()
 	cursor = cnx.cursor()

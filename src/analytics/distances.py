@@ -1,3 +1,6 @@
+"""Includes methods for getting distances from stands to an origin point, and returning the closest stand to the origin with a satisfactory number of bikes"""
+
+
 import requests
 import json
 from db import query
@@ -10,9 +13,12 @@ from db import keyring
 
 def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'):
 
+    '''Uses the google distance matrix api to get the distances for all static locations from a given origin'''
+
     requestString = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='
     requestString+=str(origin['lat'])+','+str(origin['long'])
     requestString+='&destinations='
+
     for coords in staticlocations:
 
         lat2 = str(coords['lat'])
@@ -25,9 +31,9 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
     requestString+='&mode='+transportMode+'&key='+keyring.getDistanceKey()
 
     response = requests.get(requestString)
-    response = json.loads(response.text)
-    print(response)
-    return response
+
+
+    return json.loads(response.text)
 
 
 
@@ -37,7 +43,7 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
 
 
 
-def getClosestStand(origin, transportMode='walking'):
+def getClosestStand(origin, merged, transportMode='walking'):
 
     '''iterates through all stands and finds the closest one to the origin'''
 
@@ -47,12 +53,7 @@ def getClosestStand(origin, transportMode='walking'):
     closestDuration = inf
     lat1 = origin['lat']
     long1 = origin['long']
-    stands = query.queryCurrentStands()
-    static = query.queryStaticLocations()
-    merged = {}
 
-    for each in static:
-        merged[each] = dict(stands[each], **static[each])
 
 
     coords = []
@@ -75,6 +76,7 @@ def getClosestStand(origin, transportMode='walking'):
 
 
     data = getAllDistancesInOneApiCall({'lat':lat1, 'long':long1}, coords, transportMode)
+
     closest_index = 0
     for index, location in enumerate(data['rows'][0]['elements']):
 

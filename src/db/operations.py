@@ -18,7 +18,7 @@ from db import query, keyring
 def buildModel(sleeptime):
     '''Rebuilds the RandomForestRegressor model with the most up to date data'''
     while True:
-        m= model.model(from_data=True)
+        m=model.model(from_data=True)
         del(model)
         time.sleep(sleeptime)
 

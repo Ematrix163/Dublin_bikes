@@ -1,3 +1,5 @@
+#Bunch of data that Diarmuid saved from his command line when he deleted half of the bike data. Represents the last 4000 rows of the 400,000 that were deleted
+
 |
 | 1523365011000 |     22 | OPEN   |          20 |                    13 | 7               |
 | 1523365015000 |     93 | OPEN   |          40 |                    24 | 16              |
