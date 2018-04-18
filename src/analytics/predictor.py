@@ -94,13 +94,13 @@ class predictor():
             time += 3600
 
         return d
-    def predictEnMasse(self, stands, timestamps):
+    def predictEnMasse(self, stands, timestamp):
 
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
-        d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
+        d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
         for stand in stands:
-            d = {'number':stand}
+            d['number'].append(stand)
             d['humidity'].append(weather['main']['humidity'])
             d['hour'].append(time.hour)
             d['monthday'].append(time.day)
@@ -115,7 +115,17 @@ class predictor():
             #d['wind_deg']=weather['wind']['deg']
             d['wind_speed'].append(weather['wind']['speed'])
 
-        return self.model.predictMass(d)
+        predictions = self.model.predictMass(d)
+        new_d={}
+        count = 0
+
+        for stand in stands:
+
+            new_d[stand]={'bikes':predictions[count], 'stands':stands[stand]['bike_stands']-predictions[count]}
+
+            count+=1
+
+        return new_d
 
 
 

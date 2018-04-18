@@ -175,10 +175,12 @@ class model():
 
         for feature in d:
             if feature in self.features and feature not in ['description', 'main']:
-                new_dict[feature]=object[feature]
+                new_dict[feature]=d[feature]
 
             else:
-                for index, f in enumerate(feature):
+
+                for index, f in enumerate(d[feature]):
+
                     try:
                         new_dict[feature + '_' + str(f)][index]=1
 
@@ -189,7 +191,7 @@ class model():
 
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 
-        return self.clf.predict(df)
+        return [value for value in self.clf.predict(df)]
 
 if __name__ == '__main__':
 

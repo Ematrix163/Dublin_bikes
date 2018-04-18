@@ -334,3 +334,8 @@ def getCurrentData():
 
         else:
             return 'Error. Missing parameters.'
+
+    elif request_type == 'predictall':
+
+        time = int(request.args.get('time'))
+        return json.dumps(predictiveModel.predictEnMasse(global_merged, time))

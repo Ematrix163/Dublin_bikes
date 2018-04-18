@@ -119,7 +119,7 @@ def queryCurrentStands():
     cursor = cnx.cursor()
 
     #choose the closest time's data of all stations
-    query = ("SELECT time, status, number, available_bikes, available_bike_stands FROM dynamic_bikes GROUP BY (number) HAVING MAX(time)")
+    query = ("SELECT time, status, number, available_bikes, available_bike_stands, bike_stands FROM dynamic_bikes GROUP BY (number) HAVING MAX(time)")
 
 
     cursor.execute(query)
@@ -130,7 +130,7 @@ def queryCurrentStands():
 
 	# traverse the outcome and record it
     for (arr) in cursor:
-        json[arr[2]] = {'time':arr[0], 'status': arr[1],'bikes' : arr[3], 'spaces' : arr[4]}
+        json[arr[2]] = {'time':arr[0], 'status': arr[1],'bikes' : arr[3], 'spaces' : arr[4], 'bike_stands':arr[5]}
 
     cursor.close()
     cnx.close()
