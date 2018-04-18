@@ -187,7 +187,7 @@ class model():
                     except:
                         IndexError
                         f=open('modelerrorlog.log','a')
-                        f.write('encountered new valu for '+str(feature)+' : '+str(object[feature]))
+                        f.write('encountered new valu for '+str(feature)+' : '+str(f))
 
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 

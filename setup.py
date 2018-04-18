@@ -12,11 +12,7 @@ import sys
 from setuptools import setup
 
 # Add here console scripts and other entry points in ini-style format
-entry_points = """
-[console_scripts]
-run_dublinbikes = dublin_bikes.dublin_bikes.run:run
 
-"""
 
 
 def setup_package():
@@ -25,6 +21,8 @@ def setup_package():
     setup(setup_requires=['pyscaffold>=3.0a0,<3.1a0'] + sphinx,
           entry_points=entry_points,
           use_pyscaffold=True)
+
+    entry_points = { 'console_scripts':['run_dubbikes_server=runserver:run'] }
 
 
 if __name__ == "__main__":
