@@ -38,6 +38,10 @@
 				<button type="button" class="btn btn-primary btn-block" data-bind="click:findStation">Find Me a Station</button>
         <p>Use our predictive api for bike finding?<input id='predictiveCheckBox' type='checkbox'></p>
 
+		<div id='mapOptions'><p>Bike layer
+		<input id='bikeLayerCheckBox' type='checkbox'  onchange="showHideBikeLayer()"></p></div>
+
+		
         <div><img  src='images/ads/raleigh.jpg'></div>
 
 				<div class="bottom-button">
@@ -54,8 +58,7 @@
                     <span></span>
                     <span></span>
                 </button>
-        <div id='mapOptions'><p>Bike layer
-        <input id='bikeLayerCheckBox' type='checkbox'  onchange="showHideBikeLayer()"></p></div>
+
 
 				<div id="weather">
 					<span id="temp" style="color:black; font-size:25px"></span><span style="color:black; font-size:30px">&#176;C</span>

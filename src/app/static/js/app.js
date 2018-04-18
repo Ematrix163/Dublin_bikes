@@ -171,6 +171,7 @@ function initMap() {
     //If the ajax request fail
     getBikeStation.fail(function (error) {
         //alert
+		$('.overlay').hide();
         sweetNote('Sorry, cannot get static data!');
     });
 
@@ -473,11 +474,10 @@ let viewModel = function() {
 				calcRoute(userLocation, data);
 			})
 			getBike.fail(function(data){
+				$('.overlay').hide();
 				sweetNote('Sorry, the server cannot find a bike for you!')
 			});
 		}
-
-
 
 
 
@@ -513,12 +513,8 @@ let viewModel = function() {
 			})
 
 			getStation.fail(function(data){
+				$('.overlay').hide();
 				sweetNote('Sorry, the server cannot find a station for you!')
 			});
-
 	}
-
-
-
-
 }
