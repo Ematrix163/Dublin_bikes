@@ -1,3 +1,6 @@
+'''Simple methods for returning api keys from stored .config file'''
+
+
 def getMapKey():
     '''Returns the google maps api key'''
 

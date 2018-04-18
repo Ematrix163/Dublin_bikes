@@ -4,7 +4,7 @@ from app import app
 import time as timemodule
 from flask import request
 from db import query
-from analytics import single_stand as graph
+from analytics import graph
 from analytics import distances as distance
 import json
 from analytics import predictor
@@ -90,7 +90,7 @@ def updateLiveData():
 
         except:
 
-            print('Failed to update static locations')
+            
 
         print('Querying current stand occupancy')
 
@@ -99,7 +99,7 @@ def updateLiveData():
             global_stands = query.queryCurrentStands()
 
         except:
-
+            print(query.queryCurrentStands())
             print('Failed to update current stands')
 
         print('Grabbing static locations')
@@ -303,7 +303,8 @@ def getCurrentData():
         w = query.queryWeather()
 
         return json.dumps(w)
-    #add method for predictions. So far untested
+
+#prediction api methods
     elif request_type == 'prediction':
 
         if request.args.get('stand') != None and request.args.get('time')!= None:

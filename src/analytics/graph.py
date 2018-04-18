@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def getGraphData():
-
+    '''Downloads all of the data necessary to create daily average graphs, in one go'''
     params = query.getConfig()
     connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
     df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
@@ -17,18 +17,18 @@ def getGraphData():
 
 
 def prepareDayOfTheWeekData(stand, dayOfWeek, data=False):
-    '''Returns average occupancy of a given stand, for every hour of a specified week day'''
+
+    '''Returns average occupancy of a given stand, for every hour of a specified week day. If no dataframe is provided, this method will query the needed data from the database, but it is inherently wasteful. If a dataframe is provided, it will extract it from the dataframe.'''
 
     if not data:
+
+        #slow wasteful method that won't work in acceptable time for larger datasets
+
         stand = int(stand)
         dayOfWeek = int(dayOfWeek)
-        import time
+
+
         data = query.queryStandNumberFull(stand)
-
-
-        #as default, requests all data. I think a further method for finding everyday at once,
-
-        #this method is a test, to be thrown away once we have a function for getting all the days data
 
         json = makeEmptyJsonDayObject()
 
@@ -63,7 +63,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=False):
                 response['spaces'].append(int(sum(json[t]['spaces'])/len(json[t]['spaces'])))
     else:
 
-        df=data[data['day']==dayOfWeek]
+        df=data[(data['number']==stand)and(data['day']==dayOfWeek)]
         response={'spaces':[], 'bikes':[]}
         for hour in range(0,24):
             response['bikes'].append(df[df['hour']==hour]['available_bikes'].mean())
@@ -90,13 +90,3 @@ def makeEmptyJsonDayObject():
 
 
     return json
-
-
-
-
-
-
-
-
-    #works fine, returning object of length 100, for files that have enough data
-    #don't know yet wha happens if this isn't true
