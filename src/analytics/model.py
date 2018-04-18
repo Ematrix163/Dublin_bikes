@@ -151,13 +151,13 @@ class model():
 
             elif feature in ['description','main','hour','day','number']:
                 try:
-                    row[feature+'_'+object[feature]]+=1
+                    row[feature+'_'+str(object[feature])]+=1
 
                 #if we encounter a new value for categorical features, record it in the error log file. This is a pretty rubbish fix, but will work for now. We can check this error log to see if new weather descriptions have been encountered. The next time we build the model, it will include these new descriptions as dummies anyway, so all is not lost.
                 except:
                     IndexError
                     f=open('modelerrorlog.log','a')
-                    f.write('encountered new valu for '+str(feature)+' : '+object[feature])
+                    f.write('encountered new valu for '+str(feature)+' : '+str(object[feature]))
 
 
 
@@ -180,12 +180,12 @@ class model():
             else:
                 for index, f in enumerate(feature):
                     try:
-                        new_dict[feature + '_' + f][index]=1
+                        new_dict[feature + '_' + str(f)][index]=1
 
                     except:
                         IndexError
                         f=open('modelerrorlog.log','a')
-                        f.write('encountered new valu for '+str(feature)+' : '+object[feature])
+                        f.write('encountered new valu for '+str(feature)+' : '+str(object[feature]))
 
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 
