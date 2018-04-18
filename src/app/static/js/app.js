@@ -38,24 +38,27 @@ function showHideBikeLayer(checkbox){
 
 // html geolocate copied from stack overflow
 function showError(error) {
+  foundUserLocation = false;
+  console.log('Could not locate user using geolocate')
 let userLocation = {lat: 53.3083,lng: -6.2236};
 $('#userLocation').show()
  $('#showSearchButton').hide()
   $('#locationWarning').show()
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
+
             break;
         case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
+
             break;
         case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
+
             break
         case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
+            
             break;
     }
+
 }
 
 function getLocation() {
@@ -227,7 +230,7 @@ function createMarkerInfoWindow(station, infowindow) {
       var color = 'blue';
     }
     else{
-      var color = '#00FF00';
+      var color = ' #00FF00';
     }
 
     // create a new circle

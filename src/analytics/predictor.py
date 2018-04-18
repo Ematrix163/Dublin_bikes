@@ -171,7 +171,9 @@ class predictor():
         dtime=datetime.datetime.fromtimestamp(time+1200)
         closest_index = 0
 
-        #come on. All the weather should be just about the same. We will save time here by using the same weather data for all queries.
+        #All the weather should be just about the same. We will save time here by using the same weather data for all queries.
+
+        #In a future iteration of the app, this would be different. But we would also have a model that wasn't trained on just three weeks of data as well :)
 
         weather=self.findMatchingWeather(dtime)
         print(weather)
@@ -187,13 +189,14 @@ class predictor():
         for index, location in enumerate(data['rows'][0]['elements']):
             if transportMode == 'walking':
 
-                if location['duration']['value']<closestDuration and self.predict(int(self.stands_index[index]), time+3600+location['duration']['value'], matchingweather=weather) >=5:
+                if location['duration']['value']<closestDuration and self.predict(int(self.stands_index[index]), time+location['duration']['value'], matchingweather=weather) >=5:
                     closest_index = index
                     closestDuration = location['duration']['value']
 
             else:
 
                 if location['duration']['value']<closestDuration and self.predict(int(self.stands_index[index]), time+location['duration']['value'],matchingweather=weather) <=25:
+
                     closest_index = index
                     closestDuration = location['duration']['value']
 

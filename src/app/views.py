@@ -23,7 +23,8 @@ global_weather = []
 global_cached_graphs = {}
 global_merged = {}
 global_time = datetime.datetime.fromtimestamp(timemodule.time())
-global_bike_data = []
+global_bike_data = None
+cacheFromDF=False
 
 #methods for caching and updating certain data
 def cachegraphdata(get_all_data=False):
@@ -33,31 +34,39 @@ def cachegraphdata(get_all_data=False):
     global global_static
     global global_cached_graphs
     global global_time
-    create_graph_cache = False
+    global global_bike_data
+    global cacheFromDF
     if get_all_data:
-        global global_bike_data
+        print('Downloading bike data')
         global_bike_data= graph.getGraphData()
+        cacheFromDF=True
+        print('Finished downloading bike data')
+
+    else:
+        global_bike_data = None
 
     while True:
 
         actual_day = int(global_time.weekday())
 
         for number in global_static:
-            time.sleep(2)
+            timemodule.sleep(1)
             #update the actual_day graphs first, as these are what the user sees on the index page
             try:
-                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day, data=global_bike_data)
+                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day, data=global_bike_data, fromDF=cacheFromDF)
             except:
+
                 print('Failed to update graph for stand', number, 'day', actual_day)
+
 
 
 
         for day in [d for d in range (7) if d != actual_day]:
 
             for number in global_static:
-                time.sleep(2)
+                timemodule.sleep(1)
                 try:
-                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day, data=global_bike_data)
+                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day, data=global_bike_data, fromDF=cacheFromDF)
 
                 except:
 
@@ -198,6 +207,7 @@ def dashboard():
 @app.route('/distance')
 def findClosestStand():
     global predictiveModel
+    global global_merged
 
     '''Will return the closest stand (with at least five bikes or five spaces) to the stated origin. Transport mode is used as a proxy for whether the user is seeking a bike or location. 'Cycling' will return a stand with spaces, 'walking' will return a stand with bikes.
 
@@ -223,7 +233,7 @@ def findClosestStand():
     #add other options here
     if request.args.get('predictive')==None or request.args.get('predictive')==False:
 
-        response = distance.getClosestStand(origin, mode)
+        response = distance.getClosestStand(origin, mode, global_merged)
 
     else:
         response=predictiveModel.getClosestStand(origin, mode)
@@ -236,7 +246,7 @@ def findClosestStand():
 def getGraphData():
 
     '''Returns a set of data points representing the average occupancy of a stand on a given day'''
-
+    global cacheFromDF
     global global_cached_graphs
     stand = int(request.args.get('stand'))
     day = int(str(request.args.get('day')))
@@ -247,7 +257,7 @@ def getGraphData():
 
     else:
         #if it's not there, grab it instead, add it to the cache, and then return it
-        data = graph.prepareDayOfTheWeekData(stand, day)
+        data = graph.prepareDayOfTheWeekData(stand, day, data=global_bike_data, fromDF=cacheFromDF)
         global_cached_graphs[stand][day]=data
         return json.dumps(data)
 

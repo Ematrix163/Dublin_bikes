@@ -1,3 +1,6 @@
+"""Includes methods for drawing average stand occupancy graphs"""
+
+
 from db import query as query
 import datetime
 import time
@@ -16,11 +19,11 @@ def getGraphData():
     return df_bikes
 
 
-def prepareDayOfTheWeekData(stand, dayOfWeek, data=False):
+def prepareDayOfTheWeekData(stand, dayOfWeek, data=None, fromDF=False):
 
     '''Returns average occupancy of a given stand, for every hour of a specified week day. If no dataframe is provided, this method will query the needed data from the database, but it is inherently wasteful. If a dataframe is provided, it will extract it from the dataframe.'''
 
-    if not data:
+    if fromDF == False:
 
         #slow wasteful method that won't work in acceptable time for larger datasets
 
@@ -63,7 +66,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=False):
                 response['spaces'].append(int(sum(json[t]['spaces'])/len(json[t]['spaces'])))
     else:
 
-        df=data[(data['number']==stand)and(data['day']==dayOfWeek)]
+        df=data[(data['number']==stand) & (data['day']==dayOfWeek)]
         response={'spaces':[], 'bikes':[]}
         for hour in range(0,24):
             response['bikes'].append(df[df['hour']==hour]['available_bikes'].mean())
