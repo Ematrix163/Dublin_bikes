@@ -2,80 +2,60 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find a bike</title>
-    <!-- Bootstrap CSS-->
-    <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Find a bike</title>
+	<!-- Bootstrap CSS-->
+	<link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!--The main CSS file -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+	<!--The main CSS file -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
-    <div class="wrapper">
-        <!--Sidebar-->
-        <nav id="sidebar">
+	<div class="wrapper">
+		<!--Sidebar-->
+		<nav id="sidebar">
 			<div class="sidebar-content">
-	            <div class="sidebar-header">
-                <img style="display:inline" src='../static/images/favicon.jpg'></img>
-	                <h3>Search</h3>
-	            </div>
-
-	            <div class="form-group">
-
-	                <label id="locationWarning" for="userLocation">Couldn't locate you. Please enter your location below:</label>
-
-	                <input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
-	                <br/>
-
-
+				<div class="sidebar-header">
+					<img style="display:inline" src='../static/images/favicon.jpg'></img>
+					<h3>Search</h3>
 				</div>
-
-          <button type="button" id ='showSearchButton' class="btn btn-primary btn-block" data-bind="click:showSearch">Let me enter a location</button>
+				<div class="form-group">
+					<label id="locationWarning" for="userLocation">Couldn't locate you. Please enter your location below:</label>
+					<input type="text" class="form-control" id="userLocation" placeholder="Enter your location">
+					<br/>
+				</div>
+				<button type="button" id='showSearchButton' class="btn btn-primary btn-block" data-bind="click:showSearch">Let me enter a location</button>
 				<button type="button" class="btn btn-primary btn-block" data-bind="click:findBike">Find Me a Bike</button>
 				<button type="button" class="btn btn-primary btn-block" data-bind="click:findStation">Find Me a Station</button>
-        <p>Use our predictive api for bike finding?<input id='predictiveCheckBox' type='checkbox'></p>
-
-		<div id='mapOptions'><p>Bike layer
-		<input id='bikeLayerCheckBox' type='checkbox'  onchange="showHideBikeLayer()"></p></div>
-
-		
-        <div><img  src='images/ads/raleigh.jpg'></div>
-
+				<input id='predictiveCheckBox' type='checkbox'>Use our predictive api for bike finding?
+				<div id='mapOptions'>
+					<input id='bikeLayerCheckBox' type='checkbox' onchange="showHideBikeLayer(this)">Bike layer
+				</div>
+				<div><img src='images/ads/raleigh.jpg'></div>
 				<div class="bottom-button">
 					<button type="button" class="btn btn-outline-primary btn-block" onclick="window.location.href='./dash'">Go To DASHBOARD</button>
 				</div>
 			</div>
-        </nav>
-
-
-        <div id="content">
-            <div class="content-header">
-                <button type="button" id="sidebarCollapse" class="navbar-btn">
+		</nav>
+		<div id="content">
+			<div class="content-header">
+				<button type="button" id="sidebarCollapse" class="navbar-btn">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-<<<<<<< HEAD
-
-=======
-        <div id='mapOptions'><p>Bike layer
-        <input id='bikeLayerCheckBox' type='checkbox'  onchange="showHideBikeLayer(this)"></p></div>
->>>>>>> 151948385a28c9707b0cac64afb1a45580ae63de
-
 				<div id="weather">
 					<span id="temp" style="color:black; font-size:25px"></span><span style="color:black; font-size:30px">&#176;C</span>
 					<span id="max-temp" style='display:none'></span>
 					<span id="min-temp" style='display:none'></span>
-					<img src="" id ="icon">
+					<img src="" id="icon">
 				</div>
-
-
-
-            </div>
-
+			</div>
 			<div class="overlay">
 				<div class="loading-wrapper">
 					<div class="bounceball">
@@ -83,37 +63,28 @@
 					</div>
 				</div>
 			</div>
-
-            <div id="map"></div>
-
-        </div>
-
-
+			<div id="map"></div>
+		</div>
 		<script type="text/javascript">
 			var apikey = "{{ a }}"
 		</script>
-        <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" >
-        </script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-		<!--        <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>-->
-    <script type="text/javascript" src="../static/js/weathericons.js"></script>
-    <!-- add the weather icons json dictionary -->
+		<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
+		</script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="../static/js/weathericons.js"></script>
+		<!-- add the weather icons json dictionary -->
 		<script type="text/javascript" src="../static/js/charts.js"></script>
-		        <!-- add charts.js local script to index -->
+		<!-- add charts.js local script to index -->
 
 		<script type="text/javascript" src="../static/js/app.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ key }}&callback=initMap">
-        </script>
-
+		<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ key }}&callback=initMap">
+		</script>
 
 		<script type="text/javascript">
-
-
 			$(document).ready(function() {
 				$('#sidebarCollapse').on('click', function() {
 					$('#sidebar').toggleClass('active');

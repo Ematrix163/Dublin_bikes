@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 let predictive_directions = false
 var bikeLayer
 let allStations = [];
@@ -13,7 +12,8 @@ let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
 let hide_bike_layer=false;
-document.getElementById('bikeLayerCheckBox').checked=true;
+
+
 
 let useAddress = true;
 $('#userLocation').hide()
@@ -24,21 +24,16 @@ function showSearch(){
  $('#userLocation').show()
  $('#showSearchButton').hide()
  useAddress = true;
-
-
 }
 
 function showHideBikeLayer(checkbox){
   console.log('something happened')
   if (checkbox.checked==true){
-  bikeLayer.setMap(map)
+  	bikeLayer.setMap(map)
   }
   else{
-  bikeLayer.setMap(null)
-
-
+  	bikeLayer.setMap(null)
   }
-
 }
 
 // html geolocate copied from stack overflow
@@ -47,7 +42,6 @@ let userLocation = {lat: 53.3083,lng: -6.2236};
 $('#userLocation').show()
  $('#showSearchButton').hide()
   $('#locationWarning').show()
-
     switch(error.code) {
         case error.PERMISSION_DENIED:
             x.innerHTML = "User denied the request for Geolocation."
@@ -114,8 +108,6 @@ function initMap() {
 
     bikeLayer = new google.maps.BicyclingLayer();
 
-
-
 	let getWeather = $.ajax({
 		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&units=metric&APPID='+ apikey
 	})
@@ -139,19 +131,15 @@ function initMap() {
 	})
 
 
-
 	getWeather.fail(function(){
 		sweetNote('Sorry, cannot get weather data!')
 	})
-
 
 
     //Use ajax request to get static data
     let getBikeStation = $.ajax({
         url: './request?type=liveData'
     })
-
-
 
     getBikeStation.done(function (data) {
     	console.log('Get data successfully!');
@@ -279,32 +267,41 @@ function createMarkerInfoWindow(station, infowindow) {
 
 
 function populateInfoWindow(circle, infowindow, ev, station) {
-
     /*This function is to populate infowindow when the user clicks on a marker*/
     infowindow.setPosition(ev.latLng);
 
-	var date = new Date(station.time);
+	let date = new Date(station.time);
+	let hour = date.getHours();
+	let min = date.getMinutes()
+	console.log(hour);
+	date = hour + ':' + min;
+
     infowindow.setContent(
         `<div class='infowindow'>
 			<div class="chart-container">
-      <div class="chartoverlay">
-				<div class="loading-wrapper">
-					<div class="bounceball">
-						<div class="text" id="loading-t">Loading chart</div>
+      			<div class="chartoverlay">
+					<div class="loading-wrapper">
+						<div class="bounceball">
+							<div class="text" id="loading-t">Loading chart</div>
+						</div>
 					</div>
 				</div>
-			</div>
 				<canvas id="chart${station.number}"></canvas>
 			</div>
-            <div class='circle-title'>${circle.title}</div>
-            <div class='bike'>
-                <P>Status: ${station.status}</P>
-                <p>Available Bike stands: ${station.spaces}</p>
-                <p>Available Bikes: ${station.bikes}</p>
-                <p><a href="/dash?stand=${station.number}">View on Dash</a></p>
-				<p>Last Update Time: ${date}</p>
-            </div>
-        </div>`
+
+			<div class='infowindow-text'>
+            	<div class='circle-title'>${circle.title}: &nbsp;&nbsp;&nbsp;${station.status}</div>
+            		<div class='bike'>
+                		<div class='spaces'>Spaces: ${station.spaces}</div>
+						<div class='line'></div>
+                		<div class='bikes'>Bikes: ${station.bikes}</div>
+						<br/>
+						<div class='updateTime'>Last Update Time: ${date}</div>
+                		<a class='link' href="/dash?stand=${station.number}">View on Dash</a>
+            		</div>
+				</div>
+        	</div>
+		</div>`
     );
     infowindow.open(map);
 	let today = new Date();
@@ -396,7 +393,7 @@ let viewModel = function() {
          return temp;
     })
 
-	// When user click a tag, fillout the tag on the blank
+	// // When user click a tag, fillout the tag on the blank
 	this.displayInfo = function(item, event) {
 		self.keyword(item.name());
 
@@ -409,17 +406,17 @@ let viewModel = function() {
             }
         })
 	}
-
-    this.fliterStands = function(data, event){
-        allCircles.map(circle => {
-            let lowerCase = circle.title.toLowerCase();
-            if (lowerCase.includes(data.keyword().toLowerCase())) {
-                circle.setMap(map);
-            } else {
-                circle.setMap(null);
-            }
-        })
-    }
+	//
+    // this.fliterStands = function(data, event){
+    //     allCircles.map(circle => {
+    //         let lowerCase = circle.title.toLowerCase();
+    //         if (lowerCase.includes(data.keyword().toLowerCase())) {
+    //             circle.setMap(map);
+    //         } else {
+    //             circle.setMap(null);
+    //         }
+    //     })
+    // }
 
 
 
