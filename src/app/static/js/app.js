@@ -13,6 +13,7 @@ let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
 let hide_bike_layer=false;
+document.getElementById('bikeLayerCheckBox').checked=true;
 
 let useAddress = true;
 $('#userLocation').hide()
@@ -27,14 +28,14 @@ function showSearch(){
 
 }
 
-function showHideBikeLayer(){
+function showHideBikeLayer(checkbox){
   console.log('something happened')
-  if (hide_bike_layer==true){
+  if (checkbox.checked==true){
   bikeLayer.setMap(map)
-  hide_bike_layer=false}
+  }
   else{
   bikeLayer.setMap(null)
-  hide_bike_layer=true;
+
 
   }
 
