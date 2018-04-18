@@ -6,12 +6,13 @@ import datetime
 import time
 import pandas as pd
 from sqlalchemy import create_engine
+import query()
 
 def getGraphData():
     '''Downloads all of the data necessary to create daily average graphs, in one go'''
     params = query.getConfig()
 
-    connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
+    connstring = 'mysql+pymysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
     engine=create_engine(connstring)
     df_bikes=pd.read_sql_table(con=engine, table_name='dynamic_bikes')
     df_bikes['time']=df_bikes['time']//1000
