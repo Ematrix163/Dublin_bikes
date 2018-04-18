@@ -16,31 +16,37 @@ import copy
 # This is our load routine, basically
 
 global_stands = []
+global_bike_data = []
 global_static = []
 global_last_update = 0
 global_weather = []
 global_cached_graphs = {}
 global_merged = {}
 global_time = datetime.datetime.fromtimestamp(timemodule.time())
+global_bike_data = []
 
 #methods for caching and updating certain data
-def cachegraphdata():
+def cachegraphdata(get_all_data=False):
     '''This functions is meant to be threaded. It will download information about daily stand occupancy and cache it, in order to speed up request times.'''
 
     print('begin caching graph data....')
     global global_static
     global global_cached_graphs
     global global_time
+    create_graph_cache = False
+    if get_all_data:
+        global global_bike_data
+        global_bike_data= graph.getGraphData()
 
     while True:
 
-        actual_day = int(global_time.day)
+        actual_day = int(global_time.weekday())
 
         for number in global_static:
-
+            time.sleep(2)
             #update the actual_day graphs first, as these are what the user sees on the index page
             try:
-                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day)
+                global_cached_graphs[int(number)][actual_day]=graph.prepareDayOfTheWeekData(int(number), actual_day, data=global_bike_data)
             except:
                 print('Failed to update graph for stand', number, 'day', actual_day)
 
@@ -49,9 +55,9 @@ def cachegraphdata():
         for day in [d for d in range (7) if d != actual_day]:
 
             for number in global_static:
-
+                time.sleep(2)
                 try:
-                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day)
+                    global_cached_graphs[int(number)][day]=graph.prepareDayOfTheWeekData(int(number), day, data=global_bike_data)
 
                 except:
 
@@ -73,7 +79,8 @@ def updateLiveData():
     global global_weather
     global global_time
     global global_merged
-    launched_graph_cache=False
+    launched_graph_cache=True
+    create_graph_cache=False
     print('launched updater')
     while True:
 
@@ -107,6 +114,8 @@ def updateLiveData():
 
             print('Failed to update weather')
 
+
+
         global_last_update=timemodule.time()
         global_time = datetime.datetime.fromtimestamp(timemodule.time())
         merged={}
@@ -118,16 +127,19 @@ def updateLiveData():
         #make absolutely sure we aren't just referring to a dictionary reference.
 
         global_merged = copy.deepcopy(merged)
-
-        if launched_graph_cache == False:
-
+        if not create_graph_cache:
+            create_graph_cache = True
             for number in global_static:
 
                 global_cached_graphs[int(number)]={}
+
+        if launched_graph_cache == False:
+
+
             print('launching graph cacher')
             #launch the graph cacher
             launched_graph_cache=True
-            graphcacher = Thread(target=cachegraphdata)
+            graphcacher = Thread(target=cachegraphdata, args=[True])
             graphcacher.start()
 
         #sleep for five minutes

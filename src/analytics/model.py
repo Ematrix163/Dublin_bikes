@@ -26,17 +26,17 @@ class model():
 
 
             #we don't want these features in our X dataframe
-            cols = [col for col in df_all.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target']]
+            cols = [col for col in df_all.columns if col not in ['dt','time', 'index', 'id', 'icon','description', 'main', 'status','available_bikes','bike_stands','available_bike_stands','target', 'day', 'hour', 'number']]
 
             print('Training model..')
             from sklearn.ensemble import RandomForestRegressor
-            self.clf=RandomForestRegressor(max_depth=50).fit(df_all[cols], df_all['target'])
+            self.clf=RandomForestRegressor(max_depth=100).fit(df_all[cols], df_all['target'])
             print('Saving model to pikl....')
             #save model to a pikl file
             self.piklData('analytics/model.pikl')
 
             print('Writing model feature names to file')
-            f=open('modelfeatures','w')
+            f=open('analytics/modelfeatures','w')
             string='['
             self.features = cols
             for col in self.features:
@@ -70,7 +70,7 @@ class model():
     def getandpreprocess(self):
         '''Download data, clean and merge it into one table that can be used to train the model'''
         params = query.getConfig()
-        connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']
+        connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
 
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
         df_bikes = df_bikes.drop(['index'], 1)
@@ -81,7 +81,7 @@ class model():
         def auto_truncate(val):
             return val[:20]
         print('Cleaning weather tables')
-        df_old_weather = pd.read_csv('dublin_weather.csv', converters={'weather.description': auto_truncate})
+        df_old_weather = pd.read_csv('analytics/dublin_weather.csv', converters={'weather.description': auto_truncate})
         df_old_weather['temp']=df_old_weather['main.temp']
         df_old_weather['temp_min']=df_old_weather['main.temp_min']
         df_old_weather['humidity']=df_old_weather['main.humidity']
@@ -114,7 +114,7 @@ class model():
         df_all['target']=df_all['bike_stands']-df_all['available_bike_stands']
         features_to_concat = [df_all]
 
-        for feature in ['description','main']:
+        for feature in ['description','main', 'hour', 'day', 'number']:
 
             features_to_concat.append(pd.get_dummies(df_all[feature], prefix=feature))
 
@@ -149,7 +149,7 @@ class model():
             if feature in self.features and feature not in ['description', 'main']:
                 row[feature]=object[feature]
 
-            elif feature in ['description','main']:
+            elif feature in ['description','main','hour','day','number']:
                 try:
                     row[feature+'_'+object[feature]]+=1
 

@@ -152,6 +152,7 @@ function switchDay(day) {
 
 
 function drawAverage(stand, day) {
+	keys={'0':'Monday', '1':'Tuesday', '2':'Wednesday', '3':'Thursday', '4':'Friday', '5':'Saturday', '6':'Sunday'}
 	chosenStand = stand;
 	$('.overlay').show();
 	$.ajax({
@@ -185,7 +186,7 @@ function drawAverage(stand, day) {
 				maintainAspectRatio: false,
 	            title: {
 	                display: true,
-	                text: 'Average stand occupancy by hour'
+	                text: 'Average stand occupancy by hour for '+ keys[day.toString()]
 	            }
 	        }
 	    });
