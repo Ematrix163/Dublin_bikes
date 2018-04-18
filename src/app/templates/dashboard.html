@@ -2,11 +2,12 @@
 <html>
 
 <head>
+	<meta charset="utf-8">
 	<!-- Latest compiled and minified CSS -->
+	<title>Dash Board</title>
+	<link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dash.css') }}">
-
-
 </head>
 
 <body>
@@ -16,25 +17,25 @@
 			<div class="sidebar-content">
 				<div class="sidebar-header" style="text-align:center">
 					<a href='/'><img style="display:inline-block" src="../static/images/favicon.jpg"></a>
-					<h3 style="display:inline-block">Station List</h3>
+					<h3 style="display:inline-block">Station</h3>
 				</div>
 			</div>
 			<div class="stand-list-container">
 				<ul id="stand-list"></ul>
 			</div>
 
+			<div id="inputDate"></div>
+
 		</nav>
 
-
 		<div id="content">
-
 			<ul class="dash-header">
 				<li class="title active" onClick="showAverage()" >Average</li>
 			    <li class="title" onClick="showForecast()">Forecast</li>
 			    <li class="title" onClick="showStreetView()">StreetView</li>
+				<li class="title" onClick="showPredictiveMap()">Predictive map</li>
 				<li class="title" style="float:right" onClick="location.href='/'">Index</li>
 			</ul>
-
 			<div class="dropdown show" id='predictiveDays'>
 			  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    Select Predictive Days
@@ -47,7 +48,6 @@
 				<a class="dropdown-item" onClick='switchPredDay(4)'>Day 5</a>
 			  </div>
 			</div>
-
 			<div class="dropdown show" id='averageDays'>
 			  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Select Date
@@ -63,7 +63,6 @@
 			  </div>
 			</div>
 
-
 			<div class="view">
 				<div class="overlay">
 					<div class="loading-wrapper">
@@ -72,14 +71,12 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="graph" id='average'>
 					<canvas class="canvas" id='average-chart'></canvas>
 				</div>
 				<div class="graph" id='predict'>
 					<canvas class="canvas" id='predict-chart'></canvas>
 				</div>
-
 
 				<div id="currentData">
 					<div class="data-img">
@@ -94,10 +91,9 @@
 					</div>
 				</div>
 				<div id='streetView'></div>
+				<div id='map'></div>
 			</div>
 			</div>
-
-
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -111,6 +107,7 @@
 
 
 		<script type="text/javascript" src="../static/js/charts.js"></script>
+		<script type="text/javascript" src="../static/js/predictivemap.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w">
 		</script>
 

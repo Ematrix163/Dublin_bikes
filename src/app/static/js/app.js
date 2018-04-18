@@ -226,7 +226,7 @@ function createMarkerInfoWindow(station, infowindow) {
     else if (station.bikes + 5 < station.spaces){
       var color = 'blue';
     }
-    else{
+    else {
       var color = 'green';
     }
 
