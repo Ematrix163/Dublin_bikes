@@ -88,7 +88,7 @@ def updateLiveData():
     global global_weather
     global global_time
     global global_merged
-    launched_graph_cache=True
+    launched_graph_cache=False
     create_graph_cache=False
     print('launched updater')
     while True:
@@ -136,7 +136,9 @@ def updateLiveData():
         #make absolutely sure we aren't just referring to a dictionary reference.
 
         global_merged = copy.deepcopy(merged)
+
         if not create_graph_cache:
+
             create_graph_cache = True
             for number in global_static:
 

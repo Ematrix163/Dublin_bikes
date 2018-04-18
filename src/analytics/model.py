@@ -70,7 +70,7 @@ class model():
     def getandpreprocess(self):
         '''Download data, clean and merge it into one table that can be used to train the model'''
         params = query.getConfig()
-        connstring = 'mysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
+        connstring = 'mysql+pymysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
 
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
         df_bikes = df_bikes.drop(['index'], 1)
@@ -186,8 +186,8 @@ class model():
 
                     except:
                         IndexError
-                        f=open('modelerrorlog.log','a')
-                        f.write('encountered new valu for '+str(feature)+' : '+str(feature))
+                        filename = open('modelerrorlog.log','a')
+                        filename.write('encountered new valu for '+str(feature)+' : '+str(f))
 
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 

@@ -15,6 +15,7 @@ function showPredictiveMap() {
 	$('#currentData').hide();
 	$('#averageDays').hide();
 	$('#inputDate').show();
+	$('.view').hide();
 
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: userLocation,
@@ -141,7 +142,6 @@ function createMarkerInfoWindow(station, infowindow) {
     else {
       var color = ' #00FF00';
     }
-	console.log(station);
     // create a new circle
     let stationCircle = new google.maps.Circle({
         strokeColor: color,

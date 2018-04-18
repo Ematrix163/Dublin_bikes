@@ -313,6 +313,7 @@ function showAverage() {
     $('#currentData').show();
     $('#averageDays').show();
 	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+	$('.view').show();
 }
 
 function showForecast() {
@@ -325,6 +326,7 @@ function showForecast() {
     $('#streetView').hide();
     $('#currentData').show();
 	$('.stand-list-container').show();
+	$('.view').show();
     getPredicts(currentStand);
 
 	if (previous) {
@@ -343,6 +345,7 @@ function showStreetView() {
     $('#predictiveDays').hide();
     $('#averageDays').hide();
 	$('.stand-list-container').show();
+	$('.view').hide();
     displayStreetView();
 	if (previous) {
 		$(previous).css({'background-color': '', 'color': 'black'});
