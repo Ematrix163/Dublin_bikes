@@ -55,7 +55,7 @@ $('#userLocation').show()
 
             break
         case error.UNKNOWN_ERROR:
-            
+
             break;
     }
 

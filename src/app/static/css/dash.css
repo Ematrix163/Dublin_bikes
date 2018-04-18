@@ -78,7 +78,9 @@ a {
 	cursor: pointer;
 }
 
-
+#inputDate {
+	margin: 100px 10px 0 15px;
+}
 
 
 /*Responsive Design*/
@@ -147,7 +149,7 @@ a :hover {
 	color: white;
 }
 
-#streetView {
+#streetView, #map {
 	display: inline-block;
 	width: 100%;
 	height: calc(100vh - 52px);
