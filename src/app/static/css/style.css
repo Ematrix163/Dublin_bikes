@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     margin: 0;
+	font-family: 'Roboto', sans-serif;
 }
 
 
@@ -163,20 +164,62 @@ body {
     transition: all 0.4s;
 }
 
+.bikes {
+	display: inline;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 20px;
+}
+
+.spaces {
+	display: inline;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 20px;
+}
+
+.link {
+	float: right;
+}
+
+
+.infowindow {
+	width: 600px;
+	height: 350px;
+	overflow-y: hidden;
+}
+
+
+.infowindow-text {
+	margin-top: 10px;
+	text-align: center;
+}
+
+
+.circle-title {
+	display: inline-block;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 25px;
+}
+
+
 .chart-container {
 	background-color: white;
-	position: relative;
 	left: 20%;
-	width: 50vw;
-	height: 35vh;
+	width: 600px;
+	height: 250px;
 	transition: all 1s;
 }
 
 
+.line {
+	display: inline;
+    border-left: 2px solid lightblue;
+    height: 55px;
+	margin: 0 15px 0 15px;
+}
+
 #weather {
 	position:relative;
-  display:inline;
-	top: 20px;
+	top: -30px;
 	right: -77%;
 	color: white;
 	z-index: 99;
@@ -187,12 +230,6 @@ body {
   width:50px;
 
 }
-
-
-
-
-
-
 
 
 /*Loading Animation*/
