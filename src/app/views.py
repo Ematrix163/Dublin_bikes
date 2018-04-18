@@ -88,21 +88,22 @@ def updateLiveData():
     global global_weather
     global global_time
     global global_merged
-    launched_graph_cache=False
+    launched_graph_cache=True
     create_graph_cache=False
     print('launched updater')
-    while True:
-
+    found_static = False:
+    while not found_static:
         try:
 
             global_static = query.queryStaticLocations()
-
+            found_static=True
         except:
 
             print('Failed to update static locations')
 
+    while True:
 
-
+    
         try:
 
             global_stands = query.queryCurrentStands()
