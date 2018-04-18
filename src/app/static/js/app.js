@@ -12,7 +12,7 @@ let userLocation = {lat: 53.3083,lng: -6.2236};
 let searchBox;
 let foundUserLocation = false;
 let hide_bike_layer=false;
-
+$('#bikeLayerCheckBox').prop('checked', false);
 
 
 let useAddress = true;
@@ -227,7 +227,7 @@ function createMarkerInfoWindow(station, infowindow) {
       var color = 'blue';
     }
     else{
-      var color = 'green';
+      var color = '#00FF00';
     }
 
     // create a new circle

@@ -90,9 +90,9 @@ def updateLiveData():
 
         except:
 
-            
+            print('Failed to update static locations')
 
-        print('Querying current stand occupancy')
+
 
         try:
 
@@ -339,4 +339,8 @@ def getCurrentData():
     elif request_type == 'predictall':
 
         time = int(request.args.get('time'))
-        return json.dumps(predictiveModel.predictEnMasse(global_merged, time))
+        d=predictiveModel.predictEnMasse(global_merged, time)
+        merged={}
+        for each in global_static:
+            merged[each] = dict(d[each], **global_static[each])
+        return json.dumps(merged)
