@@ -98,7 +98,7 @@ class predictor():
 
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
-        d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
+        d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
         for stand in stands:
             d['number'].append(stand)
             d['humidity'].append(weather['main']['humidity'])
@@ -121,11 +121,11 @@ class predictor():
 
         for stand in stands:
 
-            new_d[stand]={'bikes':predictions[i], 'stands':stands[stand]['bike_stands']-predictions[i]}
+            new_d[stand]={'bikes':predictions[count], 'stands':stands[stand]['bike_stands']-predictions[count]}
 
             count+=1
 
-
+        return new_d
 
 
 

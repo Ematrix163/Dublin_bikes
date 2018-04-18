@@ -337,5 +337,5 @@ def getCurrentData():
 
     elif request_type == 'predictall':
 
-        time = request.args.get('time')
-        return json.dumps(predictor.predictMass(global_merged, time))
+        time = int(request.args.get('time'))
+        return json.dumps(predictiveModel.predictEnMasse(global_merged, time))
