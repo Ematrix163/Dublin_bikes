@@ -108,6 +108,7 @@ function switchPredDay(day){
 
 
 function switchDay(day) {
+	keys={'0':'Mondays', '1':'Tuesdays', '2':'Wednesdays', '3':'Thursdays', '4':'Fridays', '5':'Saturdays', '6':'Sundays'}
 	$('.overlay').show();
 	$.ajax({
 		url: '/graph',
@@ -140,7 +141,7 @@ function switchDay(day) {
 				maintainAspectRatio: false,
 				title: {
 					display: true,
-					text: 'Average stand occupancy by hour'
+					text: 'Average stand occupancy by hour for '+ keys[day.toString()]
 				}
 			}
 		});
@@ -152,7 +153,7 @@ function switchDay(day) {
 
 
 function drawAverage(stand, day) {
-	keys={'0':'Monday', '1':'Tuesday', '2':'Wednesday', '3':'Thursday', '4':'Friday', '5':'Saturday', '6':'Sunday'}
+	keys={'0':'Mondays', '1':'Tuesdays', '2':'Wednesdays', '3':'Thursdays', '4':'Fridays', '5':'Saturdays', '6':'Sundays'}
 	chosenStand = stand;
 	$('.overlay').show();
 	$.ajax({
@@ -217,12 +218,13 @@ function loadChart(stand, day, buttons = true, targetId = false, predictive=fals
 		data: {'stand': stand, 'day':day}
 	}).done(function(response){
 		var data = JSON.parse(response);
-		makeChart(data, targetId);
+		makeChart(data, day, targetId);
 	})
 }
 
 
-function makeChart(data, targetId=false) {
+function makeChart(data, day, targetId=false) {
+	keys={'0':'Monday', '1':'Tuesday', '2':'Wednesday', '3':'Thursday', '4':'Friday', '5':'Saturday', '6':'Sunday'}
     //this part is largely
     //internet chart.js copypasta
     chart_id = "chart"
