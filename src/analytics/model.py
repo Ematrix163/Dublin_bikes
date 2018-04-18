@@ -188,9 +188,15 @@ class model():
 
                     except:
                         IndexError
+<<<<<<< HEAD
                         filename=open('modelerrorlog.log','a')
                         filename.write('encountered new valu for '+str(feature)+' : '+str(f))
                         filename.close()
+=======
+                        filename = open('modelerrorlog.log','a')
+                        filename.write('encountered new valu for '+str(feature)+' : '+str(f))
+
+>>>>>>> 96feb257004cf1f86c146d0e780345c77eeadf15
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 
         return [value for value in self.clf.predict(df)]

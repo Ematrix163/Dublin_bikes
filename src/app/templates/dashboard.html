@@ -5,9 +5,12 @@
 	<meta charset="utf-8">
 	<!-- Latest compiled and minified CSS -->
 	<title>Dash Board</title>
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.jpg') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dash.css') }}">
+
 </head>
 
 <body>
@@ -30,37 +33,37 @@
 
 		<div id="content">
 			<ul class="dash-header">
-				<li class="title active" onClick="showAverage()" >Average</li>
-			    <li class="title" onClick="showForecast()">Forecast</li>
-			    <li class="title" onClick="showStreetView()">StreetView</li>
+				<li class="title active" onClick="showAverage()">Average</li>
+				<li class="title" onClick="showForecast()">Forecast</li>
+				<li class="title" onClick="showStreetView()">StreetView</li>
 				<li class="title" onClick="showPredictiveMap()">Predictive map</li>
 				<li class="title" style="float:right" onClick="location.href='/'">Index</li>
 			</ul>
 			<div class="dropdown show" id='predictiveDays'>
-			  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    Select Predictive Days
 			  </a>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-			    <a class="dropdown-item" onClick='switchPredDay(0)'>Day 1</a>
-			    <a class="dropdown-item" onClick='switchPredDay(1)'>Day 2</a>
-			    <a class="dropdown-item" onClick='switchPredDay(2)'>Day 3</a>
-				<a class="dropdown-item" onClick='switchPredDay(3)'>Day 4</a>
-				<a class="dropdown-item" onClick='switchPredDay(4)'>Day 5</a>
-			  </div>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" onClick='switchPredDay(0)'>Day 1</a>
+					<a class="dropdown-item" onClick='switchPredDay(1)'>Day 2</a>
+					<a class="dropdown-item" onClick='switchPredDay(2)'>Day 3</a>
+					<a class="dropdown-item" onClick='switchPredDay(3)'>Day 4</a>
+					<a class="dropdown-item" onClick='switchPredDay(4)'>Day 5</a>
+				</div>
 			</div>
 			<div class="dropdown show" id='averageDays'>
-			  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Select Date
 			  </a>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" onClick='switchDay(1)'>Monday</a>
-				<a class="dropdown-item" onClick='switchDay(2)'>Tuesday</a>
-				<a class="dropdown-item" onClick='switchDay(3)'>Wednesday</a>
-				<a class="dropdown-item" onClick='switchDay(4)'>Thursday</a>
-				<a class="dropdown-item" onClick='switchDay(5)'>Friday</a>
-				<a class="dropdown-item" onClick='switchDay(6)'>Saturday</a>
-				<a class="dropdown-item" onClick='switchDay(0)'>Sunday</a>
-			  </div>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" onClick='switchDay(1)'>Monday</a>
+					<a class="dropdown-item" onClick='switchDay(2)'>Tuesday</a>
+					<a class="dropdown-item" onClick='switchDay(3)'>Wednesday</a>
+					<a class="dropdown-item" onClick='switchDay(4)'>Thursday</a>
+					<a class="dropdown-item" onClick='switchDay(5)'>Friday</a>
+					<a class="dropdown-item" onClick='switchDay(6)'>Saturday</a>
+					<a class="dropdown-item" onClick='switchDay(0)'>Sunday</a>
+				</div>
 			</div>
 
 			<div class="view">
@@ -79,6 +82,7 @@
 				</div>
 
 				<div id="currentData">
+<<<<<<< HEAD
 					
 					<div class="data-text">
 						<div class="inf" id="bikes"></div>
@@ -86,36 +90,46 @@
 						<div class="inf" id="stands"></div>
 						<br/>
 						<div class="inf" id="status"></div>
+=======
+					<div class='circle-title' id="status"></div>
+					<br><br><br>
+					<div class='bike'>
+						<div id="stands" class='spaces'></div>
+						<div class='line'></div>
+						<div id="bikes" class='bikes'></div>
+>>>>>>> 96feb257004cf1f86c146d0e780345c77eeadf15
 					</div>
 				</div>
-				<div id='streetView'></div>
-				<div id='map'></div>
 			</div>
-			</div>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			<div id='streetView'></div>
+			<div id='map'></div>
+		</div>
+	</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-		<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-		<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
-		<!-- Latest compiled and minified JavaScript -->
-
-
-		<script type="text/javascript" src="../static/js/charts.js"></script>
-		<script type="text/javascript" src="../static/js/predictivemap.js"></script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w">
-		</script>
+	<!-- Latest compiled and minified JavaScript -->
 
 
-		<script type="text/javascript">
-			var currentStand = {{ value }}
-			var d = new Date();
-			var currentDay = d.getDay()
-			getStaticLocations(currentStand, currentDay, predictie=false);
-		</script>
+	<script type="text/javascript" src="../static/js/charts.js"></script>
+	<script type="text/javascript" src="../static/js/predictivemap.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w">
+	</script>
+
+
+	<script type="text/javascript">
+		var currentStand = {{value}}
+		var d = new Date();
+		var currentDay = d.getDay()
+		getStaticLocations(currentStand, currentDay, predictie = false);
+	</script>
 
 
 

@@ -12,7 +12,7 @@ import sys
 from setuptools import setup
 
 # Add here console scripts and other entry points in ini-style format
-
+entry_points = { 'console_scripts':['run_dubbikes_server=runserver:run'] }
 
 
 def setup_package():
@@ -22,7 +22,7 @@ def setup_package():
           entry_points=entry_points,
           use_pyscaffold=True)
 
-    entry_points = { 'console_scripts':['run_dubbikes_server=runserver:run'] }
+
 
 
 if __name__ == "__main__":
