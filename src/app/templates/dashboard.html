@@ -106,23 +106,20 @@
 
     <!-- Latest compiled and minified JavaScript -->
 
-
+	<script type="text/javascript">
+	var currentStand = {{value}}
+	var d = new Date();
+	var currentDay = d.getDay()
+	</script>
     <script type="text/javascript" src="../static/js/charts.js"></script>
     <script type="text/javascript" src="../static/js/predictivemap.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjRsP2Z4JM86ag3hkbRMmfS1a72YBlD8w">
     </script>
 
 
-    <script type="text/javascript">
-        var currentStand = {{value}}
-        var d = new Date();
-        var currentDay = d.getDay()
+    <script >
         getStaticLocations(currentStand, currentDay, predictie = false);
-
     </script>
-
-
-
 
 
 </body>

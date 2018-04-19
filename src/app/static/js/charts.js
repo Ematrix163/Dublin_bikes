@@ -1,12 +1,9 @@
 let allLocation = {};
 let predictive_data = {};
 let previous = null;
-let chosenStand;
-
-
+let currentState = 'average';
 
 $('#predictiveDays').hide();
-
 $('.title').click(function() {
     $('.title').removeClass('active');
     $(this).toggleClass('active');
@@ -41,6 +38,8 @@ function makeTimeDictionary() {
     }
     return d
 }
+
+
 var timeDictionary = makeTimeDictionary()
 
 function dateTimeLabels(array) {
@@ -55,7 +54,7 @@ function dateTimeLabels(array) {
 
 
 // AjX request to get the static locations
-function getStaticLocations(currentStand, currentDay) {
+function getStaticLocations(c, currentDay) {
     console.log('getting static data')
     //get all data for drawing map markers
     $.ajax({
@@ -67,7 +66,7 @@ function getStaticLocations(currentStand, currentDay) {
     }).done(function(response) {
         console.log('getting static data successfully!');
         data = JSON.parse(response);
-        drawStandsButtons(data, currentStand, currentDay);
+        drawStandsButtons(data, c, currentDay);
     });
 }
 
@@ -77,7 +76,7 @@ function getStaticLocations(currentStand, currentDay) {
 function drawStandsButtons(data, currentStand, currentDay) {
     for (let stand in data) {
         allLocation[stand] = data[stand];
-        $('#stand-list').append(`<li class='stand' id='standbutton-${stand}' data-id=${stand}>${data[stand].name}</li>`);
+        $('#stand-list').append(`<li class='stand' id='standbutton-${stand}' data-id=${stand} onClick='draw(${stand},this)'>${data[stand].name}</li>`);
     }
 
   document.getElementById('standbutton-'+currentStand.toString()).scrollIntoView()
@@ -86,28 +85,71 @@ function drawStandsButtons(data, currentStand, currentDay) {
   previous = $('#standbutton-'+currentStand.toString())
 
 
-    $('.stand').click(function() {
-        $(this).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+    // $('.stand').click(function(self) {
+    //     $(this).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+	//
+    //     if (previous && $(previous).attr('data-id') != $(this).attr('data-id')) {
+    //         $(previous).css({'background-color': '', 'color': 'black'});
+    //     }
+    //     previous = this;
+    //     drawCurrent(this.getAttribute('data-id').toString());
+    //     showAverage();
+	//
+    //     drawAverage(this.getAttribute('data-id').toString(), currentDay);
+	// 	if ( $(this).attr('data-id') != '1') {
+	// 		$('.stand:first').css({'background-color': '', 'color': 'black'});
+	// 	}
+	// 	console.log(currentStand);
+	// 	currentStand = parseInt(this.getAttribute('data-id'));
+	// 	console.log(currentStand);
+	//
+	// 	if (currentState = 'average') {
+	// 		drawCurrent(currentStand);
+	// 		drawAverage(currentStand, currentDay);
+	// 	} else if (currentState = 'streetView') {
+	// 		drawCurrent(currentStand);
+	// 		showStreetView();
+	// 	} else {
+	// 		showForecast();
+	// 	}
+    // })
 
-        if (previous && $(previous).attr('data-id') != $(this).attr('data-id')) {
-            $(previous).css({'background-color': '', 'color': 'black'});
-        }
-        previous = this;
-        drawCurrent(this.getAttribute('data-id').toString());
-        showAverage();
-        drawAverage(this.getAttribute('data-id').toString(), currentDay);
-		if ( $(this).attr('data-id') != '1') {
-			$('.stand:first').css({'background-color': '', 'color': 'black'});
-		}
+	drawCurrent(currentStand);
+	drawAverage(currentStand, currentDay);
 
-
-    })
-    chosenStand = currentStand;
     $('#predict').hide();
-    drawCurrent(chosenStand);
-    drawAverage(1, currentDay);
 }
 
+
+function draw(s, self) {
+
+	$(self).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+
+	if (previous && $(previous).attr('data-id') != $(self).attr('data-id')) {
+		$(previous).css({'background-color': '', 'color': 'black'});
+	}
+	previous = self;
+	// drawCurrent(s);
+	// showAverage();
+	//
+	// drawAverage(s, currentDay);
+	if ( $(self).attr('data-id') != '1') {
+		$('.stand:first').css({'background-color': '', 'color': 'black'});
+	}
+
+	currentStand = s;
+	console.log(currentState);
+
+	if (currentState == 'average') {
+		drawCurrent(currentStand);
+		drawAverage(currentStand, currentDay);
+	} else if (currentState == 'streetView') {
+		drawCurrent(currentStand);
+		showStreetView();
+	} else {
+		showForecast();
+	}
+}
 
 
 // The function is to display current bikes information on the bottom
@@ -142,7 +184,7 @@ function switchDay(day) {
         url: '/graph',
         type: 'GET',
         data: {
-            'stand': chosenStand,
+            'stand': currentStand,
             'day': day
         }
     }).done(function(response) {
@@ -193,7 +235,7 @@ function drawAverage(stand, day) {
         '5': 'Saturdays',
         '6': 'Sundays'
     }
-    chosenStand = stand;
+
     $('.overlay').show();
     $.ajax({
         url: '/graph',
@@ -247,10 +289,10 @@ function loadChart(stand, day, buttons = true, targetId = false, predictive = fa
         $('.chartoverlay').show()
     }
     console.log(stand, day)
-    if (buttons === true) {
-        currentDay = day;
-        currentStand = stand;
-    }
+    // if (buttons === true) {
+    //     currentDay = day;
+    //     currentStand = stand;
+    // }
     console.log('getting chart information')
 
     $.ajax({
@@ -329,6 +371,7 @@ function makeChart(data, day, targetId = false) {
 
 // When user click average button, the function will be called
 function showAverage() {
+	currentState = 'average';
 	$('#inputDate').hide();
     $('#average').show();
     $('#predict').hide();
@@ -338,12 +381,13 @@ function showAverage() {
 	$('.stand-list-container').show();
     $('#currentData').show();
     $('#averageDays').show();
-	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
 	$('.view').show();
 }
 
 // When user click Forecast button, the function will be called
 function showForecast() {
+	currentState = 'forecast';
+	console.log(currentState);
 	$('#inputDate').hide();
     $('#average').hide();
     $('#predict').show();
@@ -354,17 +398,13 @@ function showForecast() {
     $('#currentData').show();
 	$('.stand-list-container').show();
 	$('.view').show();
-    getPredicts(currentStand);
-
-	if (previous) {
-		$(previous).css({'background-color': '', 'color': 'black'});
-	}
-	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+    getPredicts();
 }
 
 
 // When user click streetView button, the function will be called
 function showStreetView() {
+	currentState = 'streetView';
 	$('#inputDate').hide();
 	$('#map').hide();
     $('#average').hide();
@@ -376,10 +416,10 @@ function showStreetView() {
 	$('.stand-list-container').show();
 	$('.view').hide();
     displayStreetView();
-	if (previous) {
-		$(previous).css({'background-color': '', 'color': 'black'});
-	}
-	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+	// if (previous) {
+	// 	$(previous).css({'background-color': '', 'color': 'black'});
+	// }
+	// $('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
 }
 
 
@@ -388,9 +428,10 @@ function showStreetView() {
 function displayStreetView() {
   //where was this code sourced from?
     let loc = {
-        'lat': allLocation[chosenStand].lat,
-        'lng': allLocation[chosenStand].long
+        'lat': allLocation[currentStand].lat,
+        'lng': allLocation[currentStand].long
     };
+	console.log(currentState);
     let streetViewService = new google.maps.StreetViewService();
     streetViewService.getPanoramaByLocation(loc, 50, getStreetView);
 
@@ -413,7 +454,7 @@ function displayStreetView() {
 
 
 // Show predicted information
-function getPredicts(stand) {
+function getPredicts() {
     let begin = Math.round((new Date()).getTime() / 1000);
     let end = begin + 4320000;
     $('.overlay').show();
@@ -422,15 +463,17 @@ function getPredicts(stand) {
         type: 'GET',
         data: {
             'type': 'predictrange',
-            'stand': stand,
+            'stand': currentStand,
             'begin': begin,
-            'end': end
+            'end': end,
+			'cache': false
         }
     }).done(function(response) {
+		console.log(currentStand);
+		// lcurrentStand()
         predictive_data = JSON.parse(response);
         console.log('Get predicted data successfully!');
         $('.overlay').hide();
-
         makePredictiveChart(0);
     });
 
@@ -450,7 +493,6 @@ function makePredictiveChart(day) {
     var endDate = new Date(times[times.length - 1] * 1000)
     var description = 'Predicted stand occupancy from ' + beginDate.toString() + ' to ' + endDate.toString()
     for (var i = 0; i < times.length; i++) {
-
         var t = new Date(times[i] * 1000)
         times[i] = t.getHours()
     }
