@@ -87,6 +87,9 @@ function getLocation() {
 // }
 
 
+
+// This is the function to get user's locations
+// But we cannot get user's location on EC2 because of the we don't have https
 function showPosition(position) {
 
     userLocation.lat = position.coords.latitude;
@@ -98,6 +101,8 @@ function showPosition(position) {
 }
 
 
+
+// This is the callback function of google map,  initialising the map
 function initMap() {
 
     /*This function is to initialising the map*/
@@ -111,10 +116,13 @@ function initMap() {
 
     bikeLayer = new google.maps.BicyclingLayer();
 
+	// Send ajax request to the server
 	let getWeather = $.ajax({
 		url: 'http://api.openweathermap.org/data/2.5/weather?q=Dublin,Irl&units=metric&APPID='+ apikey
 	})
 
+
+	// When the ajax request succeed
 	getWeather.done(function(data){
     console.log(data)
 
@@ -133,7 +141,7 @@ function initMap() {
 		$('#icon').attr('src', `./static/images/svg/${icon}.svg`);
 	})
 
-
+	// When the ajax request fail
 	getWeather.fail(function(){
 		sweetNote('Sorry, cannot get weather data!')
 	})
@@ -144,6 +152,8 @@ function initMap() {
         url: './request?type=liveData'
     })
 
+
+	// When get the bike station successfully
     getBikeStation.done(function (data) {
     	console.log('Get data successfully!');
 		$('.overlay').hide();
@@ -156,7 +166,8 @@ function initMap() {
 			allStations.push(data[i]);
 		}
         fitMap();
-		// knockout library
+		//  This is the knockout library
+		// We allpying the bindings here when the ajax is finished
         ko.applyBindings(new viewModel());
     });
 
@@ -180,6 +191,7 @@ function initMap() {
     // }
 
 
+	//The input box of userLocation
     let input = document.getElementById('userLocation');
     searchBox = new google.maps.places.SearchBox(input);
 
@@ -206,7 +218,7 @@ function initMap() {
 
 
 
-
+// The function is to create the circle marker and infowindow
 function createMarkerInfoWindow(station, infowindow) {
 
     let location = {
@@ -267,6 +279,8 @@ function createMarkerInfoWindow(station, infowindow) {
 }
 
 
+
+// The function is to popukting the InfoWindow
 function populateInfoWindow(circle, infowindow, ev, station) {
     /*This function is to populate infowindow when the user clicks on a marker*/
     infowindow.setPosition(ev.latLng);
@@ -323,6 +337,7 @@ function sweetNote(source) {
 
 
 
+// The function is to calculate the nearest route from a position
 function calcRoute(s, e, mode = 'WALKING') {
 
 	let directionsDisplay = new google.maps.DirectionsRenderer;
@@ -348,6 +363,7 @@ function calcRoute(s, e, mode = 'WALKING') {
     // function to create markers for each step.
 
 
+	// Call the distance service
     directionsService.route(request,
 		function (response, status) {
         if (status == "OK") {
@@ -420,6 +436,7 @@ let viewModel = function() {
     // }
 
 
+	// binding show function
 
 	this.show = function(data, event) {
 		if (!searchBox.getPlaces()) {
@@ -442,7 +459,7 @@ let viewModel = function() {
 		}
 	}
 
-
+	//  binding the findBike
 	this.findBike = function(data, event) {
     if(document.getElementById("predictiveCheckBox").checked == true){
       predictive_directions = true;
@@ -478,7 +495,7 @@ let viewModel = function() {
 
 
 
-
+	// Binding the findSatition
 	this.findStation = function(data, event) {
     if(document.getElementById("predictiveCheckBox").checked == true){
       console.log('using predictive directions')

@@ -11,6 +11,8 @@ $('.title').click(function() {
     $('.title').removeClass('active');
     $(this).toggleClass('active');
 });
+
+
 //attempt at graphs using charts.js library
 function makeTimeLabels() {
     arr = []
@@ -50,6 +52,9 @@ function dateTimeLabels(array) {
     return arr
 }
 
+
+
+// AjX request to get the static locations
 function getStaticLocations(currentStand, currentDay) {
     console.log('getting static data')
     //get all data for drawing map markers
@@ -66,6 +71,9 @@ function getStaticLocations(currentStand, currentDay) {
     });
 }
 
+
+
+// The function is to stand buttons on the sidebar
 function drawStandsButtons(data, currentStand, currentDay) {
     for (let stand in data) {
         allLocation[stand] = data[stand];
@@ -96,6 +104,9 @@ function drawStandsButtons(data, currentStand, currentDay) {
     drawAverage(1, currentDay);
 }
 
+
+
+// The function is to display current bikes information on the bottom
 function drawCurrent(stand) {
     let bikes = allLocation[stand].bikes;
     let spaces = allLocation[stand].spaces;
@@ -105,10 +116,13 @@ function drawCurrent(stand) {
     $('#status').text('Current status:' + status);
 }
 
+
+
 function switchPredDay(day) {
     makePredictiveChart(day)
 }
 
+// Switch days
 function switchDay(day) {
     keys = {
         '0': 'Mondays',
@@ -162,6 +176,9 @@ function switchDay(day) {
     })
 }
 
+
+
+// The function is to draw average usage graph
 function drawAverage(stand, day) {
     keys = {
         '0': 'Mondays',
@@ -216,6 +233,9 @@ function drawAverage(stand, day) {
     })
 }
 
+
+
+// Load the chart
 function loadChart(stand, day, buttons = true, targetId = false, predictive = false) {
     if (targetId == false) {
         $('.overlay').show();
@@ -302,6 +322,8 @@ function makeChart(data, day, targetId = false) {
 
 }
 
+
+// When user click average button, the function will be called
 function showAverage() {
 	$('#inputDate').hide();
     $('#average').show();
@@ -316,6 +338,7 @@ function showAverage() {
 	$('.view').show();
 }
 
+// When user click Forecast button, the function will be called
 function showForecast() {
 	$('#inputDate').hide();
     $('#average').hide();
@@ -335,6 +358,8 @@ function showForecast() {
 	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
 }
 
+
+// When user click streetView button, the function will be called
 function showStreetView() {
 	$('#inputDate').hide();
 	$('#map').hide();
@@ -353,6 +378,9 @@ function showStreetView() {
 	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
 }
 
+
+
+// This is the function to call streetView
 function displayStreetView() {
     let loc = {
         'lat': allLocation[chosenStand].lat,
@@ -377,6 +405,9 @@ function displayStreetView() {
     }
 }
 
+
+
+// Show predicted information
 function getPredicts(stand) {
     let begin = Math.round((new Date()).getTime() / 1000);
     let end = begin + 4320000;
