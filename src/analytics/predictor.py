@@ -92,12 +92,16 @@ class predictor():
 
             #add another hour
             time += 3600
-
-        return d
+        if found == False:
+            return None
+        else:
+            return d
     def predictEnMasse(self, stands, timestamp):
 
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
+        if weather == None:
+            return None
         d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
         for stand in stands:
             d['number'].append(stand)

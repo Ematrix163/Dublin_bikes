@@ -28,7 +28,7 @@ cacheFromDF=False
 
 #methods for caching and updating certain data
 def cachegraphdata(get_all_data=False):
-    '''This functions is meant to be threaded. It will download information about daily stand occupancy and cache it, in order to speed up request times.'''
+    '''This function is meant to be threaded. It will download information about daily stand occupancy, average it, and cache the results, in order to speed up request times.'''
 
     print('begin caching graph data....')
     global global_static
@@ -254,6 +254,14 @@ def getGraphData():
     stand = int(request.args.get('stand'))
     day = int(str(request.args.get('day')))
 
+    if (stand == None or day == None):
+
+        return json.dumps({'error':'Sorry. Stand and day must be specified'})
+
+    elif int(day)<0 or int(day)>6 or stand not in global_cached_graphs:
+
+        return json.dumps({'error': 'Invalid stand/day entered'})
+
     if day in global_cached_graphs[stand]:
         #first check to see if we've cached the graph data
         return json.dumps(global_cached_graphs[stand][day])
@@ -329,11 +337,12 @@ def getCurrentData():
 
                 return str(prediction)
             else:
-                return 'Error etc'
+                return json.dumps({'error':'Error. Invalid parameters.'})
+
 
         else:
 
-            return 'Error. Missing parameters.'
+            return json.dumps({'error':'Error. Missing parameters.'})
 
     elif request_type == 'predictrange':
 
@@ -347,13 +356,19 @@ def getCurrentData():
             return json.dumps(predictiveModel.predictRange(int(stand), int(begin), int(end)))
 
         else:
-            return 'Error. Missing parameters.'
+            return json.dumps({'error':'Error. Missing parameters.'})
 
     elif request_type == 'predictall':
 
         time = int(request.args.get('time'))
-        d=predictiveModel.predictEnMasse(global_merged, time)
-        merged={}
-        for each in global_static:
-            merged[each] = dict(d[each], **global_static[each])
-        return json.dumps(merged)
+        if time==None:
+            return json.dumps({'error':'Error. Missing parameters.'})
+        else:
+            d=predictiveModel.predictEnMasse(global_merged, time)
+            if d != None:
+                merged={}
+                for each in global_static:
+                    merged[each] = dict(d[each], **global_static[each])
+                return json.dumps(merged)
+            else:
+                return json.dumps({'error':'Error. Invalid time entered. Times must be within 120 hours of the current datetime ' + str(datetime.datetime.fromtimestamp(timemodule.time()))})
