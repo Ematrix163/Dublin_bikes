@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.externals import joblib
 import json
 import getpass
-from db import query
+from db import getconfig
 from sqlalchemy import create_engine
 
 
@@ -64,7 +64,7 @@ class model():
         '''Download data, clean and merge it into one table that can be used to train the model'''
 
         #set up connection and download db resources
-        params = query.getConfig()
+        params = getconfig.getConfig()
         connstring = 'mysql+pymysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
         engine = create_engine(connstring)
         df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=engine)

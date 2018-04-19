@@ -2,21 +2,9 @@ import datetime
 import mysql.connector
 import time
 import json as js
+from db import getconfig.getConfig as getConfig
 
 
-def getConfig():
-
-    '''Gets all database parameters from file and returns them in dictionary form'''
-
-    f=open('config.config','r').read().split('\n')
-    d={}
-    d['database']=f[1]
-    d['user']=f[0]
-    d['host']=f[2]
-    d['port']=int(f[3])
-    d['passw']=f[4]
-
-    return d
 
 def makeCnx():
 
