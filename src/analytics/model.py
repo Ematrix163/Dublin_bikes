@@ -56,8 +56,8 @@ class model():
         '''Load saved model features from disk'''
 
         features = json.load(open('analytics/modelfeatures'))
+        print(features)
 
-        f.close()
         return features['features']
 
 
