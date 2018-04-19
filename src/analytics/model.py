@@ -49,13 +49,14 @@ class model():
         #save model features in json format
         print('Writing model feature names to file')
         f=open('analytics/modelfeatures','w')
-        f.write(json.dumps(cols))
+        f.write(json.dumps({"features":cols}))
         f.close()
 
     def loadFeatures(self):
         '''Load saved model features from disk'''
-        f=open('analytics/modelfeatures','r').read()
-        features = json.loads(f)
+
+        features = json.load(open('analytics/modelfeatures'))
+
         f.close()
         return features['features']
 
