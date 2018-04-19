@@ -2,8 +2,7 @@ import datetime
 import mysql.connector
 import time
 import json as js
-import getpass
-global passw
+
 
 def getConfig():
 
