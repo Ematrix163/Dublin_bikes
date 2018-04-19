@@ -19,7 +19,7 @@ def buildModel(sleeptime):
     '''Rebuilds the RandomForestRegressor model with the most up to date data'''
     while True:
         m=model.model(from_data=True)
-        del(model)
+        del(m)
         time.sleep(sleeptime)
 
 
