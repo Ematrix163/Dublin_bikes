@@ -2,7 +2,7 @@ import datetime
 import mysql.connector
 import time
 import json as js
-from db import getconfig.getConfig as getConfig
+from db.getconfig import getConfig as getConfig
 
 
 
