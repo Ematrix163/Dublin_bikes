@@ -77,10 +77,14 @@ function getStaticLocations(currentStand, currentDay) {
 function drawStandsButtons(data, currentStand, currentDay) {
     for (let stand in data) {
         allLocation[stand] = data[stand];
-        $('#stand-list').append(`<li class='stand' data-id=${stand}>${data[stand].name}</li>`);
+        $('#stand-list').append(`<li class='stand' id='standbutton-${stand}' data-id=${stand}>${data[stand].name}</li>`);
     }
 
-	$('.stand:first').css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+  document.getElementById('standbutton-'+currentStand.toString()).scrollIntoView()
+
+  $('#standbutton-'+currentStand.toString()).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
+  previous = $('#standbutton-'+currentStand.toString())
+
 
     $('.stand').click(function() {
         $(this).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
@@ -98,7 +102,7 @@ function drawStandsButtons(data, currentStand, currentDay) {
 
 
     })
-    chosenStand = 1;
+    chosenStand = currentStand;
     $('#predict').hide();
     drawCurrent(chosenStand);
     drawAverage(1, currentDay);
@@ -382,6 +386,7 @@ function showStreetView() {
 
 // This is the function to call streetView
 function displayStreetView() {
+  //where was this code sourced from?
     let loc = {
         'lat': allLocation[chosenStand].lat,
         'lng': allLocation[chosenStand].long

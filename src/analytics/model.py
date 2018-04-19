@@ -5,6 +5,7 @@ from sklearn.externals import joblib
 import json
 import getpass
 from db import query
+from sqlalchemy import create_engine
 
 
 class model():
@@ -71,12 +72,12 @@ class model():
         '''Download data, clean and merge it into one table that can be used to train the model'''
         params = query.getConfig()
         connstring = 'mysql+pymysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
-
-        df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=connstring)
+        engine = create_engine(con)
+        df_bikes=pd.read_sql_table(table_name='dynamic_bikes', con=engine)
         df_bikes = df_bikes.drop(['index'], 1)
 
-        df_weather1=pd.read_sql_table(table_name='weather', con=connstring)
-        df_weather2=pd.read_sql_table(table_name='dublin_weather', con=connstring)
+        df_weather1=pd.read_sql_table(table_name='weather', con=engine)
+        df_weather2=pd.read_sql_table(table_name='dublin_weather', con=engine)
 
         def auto_truncate(val):
             return val[:20]
@@ -158,6 +159,7 @@ class model():
                     IndexError
                     f=open('modelerrorlog.log','a')
                     f.write('encountered new valu for '+str(feature)+' : '+str(object[feature]))
+                    f.close()
 
 
 
@@ -186,8 +188,14 @@ class model():
 
                     except:
                         IndexError
+
+                        filename=open('modelerrorlog.log','a')
+                        filename.write('encountered new valu for '+str(feature)+' : '+str(f))
+                        filename.close()
+
                         filename = open('modelerrorlog.log','a')
                         filename.write('encountered new valu for '+str(feature)+' : '+str(f))
+
 
         df = pd.DataFrame(new_dict, columns=new_dict.keys())
 
