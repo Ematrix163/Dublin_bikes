@@ -73,9 +73,10 @@ class model():
 
         df_weather1=pd.read_sql_table(table_name='weather', con=engine)
         #resample this first weather table so that we have a value for every hour.
+        print('Resampling weather data..')
         df_weather1['dt']=pd.to_datetime(df_weather1['dt'], unit='s')
         df_weather1.set_index('dt', inplace=True)
-        df_weather1=df_weather1.resample('H').ffil()
+        df_weather1=df_weather1.resample('H').ffill()
 
 
         df_weather2=pd.read_sql_table(table_name='dublin_weather', con=engine)
