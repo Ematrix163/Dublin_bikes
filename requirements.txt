@@ -12,4 +12,6 @@ sqlalchemy
 pymysql
 sklearn
 scipy
+flask
+mysql-connector
 
