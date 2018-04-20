@@ -1,8 +1,8 @@
 * {
     box-sizing: border-box;
     margin: 0;
+	font-family: 'Roboto', sans-serif;
 }
-
 body {
 	overflow-x: hidden;
     overflow-y: hidden;
@@ -278,13 +278,11 @@ a :hover {
 /*Predictive map view*/
 .bikes {
 	display: inline;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 20px;
 }
 
 .spaces {
 	display: inline;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 20px;
 }
 
@@ -309,6 +307,5 @@ a :hover {
 
 .circle-title {
 	display: inline-block;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 25px;
 }

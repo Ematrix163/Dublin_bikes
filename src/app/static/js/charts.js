@@ -83,37 +83,6 @@ function drawStandsButtons(data, currentStand, currentDay) {
 
   $('#standbutton-'+currentStand.toString()).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
   previous = $('#standbutton-'+currentStand.toString())
-
-
-    // $('.stand').click(function(self) {
-    //     $(this).css({'background-color': 'rgb(173,216,210)', 'color': 'white'});
-	//
-    //     if (previous && $(previous).attr('data-id') != $(this).attr('data-id')) {
-    //         $(previous).css({'background-color': '', 'color': 'black'});
-    //     }
-    //     previous = this;
-    //     drawCurrent(this.getAttribute('data-id').toString());
-    //     showAverage();
-	//
-    //     drawAverage(this.getAttribute('data-id').toString(), currentDay);
-	// 	if ( $(this).attr('data-id') != '1') {
-	// 		$('.stand:first').css({'background-color': '', 'color': 'black'});
-	// 	}
-	// 	console.log(currentStand);
-	// 	currentStand = parseInt(this.getAttribute('data-id'));
-	// 	console.log(currentStand);
-	//
-	// 	if (currentState = 'average') {
-	// 		drawCurrent(currentStand);
-	// 		drawAverage(currentStand, currentDay);
-	// 	} else if (currentState = 'streetView') {
-	// 		drawCurrent(currentStand);
-	// 		showStreetView();
-	// 	} else {
-	// 		showForecast();
-	// 	}
-    // })
-
 	drawCurrent(currentStand);
 	drawAverage(currentStand, currentDay);
 
@@ -129,10 +98,10 @@ function draw(s, self) {
 		$(previous).css({'background-color': '', 'color': 'black'});
 	}
 	previous = self;
-	// drawCurrent(s);
-	// showAverage();
-	//
-	// drawAverage(s, currentDay);
+	drawCurrent(s);
+	showAverage();
+
+	drawAverage(s, currentDay);
 	if ( $(self).attr('data-id') != '1') {
 		$('.stand:first').css({'background-color': '', 'color': 'black'});
 	}
@@ -387,7 +356,7 @@ function showAverage() {
 // When user click Forecast button, the function will be called
 function showForecast() {
 	currentState = 'forecast';
-	console.log(currentState);
+
 	$('#inputDate').hide();
     $('#average').hide();
     $('#predict').show();
@@ -431,7 +400,7 @@ function displayStreetView() {
         'lat': allLocation[currentStand].lat,
         'lng': allLocation[currentStand].long
     };
-	console.log(currentState);
+	console.log(currentStand);
     let streetViewService = new google.maps.StreetViewService();
     streetViewService.getPanoramaByLocation(loc, 50, getStreetView);
 
@@ -490,8 +459,11 @@ function makePredictiveChart(day) {
     spaces = predictive_data['spaces'].slice(begin, end)
     times = predictive_data['times'].slice(begin, end)
     var beginDate = new Date(times[0] * 1000);
+	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var begin = `${months[beginDate.getMonth()]} ${beginDate.getDate()} ${beginDate.getFullYear()}`;
     var endDate = new Date(times[times.length - 1] * 1000)
-    var description = 'Predicted stand occupancy from ' + beginDate.toString() + ' to ' + endDate.toString()
+	var end = `${months[endDate.getMonth()]} ${endDate.getDate()} ${endDate.getFullYear()}`;
+    var description = 'Predicted stand occupancy from ' + begin + ' to ' + end;
     for (var i = 0; i < times.length; i++) {
         var t = new Date(times[i] * 1000)
         times[i] = t.getHours()

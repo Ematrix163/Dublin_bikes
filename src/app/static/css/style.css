@@ -25,8 +25,14 @@ body {
     margin-left: -350px;
 }
 
+
+.occupy {
+	width: 100%;
+	height:
+}
+
 .bottom-button {
-	position: fixed;
+	position: absolute;
 	bottom: 30px;
 	width: 350px;
 	left: 0;
@@ -151,13 +157,11 @@ body {
 
 .bikes {
 	display: inline;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 20px;
 }
 
 .spaces {
 	display: inline;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 20px;
 }
 
@@ -181,7 +185,6 @@ body {
 
 .circle-title {
 	display: inline-block;
-	font-family: 'Do Hyeon', sans-serif;
 	font-size: 25px;
 }
 
