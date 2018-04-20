@@ -44,7 +44,7 @@ if __name__ == "__main__":
 	yesno=False
 	while not yesno:
 
-		answer = input('Do you wish to open a browser window on server launch?')
+		answer = input('Do you wish to open a browser window on server launch?[y,b]')
 		if answer=='y':
 			answer=True
 			yesno=True

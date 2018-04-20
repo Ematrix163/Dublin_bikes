@@ -1,14 +1,15 @@
-cookiecutter==1.6.0
--e git+https://github.com/Ematrix163/Dublin_bikes.git@5dae34f14ef02e2c6dbd4fb98b8f1c06afd84f19#egg=dublin_bikes
 Flask==0.12.2
 Flask-Cors==3.0.2
 future==0.16.0
-matplotlib==2.0.2
-mysql-connector-python==2.0.4
+matplotlib
+mysql-connector-python
 mysqlclient==1.3.12
-pyscaf-project==0.0.post0.dev1+g2181660
-PyScaffold==3.0.1
 pytest==3.0.7
 requests==2.18.4
-SQLAlchemy==1.1.9
 urllib3==1.22
+pandas
+sqlalchemy
+pymysql
+sklearn
+scipy
+

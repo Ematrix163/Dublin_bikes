@@ -98,10 +98,6 @@ function draw(s, self) {
 		$(previous).css({'background-color': '', 'color': 'black'});
 	}
 	previous = self;
-	drawCurrent(s);
-	showAverage();
-
-	drawAverage(s, currentDay);
 	if ( $(self).attr('data-id') != '1') {
 		$('.stand:first').css({'background-color': '', 'color': 'black'});
 	}
