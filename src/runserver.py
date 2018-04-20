@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
 
 
-	url = "http://0.0.0.0:{0}".format(port)
+	url = "http://127.0.0.1:{0}".format(port)
 
 	if answer:
 		threading.Timer(20, lambda: webbrowser.open(url) ).start()
