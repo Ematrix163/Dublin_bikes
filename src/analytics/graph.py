@@ -6,8 +6,10 @@ import datetime
 import time
 import pandas as pd
 from sqlalchemy import create_engine
+
 def getGraphData():
     '''Downloads all of the data necessary to create daily average graphs, in one go'''
+
     params = query.getConfig()
 
     connstring = 'mysql+pymysql://'+params['user']+':'+params['passw']+'@'+params['host']+'/dublinbikes'
@@ -27,6 +29,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=None, fromDF=False):
     if fromDF == False:
 
         #slow wasteful method that won't work in acceptable time for larger datasets
+        #deprecated, unless mass bike data download is explicitly disabled
 
         stand = int(stand)
         dayOfWeek = int(dayOfWeek)
@@ -37,6 +40,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=None, fromDF=False):
         json = makeEmptyJsonDayObject()
 
         for t in data:
+
             time_c = int(t)/1000
             dtime = datetime.datetime.fromtimestamp(time_c)
             hour = dtime.hour
@@ -44,9 +48,7 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=None, fromDF=False):
 
             if dtime.weekday()==dayOfWeek:
                 #if day of week is the same
-
                 #place this data in the nearest five minute intereval
-
                 json[hour]['bikes'].append(int(data[t]['bikes']))
                 json[hour]['spaces'].append(int(data[t]['spaces']))
 
@@ -58,24 +60,25 @@ def prepareDayOfTheWeekData(stand, dayOfWeek, data=None, fromDF=False):
 
 
             if len(json[t]['bikes'])==0:
+
                 response['bikes'].append(0)
                 response['spaces'].append(0)
+
             else:
+
                 response['bikes'].append(int(sum(json[t]['bikes'])/len(json[t]['bikes'])))
-
-
                 response['spaces'].append(int(sum(json[t]['spaces'])/len(json[t]['spaces'])))
+
     else:
+
+        #much quicker method, using pandas
 
         df=data[(data['number']==stand) & (data['day']==dayOfWeek)]
         response={'spaces':[], 'bikes':[]}
         for hour in range(0,24):
+
             response['bikes'].append(df[df['hour']==hour]['available_bikes'].mean())
             response['spaces'].append(df[df['hour']==hour]['available_bike_stands'].mean())
-
-
-
-
 
 
     return response

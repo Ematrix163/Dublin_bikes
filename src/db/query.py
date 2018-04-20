@@ -60,7 +60,7 @@ def queryStandNumber(x):
 
 #this can be changed to reflect any query we like
 
-    query = ("SELECT time, available_bikes, available_bike_stands, bike_stands, status FROM dynamic_bikes WHERE number = "  + str(x))
+
 
     query = ("SELECT time, bike_stands, available_bikes, available_bike_stands, status FROM dynamic_bikes d WHERE d.time = (SELECT MAX(time) FROM dynamic_bikes d WHERE d.number = "+str(x)+") AND d.number = " +str(x))
 

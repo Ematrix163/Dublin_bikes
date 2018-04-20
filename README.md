@@ -1,36 +1,12 @@
-# Dublin Bikes v 2.0
-
-**Sprint 2 complete April 10th**
+# Dublin Bikes - Find a Bike v 2.0 20th April 2018
 
 
 
-## Trello board at the beginning of sprint 3
+First release of Dublin Bikes bike finder.
 
-![alt](docs/images/sprint3/sprint2TrelloFinal.png)
-
-## Screenshots of the index page
-
-![alt](docs/images/sprint3/index.png)
-![alt](docs/images/sprint3/route.png)![alt](docs/images/sprint3/all.png)
-
-## Screenshots of error checking on the index page
-
-![alt](docs/images/sprint3/staticError.png)![alt](docs/images/sprint3/error.png)
-
-## Screen shot of back end command
-
-![alt](docs/images/sprint3/commandLine.png)
-
-## Screenshot of dashboard
-
-![alt](docs/images/sprint3/dashboard.png)
-
-## Dashboard with no data
-
-![alt](docs/images/sprint3/dashnodata.png)
-
-
-
-## Trello board for the beginning of sprint 3
-
-![alt](docs/images/sprint3/sprint3TrelloStart.png)
+To run:
+1) pip install -e dublin_bikes
+2) Place a valid config.config and keys.config files in the src directory.
+3) (Optional) In src, run python runscraper.py to run the webscraper
+4) (Optional) In src, run python updatemodel.py to update the model.
+5) In src, run python runserver.py to start the server. If no model pikl is found, a model will be automatically built and saved. Enter a port number to select what port the server will run on. Answer yes/no to whether or not the website should be opened in a browser window,

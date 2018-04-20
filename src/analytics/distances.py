@@ -8,9 +8,6 @@ from math import inf
 from db import keyring
 
 
-
-
-
 def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'):
 
     '''Uses the google distance matrix api to get the distances for all static locations from a given origin'''
@@ -36,28 +33,18 @@ def getAllDistancesInOneApiCall(origin, staticlocations, transportMode='walking'
     return json.loads(response.text)
 
 
-
-
-
-
-
-
-
 def getClosestStand(origin, merged, transportMode='walking'):
 
     '''iterates through all stands and finds the closest one to the origin'''
-
-    #how to put a predictive element here?
 
 
     closestDuration = inf
     lat1 = origin['lat']
     long1 = origin['long']
 
-
-
     coords = []
     for stand_number in merged:
+
         if transportMode=='walking':
 
             if merged[stand_number]['bikes']>5:
@@ -65,19 +52,15 @@ def getClosestStand(origin, merged, transportMode='walking'):
                 coords.append({'lat':merged[stand_number]['lat'], 'long':merged[stand_number]['long']})
 
         else:
+
             if merged[stand_number]['spaces']>5:
 
                 coords.append({'lat':merged[stand_number]['lat'], 'long':merged[stand_number]['long']})
 
-
-
-
-
-
-
     data = getAllDistancesInOneApiCall({'lat':lat1, 'long':long1}, coords, transportMode)
 
     closest_index = 0
+
     for index, location in enumerate(data['rows'][0]['elements']):
 
         if location['duration']['value']<closestDuration:

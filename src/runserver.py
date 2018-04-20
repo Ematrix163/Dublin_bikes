@@ -44,11 +44,11 @@ if __name__ == "__main__":
 	yesno=False
 	while not yesno:
 
-		answer = input('Do you wish to open a browser window on server launch?')
+		answer = input('Do you wish to open a browser window on server launch? (y/n)')
 		if answer=='y':
 			answer=True
 			yesno=True
-		elif answer=='b':
+		elif answer=='n':
 			answer=False
 			yesno=True
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 	url = "http://0.0.0.0:{0}".format(port)
 
 	if answer:
-		threading.Timer(5, lambda: webbrowser.open(url) ).start()
+		threading.Timer(20, lambda: webbrowser.open(url) ).start()
 
 	from app import app
 	app.run(host='0.0.0.0', port=port)

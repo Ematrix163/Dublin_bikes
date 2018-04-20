@@ -15,6 +15,7 @@ import copy
 
 # This is our load routine, basically
 
+#define certain global variables
 global_stands = []
 global_bike_data = []
 global_static = []
@@ -79,7 +80,7 @@ def cachegraphdata(get_all_data=False):
 
 
 def updateLiveData():
-    '''This function is meant to be threaded. It will update the current weather and stand occupancy data every five minutes.'''
+    '''This function is meant to be threaded. It will update the current weather and stand occupancy data every five minutes, as well as launching the graph cacher.'''
 
     global global_stands
     global global_static
@@ -157,6 +158,7 @@ def updateLiveData():
         #sleep for five minutes
         timemodule.sleep(300)
 
+#start threads
 print('Gathering live data...')
 updater = Thread(target=updateLiveData)
 updater.start()
@@ -249,6 +251,7 @@ def findClosestStand():
 def getGraphData():
 
     '''Returns a set of data points representing the average occupancy of a stand on a given day'''
+
     global cacheFromDF
     global global_cached_graphs
     stand = int(request.args.get('stand'))
@@ -278,7 +281,7 @@ def getGraphData():
 @app.route('/request')
 def getCurrentData():
 
-    '''Multiple request methods packed into this one link. Sorted by type.'''
+    '''Multiple request methods packed into this one link. Sorted by type. See  documentation for full details'''
 
     global global_stands
     global global_static
