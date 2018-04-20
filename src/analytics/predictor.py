@@ -10,8 +10,10 @@ import datetime
 from analytics import distances
 
 class predictor():
-
+    '''Wrapper for our model. Loads a model, and preprocesses requests into data that can be fed to it.'''
+    
     def __init__(self, static_locations):
+
         #load the most recent saved model
         print('Loading model from pikl')
         self.model = model.model(from_pikl=True)
@@ -36,12 +38,17 @@ class predictor():
         '''Takes a stand and a timestamp, and tries to predict stand occupancy at the given time. Matchingweather should be supplied as a parameter when a group of stands are being queried for the same timestamp. It will reduce the required computation '''
 
         time=datetime.datetime.fromtimestamp(timestamp)
+
         if matchingweather == None:
+
             weather = self.findMatchingWeather(time)
+
             if weather == None:
-                print('Sorry, can\'t obtain weather forecast data for that timestamp. Please keep timestamps within 120 hours of the current time')
+
+
                 return None
         else:
+
             weather = matchingweather
 
         d = {'number':stand}
@@ -72,15 +79,18 @@ class predictor():
         s = query.queryStandNumber(stand)
 
         for i in s:
+
             obj1 = s[i]
 
         d={'times':[], 'bikes':[], 'spaces':[]}
         found = False
+
         while time <= end:
 
             prediction = self.predict(stand, time)
-            #how will we resolve 'none' results?
+
             if prediction != None:
+
                 d['times'].append(time)
                 d['bikes'].append(int(prediction))
                 d['spaces'].append(int(obj1['bike_stands'])-int(prediction))
@@ -92,18 +102,27 @@ class predictor():
 
             #add another hour
             time += 3600
+
         if found == False:
+
             return None
         else:
-            return d
-    def predictEnMasse(self, stands, timestamp):
 
+            return d
+
+
+    def predictEnMasse(self, stands, timestamp):
+        '''Predicts for all specified stands at one point in time'''
         time=datetime.datetime.fromtimestamp(timestamp)
         weather = self.findMatchingWeather(time)
+
         if weather == None:
             return None
+
         d={'number':[], 'humidity':[], 'hour':[],'monthday':[],'day':[], 'month':[], 'pressure':[], 'temp':[], 'temp_max':[], 'temp_min':[], 'main':[], 'description':[], 'wind_speed':[]}
+
         for stand in stands:
+
             d['number'].append(stand)
             d['humidity'].append(weather['main']['humidity'])
             d['hour'].append(time.hour)
@@ -132,12 +151,6 @@ class predictor():
         return new_d
 
 
-
-
-
-
-
-
     def findMatchingWeather(self, time1):
 
         '''Matches weather data with the given timestamp'''
@@ -158,6 +171,7 @@ class predictor():
 
     def updateWeather(self):
         '''Updates the predictors weather forecast'''
+
         self.weatherData=json.loads(requests.get('http://api.openweathermap.org/data/2.5/forecast?id=5344157&units=imperial&mode=json&APPID='+self.weatherKey).text)
 
     def getClosestStand(self, origin, transportMode='walking'):
@@ -167,8 +181,6 @@ class predictor():
         closestDuration = inf
         lat1 = origin['lat']
         long1 = origin['long']
-
-
 
         time=int(timemodule.time())
         #as we're relying on a forecast, we need to add a little bit to the matching weather time here. This should be fixed by changing the weather method to also grab current weather.
@@ -181,12 +193,6 @@ class predictor():
 
         weather=self.findMatchingWeather(dtime)
         print(weather)
-
-
-
-
-
-
 
         data = distances.getAllDistancesInOneApiCall({'lat':lat1, 'long':long1}, self.target_coords, transportMode)
 
@@ -205,12 +211,7 @@ class predictor():
                     closestDuration = location['duration']['value']
 
 
-
-
-
         return self.target_coords[closest_index]
-
-
 
 
 if __name__ == '__main__':

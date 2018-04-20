@@ -24,5 +24,6 @@ def getBikeKey():
     return f[3].split(' ')[1]
 
 def getDistanceKey2():
+    '''Returns the second google distance matrix api key'''
     f=open('keys.config').read().split('\n')
     return f[4].split(' ')[1]

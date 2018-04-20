@@ -1,13 +1,14 @@
-# Dublin Bikes - Find a Bike 
+# Dublin Bikes - Find a Bike
 
 ###  First release V.1.0 April 2018
 
 First release of Dublin Bikes bike finder.
 
-To run:
+First release of Dublin Bikes bike finder.
 
-1. pip install -e Dublin_bikes
-2. Place a valid config.config and keys.config files in the src directory.
-3. (Optional) In src, run python runscraper.py to run the webscraper
-4. (Optional) In src, run python updatemodel.py to update the model.
-5. In src, run python runserver.py to start the server. If no model pikl is found, a model will be automatically built and saved. Enter a port number to select what port the server will run on. Answer yes/no to whether or not the website should be opened in a browser window
+To run:
+1) pip install -e Dublin_bikes
+2) Place a valid config.config and keys.config files in the src directory.
+3) (Optional) In src, run python runscraper.py to run the webscraper
+4) (Optional) In src, run python updatemodel.py to update the model.
+5) In src, run python runserver.py to start the server. If no model pikl is found, a model will be automatically built and saved. Enter a port number to select what port the server will run on. Answer yes/no to whether or not the website should be opened in a browser window,

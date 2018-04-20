@@ -17,12 +17,13 @@ class model():
         if from_data == True:
             self.trainModel()
 
-        if from_pikl==True:
+        elif from_pikl==True:
 
             try:
                 self.features = self.loadFeatures()
             except:
-                print('missing model feature docs')
+                print('missing model feature docs. Training new model..')
+                self.trainModel()
 
             try:
                 self.clf = joblib.load('analytics/model.pikl')
@@ -78,9 +79,10 @@ class model():
         df_weather1.set_index('dt', inplace=True)
         df_weather1=df_weather1.resample('H').ffill()
 
-
+        #load second weather table
         df_weather2=pd.read_sql_table(table_name='dublin_weather', con=engine)
         df_weather2['dt']=pd.to_datetime(df_weather2['dt'], unit='s')
+
         def auto_truncate(val):
             return val[:20]
         #load old weather table and clip all of the strings that are longer than Varchar(20)
@@ -152,7 +154,7 @@ class model():
 
         #preprocess the object so we can predict from it
 
-        #make a prediction
+        # then make a prediction
 
         row={}
         print(len(self.features))
@@ -188,6 +190,7 @@ class model():
         new_dict = {}
         #create an empty dictionary with every value set to 0
         for feature in self.features:
+            
             new_dict[feature]=[0 for i in range(len(d['day']))]
 
         for feature in d:
