@@ -2,7 +2,7 @@
 
 ###  First release V.1.0 April 2018
 
-First release of Dublin Bikes bike finder.
+First release of Dublin Bikes Bike Finder.
 
 To run:
 
@@ -23,4 +23,3 @@ To run:
 5. (Optional) In src, run python updatemodel.py to update the model.
 
 6. In src, run python runserver.py to start the server. If no model pikl is found, a model will be automatically built and saved. Enter a port number to select what port the server will run on. Answer yes/no to whether or not the website should be opened in a browser window. There are no entry points defined for our application, and the server must be launched in this manner otherwise nothing will work.
-
