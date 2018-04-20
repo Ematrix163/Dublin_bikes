@@ -1,2 +1,0 @@
-Need to make dummy features for day, stand number, weekend, hour.
-Need to make a set dictionary that can be reused (deep copied)

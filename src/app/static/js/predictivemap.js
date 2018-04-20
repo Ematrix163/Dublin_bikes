@@ -116,7 +116,7 @@ function show() {
 
 
 	getPredict.fail(function(){
-		sweetNote('Sorry, cannot show the predicted days for you. This may because of a server error.')
+		sweetNote('Sorry, cannot display a prediction for this time. This may or may not be because of a server error.')
 	})
 }
 

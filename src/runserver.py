@@ -8,6 +8,11 @@ def run():
 	app.run()
 
 
+
+
+
+
+
 if __name__ == "__main__":
 	import os
 
@@ -34,10 +39,26 @@ if __name__ == "__main__":
 			port = int(input('Please enter a port for the app to run on?'))
 			select_port = True
 		except:
-			print('please enter an integer yo')
+			print('please enter an integer')
+
+	yesno=False
+	while not yesno:
+
+		answer = input('Do you wish to open a browser window on server launch?')
+		if answer=='y':
+			answer=True
+			yesno=True
+		elif answer=='b':
+			answer=False
+			yesno=True
+
+
+
 
 	url = "http://0.0.0.0:{0}".format(port)
-	threading.Timer(1.25, lambda: webbrowser.open(url) ).start()
+
+	if answer:
+		threading.Timer(5, lambda: webbrowser.open(url) ).start()
 
 	from app import app
 	app.run(host='0.0.0.0', port=port)
