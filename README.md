@@ -12,11 +12,11 @@ To run:
 
 2.  **Place a valid `config.config` and `keys.config` files in the src directory.**
 
-3.  ** In src, enter the following command **
+3.  **In src, enter the following command**
 
-   `python runserver.py`
+	`python runserver.py`
 
-   Then it will prompt you a port number (if you want to use the port number between 0 and 1023, you have to be the super user of your system.)
+	Then it will prompt you a port number (if you want to use the port number between 0 and 1023, you have to be the super user of your system.)
 
 4. (Optional) In src, run python runscraper.py to run the webscraper
 
